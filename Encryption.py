@@ -1,6 +1,6 @@
 string = ''
 final=''
-ascii = input('what sentence: ')
+ascii = input('Enter sentence: ')
 for x in ascii:
    string += oct(ord(x))
 instring = string
@@ -8,7 +8,6 @@ string = list(string.split("0o"))
 for x in range(0, len(string)):
    string[x] = "0o" + string [x]
 string.pop(0)
-print(instring)
 cipher = "áéíóúüñ¿¡"
 digits = "12345670o"
 word = ""

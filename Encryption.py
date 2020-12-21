@@ -1,5 +1,5 @@
 string = ''
-final=''
+final = ''
 ascii = input('Enter sentence: ')
 for x in ascii:
    string += oct(ord(x))

@@ -20,7 +20,7 @@ if answer == instring:
         Final_code =(cipher[digits.index(instring[counter])])
         Final_code = ''.join(Final_code)
         #print(Final_code)
-        final=final+Final_code
+        final = final+Final_code
 y = final.replace("¿¡á", "a")
 final = y.replace("¿¡ó", "b")
 y = final.replace("aóú", "c")

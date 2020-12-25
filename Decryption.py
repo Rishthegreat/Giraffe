@@ -14,5 +14,5 @@ for x in range(0, len(string)):
    string[x] = "0o" + string [x]
 string.pop(0)
 for x in range(0, len(string)):
-    string[x] = chr(int(str(string[x]), 8))
+    string[x] = chr(int(str(string[x]), 8)) 
 print("".join(string))

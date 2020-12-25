@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-root=Tk()
+root = Tk()
 
 x = ""
 def retrieve_input():
@@ -11,7 +11,7 @@ def retrieve_input():
     messagebox.showinfo(Title=None, message="Close out of window to continue")
     print(x)
 
-textBox=Text(root, height=4, width=40)
+textBox = Text(root, height=4, width=40)
 textBox.pack()
 buttonCommit=Button(root, height=10, width=60, text="Upload text to be encoded or decoded, then click this button to continue",
                     command=lambda: retrieve_input())

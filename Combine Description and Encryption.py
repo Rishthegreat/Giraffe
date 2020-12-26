@@ -1,8 +1,15 @@
+import tkinter
 from tkinter import *
 from tkinter import messagebox
-root = Tk()
 
+import tkinter as tk
+
+root = tk.Tk()
 x = ""
+
+def quit(self):
+    self.root.destroy()
+
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
     x = inputValue
@@ -11,7 +18,8 @@ def retrieve_input():
     messagebox.showinfo(Title=None, message="Close out of window to continue")
     print(x)
 
-textBox = Text(root, height=4, width=40)
+
+textBox=Text(root, height=4, width=40)
 textBox.pack()
 buttonCommit=Button(root, height=10, width=60, text="Upload text to be encoded or decoded, then click this button to continue",
                     command=lambda: retrieve_input())
@@ -19,20 +27,25 @@ buttonCommit.pack()
 
 mainloop()
 
+x = x
+
 
 def ascii():
-    ord(x)
+    x = ord(x)
+    print(x)
 
-
-def ascii1():
-    b_ascii = Button(topFrame, text="convert to ascii", fg="blue", command=ascii)
 
 
 def yell():
     messagebox.showinfo(Title=None, message="This will begin encrypting your code")
     b_encode.destroy()
     b_decode.destroy()
-    ascii1
+    root = window
+    root.title("Start making your code, the parentheses says what each conversion does")
+    root.geometry("800x800")
+    b_ascii = Button(topFrame, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
+    b_ascii.config(height=25, width=45)
+    b_ascii.pack(side=LEFT)
 
 
 window = Tk()

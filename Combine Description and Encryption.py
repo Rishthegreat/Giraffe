@@ -6,6 +6,8 @@ import tkinter as tk
 
 root = tk.Tk()
 x = ""
+currentvalue = 0
+
 
 def quit(self):
     self.root.destroy()
@@ -28,12 +30,13 @@ buttonCommit.pack()
 mainloop()
 
 x = x
-
+currentvalue = 0
 
 def ascii():
-    x = ord(x)
-    print(x)
-
+    if currentvalue = 0:
+        x = ord(x)
+        print(x)
+        currentvalue = "letters"
 
 
 def yell():
@@ -46,6 +49,9 @@ def yell():
     b_ascii = Button(topFrame, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)
+    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", command=octal)
+    b_octal.config(height=25, width=45)
+    b_octal.pack(side=LEFT)
 
 
 window = Tk()

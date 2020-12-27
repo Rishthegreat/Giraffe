@@ -33,9 +33,9 @@ buttonCommit.pack()
 mainloop()
 
 x = x
-currentvalue==0
+currentvalue=0
 newset = ""
-newset == 0
+newset = 0
 string = ""
 cipher = ""
 digits = ""

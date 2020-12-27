@@ -12,6 +12,8 @@ def decoder():
 
 
 def moveon():
+    global userinput
+    userinput = e.get("1.0", "end-1c")
     e.destroy()
     eorc.destroy()
     encode.place(relx=0, relwidth=0.5, relheight=1)

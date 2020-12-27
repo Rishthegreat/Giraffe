@@ -23,6 +23,21 @@ def moveon():
     choose.place(relx=0, rely=0, relheight=0.25, relwidth=1)
 
 
+def convertascii(x):
+    conascii = []
+    for index in range(0, len(x)):
+        conascii.append(ord(x[index]))
+    return conascii
+
+
+def toBase(n, base):
+    convertBase = "0123456789ABCDEF"
+    if n < base:
+        return convertBase[n]
+    else:
+        return toBase(n // base, base) + convertBase[n % base]
+
+
 root = tk.Tk()
 root.title("Encoder/Decoder Program")
 root.geometry("600x400")

@@ -49,6 +49,7 @@ string = ""
 cipher = ""
 digits = ""
 instring = ""
+help = []
 
 
 def num_there(s):
@@ -73,9 +74,16 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
         for item in x:
             item = ord(item)
             print(item)
+            item = str(item)
+            help.append(item)
+        print(help)
+        x = help
         print(x)
         x = listToString(x)
         print(x)
+        actual = "Ascii, numbers"
+        print(actual)
+        currentvalue = 1
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -86,7 +94,7 @@ def notascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = las
         string = str(string)
         x = chr(string)
         print(x)
-        currentvalue == 1
+        currentvalue = 1
         pathway = pathway + "a"
         lastcompletedfunc = "ascii"
         actual = "ascii, letters"
@@ -95,10 +103,10 @@ def notascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = las
 
 
 def octal(currentvalue=currentvalue, x=x, pathway=pathway, lastcompletedfunc=lastcompletedfunc):
-    if newset == currentvalue:
+    if newset != currentvalue:
         x = oct(x)
         print(x)
-        currentvalue == 0
+        currentvalue == 1
         pathway = pathway + "8"
         lastcompletedfunc = "octal"
         actual = "octal, numbers"
@@ -108,26 +116,48 @@ def octal(currentvalue=currentvalue, x=x, pathway=pathway, lastcompletedfunc=las
 
 def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
     if num_there(x):
-        cipher = "áéíóúüñ¿¡"
-        digits = "12345670o"
-        instring = x
-        word = ""
-        Final_code = ""
-        answer = instring
-        length = len(instring)
-        Final_sentence = ""
-        if answer == instring:
-            for counter in range(0, length):
-                Final_code = (cipher[digits.index(instring[counter])])
-                Final_code = ''.join(Final_code)
-                # print(Final_code)
-                final = final + Final_code
-        print(final)
-        x = final
-        print(x)
-        currentvalue == 0
-        pathway = pathway + "d"
-        actual = "octal, numbers"
+        if "o" in x:
+            cipher = "áéíóúüñ¿¡"
+            digits = "12345670o"
+            instring = x
+            word = ""
+            Final_code = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
+            if answer == instring:
+                for counter in range(0, length):
+                    Final_code = (cipher[digits.index(instring[counter])])
+                    Final_code = ''.join(Final_code)
+                    # print(Final_code)
+                    final = final + Final_code
+            print(final)
+            x = final
+            print(x)
+            currentvalue = 2
+            pathway = pathway + "d"
+            actual = "octal, numbers"
+        else:
+            cipher = "áéíóúüñ¿¡€"
+            digits = "1234567890"
+            instring = x
+            word = ""
+            Final_code = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
+            if answer == instring:
+                for counter in range(0, length):
+                    Final_code = (cipher[digits.index(instring[counter])])
+                    Final_code = ''.join(Final_code)
+                    # print(Final_code)
+                    final = final + Final_code
+            print(final)
+            x = final
+            print(x)
+            currentvalue = 2
+            pathway = pathway + "o"
+            actual = "octal, numbers"
     else:
         cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
         letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -146,7 +176,7 @@ def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
         print(final)
         x = final
         print(x)
-        currentvalue == 0
+        currentvalue = 3
         pathway = pathway + "d"
         actual = "cipher, accents"
 

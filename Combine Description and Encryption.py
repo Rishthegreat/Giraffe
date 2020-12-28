@@ -14,14 +14,23 @@ actual = ""
 def quit(self):
     self.root.destroy()
 
+def other_function():
+    global x
+    print(x)
+    print(x)
+
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
+    global x
     x = inputValue
     buttonCommit.destroy()
     textBox.destroy()
     messagebox.showinfo(Title=None, message="Close out of window to continue")
     print(x)
-    x = str(x)
+    print(x)
+    other_function()
+    print(x)
+    print(x)
 
 
 textBox=Text(root, height=4, width=40)
@@ -140,6 +149,7 @@ def show():
 
 def yell():
     messagebox.showinfo(Title=None, message="This will begin encrypting your code")
+    print(x)
     b_encode.destroy()
     b_decode.destroy()
     root = window

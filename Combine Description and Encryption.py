@@ -55,14 +55,26 @@ def num_there(s):
     return any(i.isdigit() for i in s)
 
 
+def split(word):
+    return [char for char in word]
+
+
+def listToString(oflist):
+    str1 = " "
+
+    return (str1.join(oflist))
 
 
 def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string, x=x):
     if newset == currentvalue:
         string = x
-        for x in string:
-            string += ord(x)
-        x = string
+        x = split(x)
+        print(x)
+        for item in x:
+            item = ord(item)
+            print(item)
+        print(x)
+        x = listToString(x)
         print(x)
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")

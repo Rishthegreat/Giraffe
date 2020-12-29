@@ -42,6 +42,8 @@ buttonCommit.pack()
 mainloop()
 
 x = x
+# when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
+# both letters and numbers (octal)
 currentvalue=0
 newset = ""
 newset = 0
@@ -94,10 +96,10 @@ def notascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = las
         string = str(string)
         x = chr(string)
         print(x)
-        currentvalue = 1
-        pathway = pathway + "a"
-        lastcompletedfunc = "ascii"
-        actual = "ascii, letters"
+        currentvalue = 0
+        pathway = pathway + "n"
+        lastcompletedfunc = "notascii"
+        actual = "notascii, letters"
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -203,7 +205,7 @@ def yell():
     b_ascii = Button(topFrame, text="convert to letters from ascii (Numbers to letters (note octal will not work))", fg="blue", command=notascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)
-    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", command=octal)
+    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", bg = "red", command=octal)
     b_octal.config(height=25, width=45)
     b_octal.pack(side=LEFT)
     b_cipher = Button(topFrame, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)

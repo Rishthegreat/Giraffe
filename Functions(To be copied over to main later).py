@@ -17,3 +17,16 @@ def tobase(n, currbase, finbase):
     else:
         return answerint
 
+
+def toascii(n):
+    answer = []
+    for letters in range(0, len(n)):
+        answer.append(ord(n[letters]))
+    return answer
+
+
+def frominttoascii(n):
+    for numbers in range(0, len(n)):
+        n[numbers] = chr(int(n[numbers]))
+
+

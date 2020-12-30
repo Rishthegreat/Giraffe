@@ -14,14 +14,23 @@ actual = ""
 def quit(self):
     self.root.destroy()
 
+def other_function():
+    global x
+    print(x)
+    print(x)
+
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
+    global x
     x = inputValue
     buttonCommit.destroy()
     textBox.destroy()
     messagebox.showinfo(Title=None, message="Close out of window to continue")
     print(x)
-    x = str(x)
+    print(x)
+    other_function()
+    print(x)
+    print(x)
 
 
 textBox=Text(root, height=4, width=40)
@@ -33,6 +42,8 @@ buttonCommit.pack()
 mainloop()
 
 x = x
+# when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
+# both letters and numbers (octal)
 currentvalue=0
 newset = ""
 newset = 0
@@ -40,21 +51,41 @@ string = ""
 cipher = ""
 digits = ""
 instring = ""
+help = []
 
 
 def num_there(s):
     return any(i.isdigit() for i in s)
 
 
+def split(word):
+    return [char for char in word]
+
+
+def listToString(oflist):
+    str1 = " "
+
+    return (str1.join(oflist))
 
 
 def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string, x=x):
     if newset == currentvalue:
         string = x
-        for x in string:
-            string += ord(x)
-        x = string
+        x = split(x)
         print(x)
+        for item in x:
+            item = ord(item)
+            print(item)
+            item = str(item)
+            help.append(item)
+        print(help)
+        x = help
+        print(x)
+        x = listToString(x)
+        print(x)
+        actual = "Ascii, numbers"
+        print(actual)
+        currentvalue = 1
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -65,19 +96,19 @@ def notascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = las
         string = str(string)
         x = chr(string)
         print(x)
-        currentvalue == 1
-        pathway = pathway + "a"
-        lastcompletedfunc = "ascii"
-        actual = "ascii, letters"
+        currentvalue = 0
+        pathway = pathway + "n"
+        lastcompletedfunc = "notascii"
+        actual = "notascii, letters"
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
 def octal(currentvalue=currentvalue, x=x, pathway=pathway, lastcompletedfunc=lastcompletedfunc):
-    if newset == currentvalue:
+    if newset != currentvalue:
         x = oct(x)
         print(x)
-        currentvalue == 0
+        currentvalue == 1
         pathway = pathway + "8"
         lastcompletedfunc = "octal"
         actual = "octal, numbers"
@@ -87,26 +118,48 @@ def octal(currentvalue=currentvalue, x=x, pathway=pathway, lastcompletedfunc=las
 
 def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
     if num_there(x):
-        cipher = "áéíóúüñ¿¡"
-        digits = "12345670o"
-        instring = x
-        word = ""
-        Final_code = ""
-        answer = instring
-        length = len(instring)
-        Final_sentence = ""
-        if answer == instring:
-            for counter in range(0, length):
-                Final_code = (cipher[digits.index(instring[counter])])
-                Final_code = ''.join(Final_code)
-                # print(Final_code)
-                final = final + Final_code
-        print(final)
-        x = final
-        print(x)
-        currentvalue == 0
-        pathway = pathway + "d"
-        actual = "octal, numbers"
+        if "o" in x:
+            cipher = "áéíóúüñ¿¡"
+            digits = "12345670o"
+            instring = x
+            word = ""
+            Final_code = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
+            if answer == instring:
+                for counter in range(0, length):
+                    Final_code = (cipher[digits.index(instring[counter])])
+                    Final_code = ''.join(Final_code)
+                    # print(Final_code)
+                    final = final + Final_code
+            print(final)
+            x = final
+            print(x)
+            currentvalue = 2
+            pathway = pathway + "d"
+            actual = "octal, numbers"
+        else:
+            cipher = "áéíóúüñ¿¡€"
+            digits = "1234567890"
+            instring = x
+            word = ""
+            Final_code = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
+            if answer == instring:
+                for counter in range(0, length):
+                    Final_code = (cipher[digits.index(instring[counter])])
+                    Final_code = ''.join(Final_code)
+                    # print(Final_code)
+                    final = final + Final_code
+            print(final)
+            x = final
+            print(x)
+            currentvalue = 2
+            pathway = pathway + "o"
+            actual = "octal, numbers"
     else:
         cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
         letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -125,7 +178,7 @@ def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
         print(final)
         x = final
         print(x)
-        currentvalue == 0
+        currentvalue = 3
         pathway = pathway + "d"
         actual = "cipher, accents"
 
@@ -140,6 +193,7 @@ def show():
 
 def yell():
     messagebox.showinfo(Title=None, message="This will begin encrypting your code")
+    print(x)
     b_encode.destroy()
     b_decode.destroy()
     root = window
@@ -151,7 +205,7 @@ def yell():
     b_ascii = Button(topFrame, text="convert to letters from ascii (Numbers to letters (note octal will not work))", fg="blue", command=notascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)
-    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", command=octal)
+    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", bg = "red", command=octal)
     b_octal.config(height=25, width=45)
     b_octal.pack(side=LEFT)
     b_cipher = Button(topFrame, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)

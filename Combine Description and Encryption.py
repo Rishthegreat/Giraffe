@@ -1,10 +1,18 @@
-import tkinter
 from tkinter import *
 from tkinter import messagebox
 
 import tkinter as tk
 
+
+
 root = tk.Tk()
+coolFrame = Frame(root)
+coolFrame.pack()
+notFrame = Frame(root)
+notFrame.pack(side=BOTTOM)
+
+
+
 x = ""
 currentvalue = ""
 pathway = ""
@@ -25,6 +33,7 @@ def retrieve_input():
     x = inputValue
     buttonCommit.destroy()
     textBox.destroy()
+    root.destroy()
     messagebox.showinfo(Title=None, message="Close out of window to continue")
     print(x)
     print(x)
@@ -33,25 +42,25 @@ def retrieve_input():
     print(x)
 
 
-textBox=Text(root, height=4, width=40)
+textBox=Text(coolFrame, height=4, width=40)
 textBox.pack()
-buttonCommit=Button(root, height=10, width=60, text="Upload text to be encoded or decoded, then click this button to continue",
+buttonCommit=Button(notFrame, height=10, width=60, text="Upload text to be encoded or decoded, then click this button to continue",
                     command=lambda: retrieve_input())
 buttonCommit.pack()
 
-mainloop()
+root.mainloop()
 
 x = x
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
 # both letters and numbers (octal)
-currentvalue=0
+currentvalue = 0
 newset = ""
 newset = 0
 string = ""
-cipher = ""
 digits = ""
 instring = ""
-help = []
+help = []= ""
+cipher = ""
 
 
 def num_there(s):
@@ -68,9 +77,11 @@ def listToString(oflist):
     return (str1.join(oflist))
 
 
-def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string, x=x):
+def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string, x=x,
+          newset=0):
     if newset == currentvalue:
         string = x
+        help = []
         x = split(x)
         print(x)
         for item in x:
@@ -84,17 +95,28 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
         x = listToString(x)
         print(x)
         actual = "Ascii, numbers"
-        print(actual)
+        pathway = pathway + "a"
+        lastcompletedfunc = "ascii"
         currentvalue = 1
+        newset = 0
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
-def notascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=string):
+def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=string, x=x, currentvalue=1):
     if newset != currentvalue:
-        x = string
-        string = str(string)
-        x = chr(string)
+        string = x
+        x = split(x)
+        help = []
+        print(x)
+        for item in x:
+            item = chr(item)
+            print(item)
+            help.append(item)
+        print(help)
+        x = help
+        print(x)
+        x = listToString(x)
         print(x)
         currentvalue = 0
         pathway = pathway + "n"
@@ -197,8 +219,11 @@ def yell():
     b_encode.destroy()
     b_decode.destroy()
     root = window
+    root.attributes("-fullscreen", True)
+    root.bind("<F11>", lambda event: root.attributes("-fullscreen", not root.attributes("-fullscreen")))
+    root.bind("<Escape>", lambda event: root.attributes("-fullscreen", False))
     root.title("Start making your code, the parentheses says what each conversion does")
-    root.geometry("1600x1600")
+    root.geometry("1920x1080")
     b_ascii = Button(topFrame, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)

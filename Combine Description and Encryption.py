@@ -61,6 +61,7 @@ digits = ""
 instring = ""
 help = []= ""
 cipher = ""
+currbase = 10
 
 
 def num_there(s):
@@ -126,16 +127,38 @@ def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=stri
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
-def octal(currentvalue=currentvalue, x=x, pathway=pathway, lastcompletedfunc=lastcompletedfunc):
-    if newset != currentvalue:
-        x = oct(x)
-        print(x)
-        currentvalue == 1
-        pathway = pathway + "8"
-        lastcompletedfunc = "octal"
-        actual = "octal, numbers"
+def tobase(x, currbase, finbase):
+    newstring = x
+    newwind = tk.Tk()
+    textBox = Text(newwind, height=4, width=40)
+    textBox.pack()
+    buttonCommit = Button(newwind, height=10, width=60,
+                          text="Upload text to be encoded or decoded, then click this button to continue",
+                          command=lambda: retrieve_input())
+    buttonCommit.pack()
+
+    root.mainloop()
+    finbase = x
+    newstring = str(newstring)
+    orignal = "0123456789ABCDEF"
+    answerint = 0
+    converted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    for x in range((len(newstring) - 1), -1, -1):
+        answerint += (converted[orignal.index(newstring[x])]) * (currbase ** ((len(newstring) - 1) - x))
+    if finbase != 10:
+        def tobase1(n1, base):
+            orignal = "0123456789ABCDEF"
+            if n1 < base:
+                return orignal[n1]
+            else:
+                return tobase1(n1 // base, base) + orignal[(n1 % base)]
+
+        x = tobase1(answerint, finbase)
+        currbase = finbase
     else:
-        messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
+        x = answerint
+        currbase = finbase
+
 
 
 def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
@@ -230,7 +253,7 @@ def yell():
     b_ascii = Button(topFrame, text="convert to letters from ascii (Numbers to letters (note octal will not work))", fg="blue", command=notascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)
-    b_octal = Button(topFrame, text="convert to octal (Numbers to Numbers)", fg="blue", bg = "red", command=octal)
+    b_octal = Button(topFrame, text="convert to any base (Numbers to Numbers)", fg="blue", bg = "red", command=tobase)
     b_octal.config(height=25, width=45)
     b_octal.pack(side=LEFT)
     b_cipher = Button(topFrame, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)

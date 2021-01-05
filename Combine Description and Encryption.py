@@ -159,6 +159,19 @@ def tobase(x, currbase, finbase):
         x = answerint
         currbase = finbase
 
+def beforetobase():
+    def inputforconversion():
+        base = int(enterbox.get("1.0","end-1c"))
+        entbase.destroy()
+        enterbox.destroy()
+    tobasewindow = tk.Tk()
+    tobasewindow.geometry("600x400")
+    entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.", command=inputforconversion)
+    enterbox = tk.Text(tobasewindow)
+    enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
+    entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
+    tobasewindow.mainloop()
+
 
 
 def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
@@ -253,7 +266,7 @@ def yell():
     b_ascii = Button(topFrame, text="convert to letters from ascii (Numbers to letters (note octal will not work))", fg="blue", command=notascii)
     b_ascii.config(height=25, width=45)
     b_ascii.pack(side=LEFT)
-    b_octal = Button(topFrame, text="convert to any base (Numbers to Numbers)", fg="blue", bg = "red", command=tobase)
+    b_octal = Button(topFrame, text="convert to any base (Numbers to Numbers)", fg="blue", bg = "red", command=beforetobase)
     b_octal.config(height=25, width=45)
     b_octal.pack(side=LEFT)
     b_cipher = Button(topFrame, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)

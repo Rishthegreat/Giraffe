@@ -14,6 +14,7 @@ notFrame.pack(side=BOTTOM)
 
 
 x = ""
+code = []
 currentvalue = ""
 pathway = ""
 lastcompletedfunc = ""
@@ -31,6 +32,7 @@ def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
     global x
     x = inputValue
+    code[1] = inputValue
     buttonCommit.destroy()
     textBox.destroy()
     root.destroy()
@@ -95,11 +97,28 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
         print(x)
         x = listToString(x)
         print(x)
+        # this is separation for testing out code array which has the pathway and the encoded code as its elements.
+        help = []
+        global code
+        code1array = code[1]
+        print(code1array)
+        for item in code1array:
+            item = ord(item)
+            print(item)
+            item = str(item)
+            help.append(item)
+        print(help)
+        code[1] = help
+        print(x)
+        x = listToString(x)
+        print(x)
         actual = "Ascii, numbers"
         pathway = pathway + "a"
         lastcompletedfunc = "ascii"
         currentvalue = 1
         newset = 0
+
+
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -170,6 +189,7 @@ def beforetobase():
     enterbox = tk.Text(tobasewindow)
     enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
     entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
+    print(x)
     tobasewindow.mainloop()
 
 

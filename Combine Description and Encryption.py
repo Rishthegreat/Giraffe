@@ -14,7 +14,7 @@ notFrame.pack(side=BOTTOM)
 # x is code
 # pathway is what happened
 
-x = ""
+code = ""
 currentvalue = ""
 pathway = ""
 lastcompletedfunc = ""
@@ -24,23 +24,23 @@ def quit(self):
     self.root.destroy()
 
 def other_function():
-    global x
-    print(x)
-    print(x)
+    global code
+    print(code)
+    print(code)
 
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
-    global x
-    x = inputValue
+    global code
+    code = inputValue
     buttonCommit.destroy()
     textBox.destroy()
     root.destroy()
     messagebox.showinfo(Title=None, message="Close out of window to continue")
-    print(x)
-    print(x)
+    print(code)
+    print(code)
     other_function()
-    print(x)
-    print(x)
+    print(code)
+    print(code)
 
 
 textBox=Text(coolFrame, height=4, width=40)
@@ -51,7 +51,6 @@ buttonCommit.pack()
 
 root.mainloop()
 
-x = x
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
 # both letters and numbers (octal)
 currentvalue = 0
@@ -60,7 +59,7 @@ newset = 0
 string = ""
 digits = ""
 instring = ""
-help = []= ""
+help = [] = ""
 cipher = ""
 currbase = 10
 
@@ -79,23 +78,24 @@ def listToString(oflist):
     return (str1.join(oflist))
 
 
-def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string, x=x,
+def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string,
           newset=0):
+    global code
     if newset == currentvalue:
-        string = x
+        string = code
         help = []
-        x = split(x)
-        print(x)
-        for item in x:
+        code = split(code)
+        print(code)
+        for item in code:
             item = ord(item)
             print(item)
             item = str(item)
             help.append(item)
         print(help)
-        x = help
-        print(x)
-        x = listToString(x)
-        print(x)
+        code = help
+        print(code)
+        code = listToString(code)
+        print(code)
         actual = "Ascii, numbers"
         pathway = pathway + "a"
         lastcompletedfunc = "ascii"
@@ -109,19 +109,19 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
 
 def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=string, x=x, currentvalue=1):
     if newset != currentvalue:
-        string = x
-        x = split(x)
+        string = code
+        code = split(code)
         help = []
-        print(x)
-        for item in x:
+        print(code)
+        for item in code:
             item = chr(item)
             print(item)
             help.append(item)
         print(help)
-        x = help
-        print(x)
-        x = listToString(x)
-        print(x)
+        code = help
+        print(code)
+        code = listToString(code)
+        print(code)
         currentvalue = 0
         pathway = pathway + "n"
         lastcompletedfunc = "notascii"
@@ -130,24 +130,25 @@ def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=stri
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
-def tobase(x, currbase, finbase):
-    newstring = x
-    newwind = tk.Tk()
-    textBox = Text(newwind, height=4, width=40)
-    textBox.pack()
-    buttonCommit = Button(newwind, height=10, width=60,
-                          text="Upload text to be encoded or decoded, then click this button to continue",
-                          command=lambda: retrieve_input())
-    buttonCommit.pack()
+def tobase(n, currbase, finbase):
+   # newstring = x
+   # newwind = tk.Tk()
+   # textBox = Text(newwind, height=4, width=40)
+   # textBox.pack()
+   # buttonCommit = Button(newwind, height=10, width=60,
+                        #  text="Upload text to be encoded or decoded, then click this button to continue",
+                        #  command=lambda: retrieve_input())
+   # buttonCommit.pack()
 
-    root.mainloop()
-    finbase = x
-    newstring = str(newstring)
+  #  root.mainloop()
+  #  finbase = x
+   # newstring = str(newstring)
+    n = str(n)
     orignal = "0123456789ABCDEF"
     answerint = 0
     converted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    for x in range((len(newstring) - 1), -1, -1):
-        answerint += (converted[orignal.index(newstring[x])]) * (currbase ** ((len(newstring) - 1) - x))
+    for x in range((len(n) - 1), -1, -1):
+        answerint += (converted[orignal.index(n[x])]) * (currbase ** ((len(n) - 1) - x))
     if finbase != 10:
         def tobase1(n1, base):
             orignal = "0123456789ABCDEF"
@@ -156,34 +157,43 @@ def tobase(x, currbase, finbase):
             else:
                 return tobase1(n1 // base, base) + orignal[(n1 % base)]
 
-        x = tobase1(answerint, finbase)
-        currbase = finbase
+        return tobase1(answerint, finbase)
     else:
-        x = answerint
-        currbase = finbase
+        return answerint
 
 def beforetobase():
+    global code
     def inputforconversion():
+        global code
         base = int(enterbox.get("1.0","end-1c"))
         entbase.destroy()
         enterbox.destroy()
+        code = code.split(" ")
+        print(code)
+        for index in range(0, len(code)):
+            code[index] = tobase(code[index], 10, base)
+        print(code)
+        code = listToString(code)
+        print(code)
+        tobasewindow.destroy()
     tobasewindow = tk.Tk()
     tobasewindow.geometry("600x400")
     entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.", command=inputforconversion)
     enterbox = tk.Text(tobasewindow)
     enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
     entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
-    print(x)
+    print(code)
     tobasewindow.mainloop()
 
 
 
-def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
-    if num_there(x):
-        if "o" in x:
+def runthroughcipher(currentvalue=currentvalue, pathway=pathway):
+    global code
+    if num_there(code):
+        if "o" in code:
             cipher = "áéíóúüñ¿¡"
             digits = "12345670o"
-            instring = x
+            instring = code
             word = ""
             Final_code = ""
             answer = instring
@@ -196,15 +206,15 @@ def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
                     # print(Final_code)
                     final = final + Final_code
             print(final)
-            x = final
-            print(x)
+            code = final
+            print(code )
             currentvalue = 2
             pathway = pathway + "d"
             actual = "octal, numbers"
         else:
             cipher = "áéíóúüñ¿¡€"
             digits = "1234567890"
-            instring = x
+            instring = code
             word = ""
             Final_code = ""
             answer = instring
@@ -217,15 +227,15 @@ def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
                     # print(Final_code)
                     final = final + Final_code
             print(final)
-            x = final
-            print(x)
+            code = final
+            print(code)
             currentvalue = 2
             pathway = pathway + "o"
             actual = "octal, numbers"
     else:
         cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
         letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        instring = x
+        instring = code
         word = ""
         Final_code = ""
         answer = instring
@@ -238,8 +248,8 @@ def runthroughcipher(currentvalue=currentvalue, x=x, pathway=pathway):
                 # print(Final_code)
                 final = final + Final_code
         print(final)
-        x = final
-        print(x)
+        code = final
+        print(code)
         currentvalue = 3
         pathway = pathway + "d"
         actual = "cipher, accents"
@@ -250,12 +260,12 @@ def tell():
 
 
 def show():
-    messagebox.showinfo(Title=None, message=x)
+    messagebox.showinfo(Title=None, message=code)
 
 
 def yell():
     messagebox.showinfo(Title=None, message="This will begin encrypting your code")
-    print(x)
+    print(code)
     b_encode.destroy()
     b_decode.destroy()
     root = window

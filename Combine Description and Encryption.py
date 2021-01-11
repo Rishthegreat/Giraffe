@@ -11,10 +11,10 @@ coolFrame.pack()
 notFrame = Frame(root)
 notFrame.pack(side=BOTTOM)
 
-
+# x is code
+# pathway is what happened
 
 x = ""
-code = []
 currentvalue = ""
 pathway = ""
 lastcompletedfunc = ""
@@ -32,7 +32,6 @@ def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
     global x
     x = inputValue
-    code[1] = inputValue
     buttonCommit.destroy()
     textBox.destroy()
     root.destroy()
@@ -94,21 +93,6 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
             help.append(item)
         print(help)
         x = help
-        print(x)
-        x = listToString(x)
-        print(x)
-        # this is separation for testing out code array which has the pathway and the encoded code as its elements.
-        help = []
-        global code
-        code1array = code[1]
-        print(code1array)
-        for item in code1array:
-            item = ord(item)
-            print(item)
-            item = str(item)
-            help.append(item)
-        print(help)
-        code[1] = help
         print(x)
         x = listToString(x)
         print(x)

@@ -107,7 +107,8 @@ def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastco
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
-def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=string, x=x, currentvalue=1):
+def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=string, currentvalue=1):
+    global code
     if newset != currentvalue:
         string = code
         code = split(code)

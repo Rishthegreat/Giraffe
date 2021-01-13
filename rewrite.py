@@ -63,7 +63,7 @@ def notascii():
         help = []
         print(code)
         for item in code:
-            item = chr(item)
+            item = chr(int(item))
             print(item)
             help.append(item)
         print(help)
@@ -207,17 +207,18 @@ def yell():
     root.title("Start making your code, the parentheses says what each conversion does")
     root.geometry("1000x800")
     b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
-    b_ascii.place(relx=0, rely=0, relheight=0.5, relwidth=(1/3))
-    b_ascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue", command=notascii)
-    b_ascii.place(relx=(1/3), rely=0, relheight=0.5, relwidth=(1/3))
+    b_ascii.place(relx=0, rely=0, relheight=0.5, relwidth=(1 / 3))
+    b_ascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
+                     command=notascii)
+    b_ascii.place(relx=(1 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
     b_octal = Button(root, text="convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
-    b_octal.place(relx=(2/3), rely=0, relheight=0.5, relwidth=(1/3))
+    b_octal.place(relx=(2 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
     b_cipher = Button(root, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
-    b_cipher.place(relx=0, rely=0.5, relheight=0.5, relwidth=(1/3))
+    b_cipher.place(relx=0, rely=0.5, relheight=0.5, relwidth=(1 / 3))
     b_dontclick = Button(root, text="Last function applied", fg="blue", command=tell)
-    b_dontclick.place(relx=(1/3), rely=0.5, relheight=0.5, relwidth=(1/3))
+    b_dontclick.place(relx=(1 / 3), rely=0.5, relheight=0.5, relwidth=(1 / 3))
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
-    b_check.place(relx=(2/3), rely=0.5, relheight=0.5, relwidth=(1/3))
+    b_check.place(relx=(2 / 3), rely=0.5, relheight=0.5, relwidth=(1 / 3))
 
 
 root = tk.Tk()
@@ -235,7 +236,8 @@ actual = ""
 
 textBox = Text(root)
 textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue", command=retrieve_input)
+buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",
+                      command=retrieve_input)
 buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in

@@ -142,7 +142,6 @@ def runthroughcipher():
                 for counter in range(0, length):
                     Final_code = (cipher[digits.index(instring[counter])])
                     Final_code = ''.join(Final_code)
-                    # print(Final_code)
                     final = final + Final_code
             print(final)
             code = final
@@ -163,7 +162,6 @@ def runthroughcipher():
                 for counter in range(0, length):
                     Final_code = (cipher[digits.index(instring[counter])])
                     Final_code = ''.join(Final_code)
-                    # print(Final_code)
                     final = final + Final_code
             print(final)
             code = final

@@ -17,9 +17,6 @@ pathway = []
 lastcompletedfunc = ""
 actual = ""
 
-def quit(self):
-    self.root.destroy()
-
 
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
@@ -73,19 +70,20 @@ def ascii():
         string = code
         help = []
         code = split(code)
-        print(code)
+        #print(code)
         for item in code:
             item = ord(item)
-            print(item)
+            #print(item)
             item = str(item)
             help.append(item)
-        print(help)
+        #print(help)
         code = help
-        print(code)
+        #print(code)
         code = listToString(code)
         print(code)
         actual = "Ascii, numbers"
         pathway.append("a")
+        print(pathway)
         lastcompletedfunc = "ascii"
         currentvalue = 1
         newset = 0
@@ -146,21 +144,22 @@ def beforetobase():
         entbase.destroy()
         enterbox.destroy()
         code = code.split(" ")
-        print(code)
+        #print(code)
         for index in range(0, len(code)):
             code[index] = tobase(code[index], 10, base)
-        print(code)
+        #print(code)
         code = listToString(code)
         print(code)
         tobasewindow.destroy()
-        pathway.append("b")
+        pathway.append("b" + str(base))
+        print(pathway)
     tobasewindow = tk.Tk()
     tobasewindow.geometry("600x400")
     entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.", command=inputforconversion)
     enterbox = tk.Text(tobasewindow)
     enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
     entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
-    print(code)
+    #print(code)
     tobasewindow.mainloop()
 
 

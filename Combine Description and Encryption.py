@@ -10,23 +10,18 @@ coolFrame = Frame(root)
 coolFrame.pack()
 notFrame = Frame(root)
 notFrame.pack(side=BOTTOM)
-
-# x is code
+output = []
 # pathway is what happened
 
 code = ""
 currentvalue = ""
-pathway = ""
+pathway = []
 lastcompletedfunc = ""
 actual = ""
 
 def quit(self):
     self.root.destroy()
 
-def other_function():
-    global code
-    print(code)
-    print(code)
 
 def retrieve_input():
     inputValue=textBox.get("1.0","end-1c")
@@ -36,10 +31,6 @@ def retrieve_input():
     textBox.destroy()
     root.destroy()
     messagebox.showinfo(Title=None, message="Close out of window to continue")
-    print(code)
-    print(code)
-    other_function()
-    print(code)
     print(code)
 
 
@@ -78,9 +69,8 @@ def listToString(oflist):
     return (str1.join(oflist))
 
 
-def ascii(currentvalue=currentvalue, pathway=pathway, lastcompletedfunc = lastcompletedfunc, string = string,
-          newset=0):
-    global code
+def ascii():
+    global code, pathway, currentvalue, lastcompletedfunc, string, newset
     if newset == currentvalue:
         string = code
         help = []
@@ -132,18 +122,6 @@ def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=stri
 
 
 def tobase(n, currbase, finbase):
-   # newstring = x
-   # newwind = tk.Tk()
-   # textBox = Text(newwind, height=4, width=40)
-   # textBox.pack()
-   # buttonCommit = Button(newwind, height=10, width=60,
-                        #  text="Upload text to be encoded or decoded, then click this button to continue",
-                        #  command=lambda: retrieve_input())
-   # buttonCommit.pack()
-
-  #  root.mainloop()
-  #  finbase = x
-   # newstring = str(newstring)
     n = str(n)
     orignal = "0123456789ABCDEF"
     answerint = 0
@@ -163,7 +141,7 @@ def tobase(n, currbase, finbase):
         return answerint
 
 def beforetobase():
-    global code
+    global code, pathway
     def inputforconversion():
         global code
         base = int(enterbox.get("1.0","end-1c"))
@@ -188,8 +166,8 @@ def beforetobase():
 
 
 
-def runthroughcipher(currentvalue=currentvalue, pathway=pathway):
-    global code
+def runthroughcipher():
+    global code, currentvalue, pathway
     if num_there(code):
         if "o" in code:
             cipher = "áéíóúüñ¿¡"

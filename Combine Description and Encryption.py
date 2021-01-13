@@ -48,7 +48,7 @@ newset = 0
 string = ""
 digits = ""
 instring = ""
-help = [] = ""
+help = []
 cipher = ""
 currbase = 10
 
@@ -85,7 +85,7 @@ def ascii():
         code = listToString(code)
         print(code)
         actual = "Ascii, numbers"
-        pathway = pathway + "a"
+        pathway.append("a")
         lastcompletedfunc = "ascii"
         currentvalue = 1
         newset = 0
@@ -112,7 +112,7 @@ def notascii(pathway=pathway, lastcompletedfunc = lastcompletedfunc, string=stri
         code = listToString(code)
         print(code)
         currentvalue = 0
-        pathway = pathway + "n"
+        pathway.append("n")
         lastcompletedfunc = "notascii"
         actual = "notascii, letters"
     else:
@@ -153,6 +153,7 @@ def beforetobase():
         code = listToString(code)
         print(code)
         tobasewindow.destroy()
+        pathway.append("b")
     tobasewindow = tk.Tk()
     tobasewindow.geometry("600x400")
     entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.", command=inputforconversion)

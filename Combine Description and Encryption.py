@@ -3,8 +3,6 @@ from tkinter import messagebox
 
 import tkinter as tk
 
-
-
 root = tk.Tk()
 coolFrame = Frame(root)
 coolFrame.pack()

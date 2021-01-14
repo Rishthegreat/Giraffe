@@ -31,7 +31,7 @@ def listToString(oflist):
 
 def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset
-    if newset == currentvalue:
+    if currentvalue == 0:
         string = code
         help = []
         code = split(code)
@@ -48,18 +48,15 @@ def ascii():
         lastcompletedfunc = "ascii"
         currentvalue = 1
         newset = 0
-
-
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
 def notascii():
     global code, pathway, lastcompletedfunc, string, currentvalue
-    currentvalue = 1
-    if newset != currentvalue:
-        string = code
-        code = split(code)
+    if currentvalue == 1:
+        # string = code
+        code = code.split(" ")
         help = []
         print(code)
         for item in code:
@@ -67,9 +64,7 @@ def notascii():
             print(item)
             help.append(item)
         print(help)
-        code = help
-        print(code)
-        code = listToString(code)
+        code = "".join(help)
         print(code)
         currentvalue = 0
         pathway.append("n")
@@ -100,10 +95,10 @@ def tobase(n, currbase, finbase):
 
 
 def beforetobase():
-    global code, pathway
+    global code, pathway, currentvalue
 
     def inputforconversion():
-        global code
+        global code, currentvalue
         base = int(enterbox.get("1.0", "end-1c"))
         entbase.destroy()
         enterbox.destroy()
@@ -115,15 +110,19 @@ def beforetobase():
         tobasewindow.destroy()
         pathway.append("b" + str(base))
         print(pathway)
+        currentvalue = 2
 
-    tobasewindow = tk.Tk()
-    tobasewindow.geometry("600x400")
-    entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.",
-                        command=inputforconversion)
-    enterbox = tk.Text(tobasewindow)
-    enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
-    entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
-    tobasewindow.mainloop()
+    if currentvalue == 0:
+        messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
+    else:
+        tobasewindow = tk.Tk()
+        tobasewindow.geometry("600x400")
+        entbase = tk.Button(tobasewindow, text="Enter the base you want to convert to and then click this button.",
+                            command=inputforconversion)
+        enterbox = tk.Text(tobasewindow)
+        enterbox.place(relwidth=0.5, relheight=0.25, relx=0.25, rely=0)
+        entbase.place(relwidth=0.75, relheight=0.4, relx=0.125, rely=0.45)
+        tobasewindow.mainloop()
 
 
 def runthroughcipher():
@@ -211,9 +210,9 @@ def yell():
     b_ascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
                      command=notascii)
     b_ascii.place(relx=(1 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
-    b_octal = Button(root, text="convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
+    b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
     b_octal.place(relx=(2 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
-    b_cipher = Button(root, text="run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
+    b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
     b_cipher.place(relx=0, rely=0.5, relheight=0.5, relwidth=(1 / 3))
     b_dontclick = Button(root, text="Last function applied", fg="blue", command=tell)
     b_dontclick.place(relx=(1 / 3), rely=0.5, relheight=0.5, relwidth=(1 / 3))
@@ -241,7 +240,7 @@ buttonCommit = Button(root, text="Upload text to be encoded or decoded, then cli
 buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
-# both letters and numbers (octal)
+# both letters and numbers (non base 10 integer)
 currentvalue = 0
 newset = ""
 newset = 0

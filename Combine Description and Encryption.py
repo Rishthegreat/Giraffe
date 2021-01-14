@@ -21,8 +21,12 @@ def num_there(s):
 
 def split(word):
     return [char for char in word]
-
-
+                                                                   # Hello      72 101 108 108 111    2dig = [1]  1dig = []  3dig
+                                                                    #            7210110810811 gig = [2, 3, 3, 3, 3]
+                                                                     #           234575973248593749587239847
+                                                                      #          7210110810811
+                                                                       #         72 101 108 108 111
+                                                                        #        2462354 2635472 276354726 dig=[7, 7, 9]
 def listToString(oflist):
     str1 = " "
 
@@ -30,24 +34,32 @@ def listToString(oflist):
 
 
 def ascii():
-    global code, pathway, currentvalue, lastcompletedfunc, string, newset
+    global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases
     if currentvalue == 0:
         string = code
         help = []
         code = split(code)
-        for item in code:
-            item = ord(item)
-            item = str(item)
-            help.append(item)
-        code = help
-        code = listToString(code)
+        for item in range(0, len(code)):
+            code[item] = str(ord(code[item]))
+            help.append(code[item])
+        for item in range(0, len(help)):
+            help[item] = int(help[item])
+            if newdigits(help[item]) == 2:
+                twodig.append(item)
+            if newdigits(help[item]) == 1:
+                onedig.append(item)
+            help[item] = str(help[item])
+        code = listToString(help)
         print(code)
+        print(twodig)
+        print(onedig)
         actual = "Ascii, numbers"
         pathway.append("a")
         print(pathway)
         lastcompletedfunc = "ascii"
         currentvalue = 1
         newset = 0
+        bases.append("10")
     else:
         messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -95,17 +107,14 @@ def tobase(n, currbase, finbase):
 
 
 def beforetobase():
-    global code, pathway, currentvalue
+    global code, pathway, currentvalue, bases
 
     def inputforconversion():
-        global code, currentvalue
+        global code, currentvalue, bases
         base = int(enterbox.get("1.0", "end-1c"))
         entbase.destroy()
         enterbox.destroy()
-        code = code.split(" ")
-        for index in range(0, len(code)):
-            code[index] = tobase(code[index], 10, base)
-        code = listToString(code)
+        code = tobase(code, int(bases[len(bases)-1]), int(base))
         print(code)
         tobasewindow.destroy()
         pathway.append("b" + str(base))
@@ -223,6 +232,9 @@ def yell():
 root = tk.Tk()
 root.geometry("600x400")
 output = []
+bases = []
+onedig = []
+twodig = []
 
 b_encode = Button(root, text="Encode", fg="blue", command=yell)
 b_decode = Button(root, text="Decode", fg="green")

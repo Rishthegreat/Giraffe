@@ -32,6 +32,14 @@ def listToString(oflist):
     return (str1.join(oflist))
 
 
+def newdigits(n):
+    count = 0
+    while n != 0:
+        n //= 10
+        count += 1
+    return count
+
+
 def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases
     if currentvalue == 0:
@@ -116,8 +124,10 @@ def beforetobase():
         code = tobase(code, int(bases[len(bases)-1]), int(base))
         print(code)
         tobasewindow.destroy()
-        pathway.append("b" + str(base))
+        pathway.append("b")
+        bases.append(str(base))
         print(pathway)
+        print(bases)
         currentvalue = 2
 
     if currentvalue == 0:

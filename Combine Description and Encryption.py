@@ -28,8 +28,7 @@ def split(word):
                                                                        #         72 101 108 108 111
                                                                         #        2462354 2635472 276354726 dig=[7, 7, 9]
 def listToString(oflist):
-    str1 = " "
-
+    str1 = ""
     return (str1.join(oflist))
 
 

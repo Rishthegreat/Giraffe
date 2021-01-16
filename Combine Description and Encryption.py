@@ -41,7 +41,7 @@ def newdigits(n):
 
 
 def ascii():
-    global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases
+    global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
     if currentvalue == 0:
         string = code
         help = []
@@ -72,7 +72,7 @@ def ascii():
 
 
 def notascii():
-    global code, pathway, lastcompletedfunc, string, currentvalue
+    global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
     if currentvalue == 1:
         # string = code
         code = code.split(" ")

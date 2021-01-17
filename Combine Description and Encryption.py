@@ -165,6 +165,7 @@ def runthroughcipher():
             print(code)
             currentvalue = 2
             pathway = pathway + "d"
+            ciphersused.append("1")
             actual = "octal, numbers"
         else:
             cipher = "áéíóúüñ¿¡€"
@@ -185,6 +186,7 @@ def runthroughcipher():
             print(code)
             currentvalue = 2
             pathway = pathway + "o"
+            ciphersused.append("2")
             actual = "octal, numbers"
     else:
         cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
@@ -206,6 +208,7 @@ def runthroughcipher():
         print(code)
         currentvalue = 3
         pathway = pathway + "d"
+        ciphersused.append("3")
         actual = "cipher, accents"
 
 
@@ -217,25 +220,60 @@ def show():
     messagebox.showinfo(Title=None, message=code)
 
 
+def complete():
+    global code
+    x = []
+    x.append("/")
+    showcode = [listToString(pathway),code]
+    finalcode = listToString(showcode)
+    root.clipboard_clear()
+    root.clipboard_append("Hello")
+    messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
+
+def Eashan():
+    global code
+    code = "Eashan"
+
+def replace():
+    def retrieve_input2():
+        global code
+        inputValue = textboxx.get("1.0", "end-1c")
+        code = inputValue
+        ButtonCommitx.destroy()
+        textboxx.destroy()
+        TK.destroy()
+        print(code)
+    global code
+    code = ""
+    TK = tk.Tk()
+    TK.geometry("600x400")
+    textboxx = Text(TK)
+    textboxx.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+    ButtonCommitx = Button(TK, text = "Apply your new words", command=retrieve_input2)
+    ButtonCommitx.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+    TK.mainloop()
+
+
 def yell():
     print(code)
     b_encode.destroy()
     b_decode.destroy()
     root.title("Start making your code, the parentheses says what each conversion does")
-    root.geometry("1000x800")
+    root.geometry("1000x1000")
     b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
-    b_ascii.place(relx=0, rely=0, relheight=0.5, relwidth=(1 / 3))
-    b_ascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
-                     command=notascii)
-    b_ascii.place(relx=(1 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
+    b_ascii.place(relx=0, rely=0, relheight=(1/3), relwidth=(1 / 3))
+    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue", command=notascii)
+    b_nascii.place(relx=(1 / 3), rely=0, relheight=(1/3), relwidth=(1 / 3))
     b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
-    b_octal.place(relx=(2 / 3), rely=0, relheight=0.5, relwidth=(1 / 3))
+    b_octal.place(relx=(2 / 3), rely=0, relheight=(1/3), relwidth=(1 / 3))
     b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
-    b_cipher.place(relx=0, rely=0.5, relheight=0.5, relwidth=(1 / 3))
+    b_cipher.place(relx=0, rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
     b_dontclick = Button(root, text="Last function applied", fg="blue", command=tell)
-    b_dontclick.place(relx=(1 / 3), rely=0.5, relheight=0.5, relwidth=(1 / 3))
+    b_dontclick.place(relx=(1 / 3), rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
-    b_check.place(relx=(2 / 3), rely=0.5, relheight=0.5, relwidth=(1 / 3))
+    b_check.place(relx=(2 / 3), rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
+    b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
+    b_complete.place(relx=0, rely=1, relheight=0.5, relwidth=(1 / 3))
 
 
 root = tk.Tk()
@@ -244,6 +282,7 @@ output = []
 bases = []
 onedig = []
 twodig = []
+ciphersused = []
 
 b_encode = Button(root, text="Encode", fg="blue", command=yell)
 b_decode = Button(root, text="Decode", fg="green")

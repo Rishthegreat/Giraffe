@@ -15,6 +15,7 @@ def retrieve_input():
     print(code)
 
 
+
 def num_there(s):
     return any(i.isdigit() for i in s)
 
@@ -164,7 +165,7 @@ def runthroughcipher():
             code = final
             print(code)
             currentvalue = 2
-            pathway = pathway + "d"
+            pathway.append("d")
             ciphersused.append("1")
             actual = "octal, numbers"
         else:
@@ -176,6 +177,7 @@ def runthroughcipher():
             answer = instring
             length = len(instring)
             Final_sentence = ""
+            final = ""
             if answer == instring:
                 for counter in range(0, length):
                     Final_code = (cipher[digits.index(instring[counter])])
@@ -185,7 +187,7 @@ def runthroughcipher():
             code = final
             print(code)
             currentvalue = 2
-            pathway = pathway + "o"
+            pathway.append("d")
             ciphersused.append("2")
             actual = "octal, numbers"
     else:
@@ -197,6 +199,7 @@ def runthroughcipher():
         answer = instring
         length = len(instring)
         Final_sentence = ""
+        final = ""
         if answer == instring:
             for counter in range(0, length):
                 Final_code = (cipher[letters.index(instring[counter])])
@@ -207,7 +210,7 @@ def runthroughcipher():
         code = final
         print(code)
         currentvalue = 3
-        pathway = pathway + "d"
+        pathway.append("d")
         ciphersused.append("3")
         actual = "cipher, accents"
 
@@ -227,7 +230,7 @@ def complete():
     showcode = [listToString(pathway),code]
     finalcode = listToString(showcode)
     root.clipboard_clear()
-    root.clipboard_append("Hello")
+    root.clipboard_append(finalcode)
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
 
 def Eashan():
@@ -273,8 +276,11 @@ def yell():
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
     b_check.place(relx=(2 / 3), rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
     b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
-    b_complete.place(relx=0, rely=1, relheight=0.5, relwidth=(1 / 3))
-
+    b_complete.place(relx=0, rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
+    b_eashan = Button(root, text="Change your code to only say ''Eashan'", fg="blue", command=Eashan)
+    b_eashan.place(relx=(1/3), rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
+    b_nothing = Button(root, text="Restart", fg="blue", command = replace)
+    b_nothing.place(relx=(2/3), rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
 
 root = tk.Tk()
 root.geometry("600x400")

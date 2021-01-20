@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
+import clipboard
 
 import tkinter as tk
-
+# pathway/code/bases/twodig/onedig/ciphersused/length of pathway
 
 def retrieve_input():
     inputValue = textBox.get("1.0", "end-1c")
@@ -15,19 +16,14 @@ def retrieve_input():
     print(code)
 
 
-
 def num_there(s):
     return any(i.isdigit() for i in s)
 
 
 def split(word):
     return [char for char in word]
-                                                                   # Hello      72 101 108 108 111    2dig = [1]  1dig = []  3dig
-                                                                    #            7210110810811 gig = [2, 3, 3, 3, 3]
-                                                                     #           234575973248593749587239847
-                                                                      #          7210110810811
-                                                                       #         72 101 108 108 111
-                                                                        #        2462354 2635472 276354726 dig=[7, 7, 9]
+
+
 def listToString(oflist):
     str1 = ""
     return (str1.join(oflist))
@@ -43,55 +39,59 @@ def newdigits(n):
 
 def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
-    if currentvalue == 0:
-        string = code
-        help = []
-        code = split(code)
-        for item in range(0, len(code)):
-            code[item] = str(ord(code[item]))
-            help.append(code[item])
-        for item in range(0, len(help)):
-            help[item] = int(help[item])
-            if newdigits(help[item]) == 2:
-                twodig.append(item)
-            if newdigits(help[item]) == 1:
-                onedig.append(item)
-            help[item] = str(help[item])
-        code = listToString(help)
-        print(code)
-        print(twodig)
-        print(onedig)
-        actual = "Ascii, numbers"
-        pathway.append("a")
-        print(pathway)
-        lastcompletedfunc = "ascii"
-        currentvalue = 1
-        newset = 0
-        bases.append("10")
-    else:
-        messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
+    string = code
+    help = []
+    code = split(code)
+    for item in range(0, len(code)):
+        code[item] = str(ord(code[item]))
+        help.append(code[item])
+    for item in range(0, len(help)):
+        help[item] = int(help[item])
+        if newdigits(help[item]) == 2:
+            twodig.append(str(item))
+            twodig.append(",")
+        if newdigits(help[item]) == 1:
+            onedig.append(str(item))
+            onedig.append(",")
+        help[item] = str(help[item])
+    code = listToString(help)
+    onedig.append(";")
+    twodig.append(";")
+    print(code)
+    print(twodig)
+    print(onedig)
+    actual = "Ascii, numbers"
+    pathway.append("a")
+    print(pathway)
+    lastcompletedfunc = "ascii"
+    currentvalue = 1
+    newset = 0
+    bases.append("10")
+    bases.append(",")
 
 
 def notascii():
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
-    if currentvalue == 1:
-        # string = code
-        code = code.split(" ")
-        help = []
-        print(code)
-        for item in code:
-            item = chr(int(item))
-            print(item)
-            help.append(item)
-        print(help)
-        code = "".join(help)
-        print(code)
-        currentvalue = 0
-        pathway.append("n")
-        lastcompletedfunc = "notascii"
-        actual = "notascii, letters"
-    else:
-        messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
+
+    # string = code
+
+    code = code.split(" ")
+    help = []
+    print(code)
+    for item in code:
+        item = chr(int(item))
+        print(item)
+        help.append(item)
+    print(help)
+    code = "".join(help)
+    print(code)
+    currentvalue = 0
+    pathway.append("n")
+    lastcompletedfunc = "notascii"
+    actual = "notascii, letters"
+
+
+# messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
 
 def tobase(n, currbase, finbase):
@@ -122,7 +122,7 @@ def beforetobase():
         base = int(enterbox.get("1.0", "end-1c"))
         entbase.destroy()
         enterbox.destroy()
-        code = tobase(code, int(bases[len(bases)-1]), int(base))
+        code = tobase(code, int(bases[len(bases) - 2]), int(base))
         print(code)
         tobasewindow.destroy()
         pathway.append("b")
@@ -229,13 +229,14 @@ def complete():
     x.append("/")
     showcode = [listToString(pathway),code]
     finalcode = listToString(showcode)
-    root.clipboard_clear()
-    root.clipboard_append(finalcode)
+    clipboard.copy(finalcode)
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
+
 
 def Eashan():
     global code
     code = "Eashan"
+
 
 def replace():
     def retrieve_input2():
@@ -246,15 +247,46 @@ def replace():
         textboxx.destroy()
         TK.destroy()
         print(code)
+
     global code
     code = ""
     TK = tk.Tk()
     TK.geometry("600x400")
     textboxx = Text(TK)
     textboxx.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-    ButtonCommitx = Button(TK, text = "Apply your new words", command=retrieve_input2)
+    ButtonCommitx = Button(TK, text="Apply your new words", command=retrieve_input2)
     ButtonCommitx.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
     TK.mainloop()
+
+
+def decode():
+    global code
+    code = code.split("/")
+    print(code)
+    decode_pathway = []
+    decode_code = code[0]
+    decode_bases = code[1]
+    decode_twodig = code[2]
+    decode_onedig = code[3]
+    decode_cipherused = code[4]
+    decode_lenpath = int(code[5])
+    for index in range(0, decode_lenpath):
+        decode_pathway.append(decode_code[index])
+    decode_code = decode_code[decode_lenpath:]
+    print(decode_code)
+    print(decode_pathway)
+    decode_onedig = decode_onedig.split(";")
+    decode_twodig = decode_twodig.split(";")
+    decode_bases = decode_bases.split(",")
+    decode_bases.pop()
+    print(decode_bases)
+    for y in range((len(decode_pathway)-1), -1, -1):
+        if decode_pathway[y] == "a":
+            print("bully")
+        elif decode_pathway[y] == "b":
+            decode_code = tobase(decode_code, int(decode_bases[len(decode_bases)-1]), int(decode_bases[len(decode_bases)-2]))
+            decode_bases.pop()
+            print(decode_code)
 
 
 def yell():
@@ -264,23 +296,25 @@ def yell():
     root.title("Start making your code, the parentheses says what each conversion does")
     root.geometry("1000x1000")
     b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
-    b_ascii.place(relx=0, rely=0, relheight=(1/3), relwidth=(1 / 3))
-    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue", command=notascii)
-    b_nascii.place(relx=(1 / 3), rely=0, relheight=(1/3), relwidth=(1 / 3))
+    b_ascii.place(relx=0, rely=0, relheight=(1 / 3), relwidth=(1 / 3))
+    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
+                      command=notascii)
+    b_nascii.place(relx=(1 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
     b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
-    b_octal.place(relx=(2 / 3), rely=0, relheight=(1/3), relwidth=(1 / 3))
+    b_octal.place(relx=(2 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
     b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
-    b_cipher.place(relx=0, rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
+    b_cipher.place(relx=0, rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_dontclick = Button(root, text="Last function applied", fg="blue", command=tell)
-    b_dontclick.place(relx=(1 / 3), rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
+    b_dontclick.place(relx=(1 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
-    b_check.place(relx=(2 / 3), rely=(1/3), relheight=(1/3), relwidth=(1 / 3))
+    b_check.place(relx=(2 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
-    b_complete.place(relx=0, rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
+    b_complete.place(relx=0, rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_eashan = Button(root, text="Change your code to only say ''Eashan'", fg="blue", command=Eashan)
-    b_eashan.place(relx=(1/3), rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
-    b_nothing = Button(root, text="Restart", fg="blue", command = replace)
-    b_nothing.place(relx=(2/3), rely=(2/3), relheight=(1/3), relwidth=(1 / 3))
+    b_eashan.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+    b_nothing = Button(root, text="Restart", fg="blue", command=replace)
+    b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+
 
 root = tk.Tk()
 root.geometry("600x400")
@@ -289,9 +323,10 @@ bases = []
 onedig = []
 twodig = []
 ciphersused = []
+todecode = ""
 
 b_encode = Button(root, text="Encode", fg="blue", command=yell)
-b_decode = Button(root, text="Decode", fg="green")
+b_decode = Button(root, text="Decode", fg="green", command=decode)
 
 code = ""
 currentvalue = ""

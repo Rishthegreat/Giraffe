@@ -28,3 +28,7 @@ def toascii(n):
 def frominttoascii(n):
     for numbers in range(0, len(n)):
         n[numbers] = chr(int(n[numbers]))
+
+list = "3;"
+list = list.split(";")
+print(list)

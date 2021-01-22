@@ -234,7 +234,6 @@ def complete():
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
 
 
-
 def Eashan():
     global code
     code = "Eashan"
@@ -262,7 +261,43 @@ def replace():
 
 
 def decode():
-    global code
+    global code, decode_code
+    def a():
+        global decode_code, thereisonedig, thereistwodig
+        thereisonedig = False
+        thereistwodig = False
+        onedigsp = decode_onedig[0]
+        twodigsp = decode_twodig[0]
+        codetemp = []
+        codeindex = 0
+        coderange = 0
+        if len(onedigsp) > 1:
+            onedigsp = onedigsp.split(",")
+            onedigsp.pop()
+            thereisonedig = True
+        if len(twodigsp) > 1:
+            twodigsp = twodigsp.split(",")
+            twodigsp.pop()
+            thereistwodig = True
+        for index in range(0, len(onedigsp)):
+            onedigsp[index] = int(onedigsp[index])
+        for index in range(0, len(twodigsp)):
+            twodigsp[index] = int(twodigsp[index])
+        while coderange < len(decode_code):
+            if thereisonedig and codeindex in onedigsp:
+                codetemp.append(decode_code[coderange:(coderange+1)])
+                coderange += 1
+            elif thereistwodig and codeindex in twodigsp:
+                codetemp.append(decode_code[coderange:(coderange + 2)])
+                coderange += 2
+            else:
+                codetemp.append(decode_code[coderange:(coderange + 3)])
+                coderange += 3
+            codeindex += 1
+        for index in range(0, len(codetemp)):
+            codetemp[index] = chr(int(codetemp[index]))
+        decode_code = listToString(codetemp)
+        print(decode_code)
     code = code.split("/")
     print(code)
     decode_pathway = []
@@ -279,15 +314,22 @@ def decode():
     print(decode_pathway)
     decode_onedig = decode_onedig.split(";")
     decode_twodig = decode_twodig.split(";")
+    decode_onedig.pop()
+    decode_twodig.pop()
     decode_bases = decode_bases.split(",")
     decode_bases.pop()
     print(decode_bases)
     for y in range((len(decode_pathway)-1), -1, -1):
         if decode_pathway[y] == "a":
-            print("bully")
+            a()
+            decode_onedig.pop(0)
+            decode_twodig.pop(0)
+            print(decode_twodig)
+            print(decode_onedig)
         elif decode_pathway[y] == "b":
             decode_code = tobase(decode_code, int(decode_bases[len(decode_bases)-1]), int(decode_bases[len(decode_bases)-2]))
             decode_bases.pop()
+            decode_code = str(decode_code)
             print(decode_code)
 
 
@@ -325,12 +367,12 @@ bases = []
 onedig = []
 twodig = []
 ciphersused = []
-todecode = ""
 
 b_encode = Button(root, text="Encode", fg="blue", command=yell)
 b_decode = Button(root, text="Decode", fg="green", command=decode)
 
 code = ""
+decode_code = ""
 currentvalue = ""
 pathway = []
 lastcompletedfunc = ""

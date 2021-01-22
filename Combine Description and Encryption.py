@@ -127,6 +127,7 @@ def beforetobase():
         tobasewindow.destroy()
         pathway.append("b")
         bases.append(str(base))
+        bases.append(",")
         print(pathway)
         print(bases)
         currentvalue = 2
@@ -224,13 +225,14 @@ def show():
 
 
 def complete():
-    global code
-    x = []
-    x.append("/")
-    showcode = [listToString(pathway),code]
+    global code, pathway, bases, twodig, onedig
+    x = "/"
+    showcode = [listToString(pathway), code, x, listToString(bases), x, listToString(twodig), x, listToString(onedig),
+                x, listToString(ciphersused), x, str(len(pathway))]
     finalcode = listToString(showcode)
     clipboard.copy(finalcode)
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
+
 
 
 def Eashan():

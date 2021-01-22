@@ -329,6 +329,8 @@ def decode():
             decode_code = tobase(str(decode_code), int(decode_bases[len(decode_bases) - 1]),
                                  int(decode_bases[len(decode_bases) - 2]))
             decode_bases.pop()
+        elif decode_pathway[y] == "d":
+            print("runthroughcipher")
     print(decode_code)
 
 

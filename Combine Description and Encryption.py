@@ -3,6 +3,8 @@ from tkinter import messagebox
 import clipboard
 
 import tkinter as tk
+
+
 # pathway/code/bases/twodig/onedig/ciphersused/length of pathway
 
 def retrieve_input():
@@ -105,13 +107,13 @@ def tobase(n, currbase, finbase):
         def tobase1(n1, base):
             orignal = "0123456789ABCDEF"
             if n1 < base:
-                return orignal[n1]
+                return str(orignal[n1])
             else:
-                return tobase1(n1 // base, base) + orignal[(n1 % base)]
+                return str(tobase1(n1 // base, base) + orignal[(n1 % base)])
 
-        return tobase1(answerint, finbase)
+        return str(tobase1(answerint, finbase))
     else:
-        return answerint
+        return str(answerint)
 
 
 def beforetobase():
@@ -234,7 +236,6 @@ def complete():
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
 
 
-
 def Eashan():
     global code
     code = "Eashan"
@@ -263,12 +264,13 @@ def replace():
 
 def decode():
     global code, decode_code
+
     def a():
         global decode_code, thereisonedig, thereistwodig
         thereisonedig = False
         thereistwodig = False
-        onedigsp = decode_onedig[0]
-        twodigsp = decode_twodig[0]
+        onedigsp = decode_onedig[-1]
+        twodigsp = decode_twodig[-1]
         codetemp = []
         codeindex = 0
         coderange = 0
@@ -286,7 +288,7 @@ def decode():
             twodigsp[index] = int(twodigsp[index])
         while coderange < len(decode_code):
             if thereisonedig and codeindex in onedigsp:
-                codetemp.append(decode_code[coderange:(coderange+1)])
+                codetemp.append(decode_code[coderange:(coderange + 1)])
                 coderange += 1
             elif thereistwodig and codeindex in twodigsp:
                 codetemp.append(decode_code[coderange:(coderange + 2)])
@@ -298,9 +300,8 @@ def decode():
         for index in range(0, len(codetemp)):
             codetemp[index] = chr(int(codetemp[index]))
         decode_code = listToString(codetemp)
-        print(decode_code)
+
     code = code.split("/")
-    print(code)
     decode_pathway = []
     decode_code = code[0]
     decode_bases = code[1]
@@ -311,27 +312,24 @@ def decode():
     for index in range(0, decode_lenpath):
         decode_pathway.append(decode_code[index])
     decode_code = decode_code[decode_lenpath:]
-    print(decode_code)
-    print(decode_pathway)
     decode_onedig = decode_onedig.split(";")
     decode_twodig = decode_twodig.split(";")
     decode_onedig.pop()
     decode_twodig.pop()
     decode_bases = decode_bases.split(",")
     decode_bases.pop()
-    print(decode_bases)
-    for y in range((len(decode_pathway)-1), -1, -1):
+    for y in range((len(decode_pathway) - 1), -1, -1):
         if decode_pathway[y] == "a":
             a()
-            decode_onedig.pop(0)
-            decode_twodig.pop(0)
-            print(decode_twodig)
-            print(decode_onedig)
-        elif decode_pathway[y] == "b":
-            decode_code = tobase(decode_code, int(decode_bases[len(decode_bases)-1]), int(decode_bases[len(decode_bases)-2]))
+            decode_onedig.pop()
+            decode_twodig.pop()
             decode_bases.pop()
-            decode_code = str(decode_code)
-            print(decode_code)
+            print(decode_twodig)
+        elif decode_pathway[y] == "b":
+            decode_code = tobase(str(decode_code), int(decode_bases[len(decode_bases) - 1]),
+                                 int(decode_bases[len(decode_bases) - 2]))
+            decode_bases.pop()
+    print(decode_code)
 
 
 def yell():

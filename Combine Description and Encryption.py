@@ -150,37 +150,38 @@ def beforetobase():
 def runthroughcipher():
     global code, currentvalue, pathway
     if num_there(code):
-        if "o" in code:
-            cipher = "áéíóúüñ¿¡"
-            digits = "12345670o"
+        cipher = "áéíóúüñ¿¡€ëïमपजट"
+        digits = "1234567890ABCDEF"
+        instring = code
+        word = ""
+        Final_code = ""
+        answer = instring
+        length = len(instring)
+        Final_sentence = ""
+        final = ""
+        if answer == instring:
+            for counter in range(0, length):
+                Final_code = (cipher[digits.index(instring[counter])])
+                Final_code = ''.join(Final_code)
+                final = final + Final_code
+        print(final)
+        code = final
+        print(code)
+        currentvalue = 2
+        pathway.append("d")
+        ciphersused.append("1")
+        actual = "octal, numbers"
+    else:
+        if "," or "." or "?" or "!" or "(" or ";" or ":" in code:
+            cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵ"
+            digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$()"
             instring = code
             word = ""
             Final_code = ""
-            answer = instring
-            length = len(instring)
-            Final_sentence = ""
-            if answer == instring:
-                for counter in range(0, length):
-                    Final_code = (cipher[digits.index(instring[counter])])
-                    Final_code = ''.join(Final_code)
-                    final = final + Final_code
-            print(final)
-            code = final
-            print(code)
-            currentvalue = 2
-            pathway.append("d")
-            ciphersused.append("1")
-            actual = "octal, numbers"
-        else:
-            cipher = "áéíóúüñ¿¡€"
-            digits = "1234567890"
-            instring = code
-            word = ""
-            Final_code = ""
-            answer = instring
-            length = len(instring)
-            Final_sentence = ""
             final = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
             if answer == instring:
                 for counter in range(0, length):
                     Final_code = (cipher[digits.index(instring[counter])])
@@ -193,29 +194,29 @@ def runthroughcipher():
             pathway.append("d")
             ciphersused.append("2")
             actual = "octal, numbers"
-    else:
-        cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
-        letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        instring = code
-        word = ""
-        Final_code = ""
-        answer = instring
-        length = len(instring)
-        Final_sentence = ""
-        final = ""
-        if answer == instring:
-            for counter in range(0, length):
-                Final_code = (cipher[letters.index(instring[counter])])
-                Final_code = ''.join(Final_code)
-                # print(Final_code)
-                final = final + Final_code
-        print(final)
-        code = final
-        print(code)
-        currentvalue = 3
-        pathway.append("d")
-        ciphersused.append("3")
-        actual = "cipher, accents"
+        else:
+            cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
+            letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            instring = code
+            word = ""
+            Final_code = ""
+            answer = instring
+            length = len(instring)
+            Final_sentence = ""
+            final = ""
+            if answer == instring:
+                for counter in range(0, length):
+                    Final_code = (cipher[letters.index(instring[counter])])
+                    Final_code = ''.join(Final_code)
+                    # print(Final_code)
+                    final = final + Final_code
+            print(final)
+            code = final
+            print(code)
+            currentvalue = 3
+            pathway.append("d")
+            ciphersused.append("3")
+            actual = "cipher, accents"
 
 
 def tell():

@@ -17,6 +17,15 @@ def retrieve_input():
     b_decode.place(relx=0.5, rely=0, relheight=1, relwidth=0.5)
     print(code)
 
+def isthere(s,j):
+    if j == 'digit':
+        return any(i.isdigit() for i in s)
+    elif j == 'lowletter':
+        return any(i.islower() for i in s)
+
+
+def nolowletter(d):
+    return any(i.islower() for i in d)
 
 def num_there(s):
     return any(i.isdigit() for i in s)
@@ -149,7 +158,7 @@ def beforetobase():
 
 def runthroughcipher():
     global code, currentvalue, pathway
-    if num_there(code):
+    if isthere(code, 'digit') and isthere(code, 'lowletter'):
         cipher = "áéíóúüñ¿¡€ëïमपजट"
         digits = "1234567890ABCDEF"
         instring = code
@@ -172,7 +181,7 @@ def runthroughcipher():
         ciphersused.append("1")
         actual = "octal, numbers"
     else:
-        if "," or "." or "?" or "!" or "(" or ";" or ":" in code:
+        if "," in code or "." in code or "?" in code or "!" in code or "(" in code or ";" in code or ":" in code:
             cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
             digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() "
             instring = code

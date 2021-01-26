@@ -173,8 +173,8 @@ def runthroughcipher():
         actual = "octal, numbers"
     else:
         if "," or "." or "?" or "!" or "(" or ";" or ":" in code:
-            cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵ"
-            digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$()"
+            cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
+            digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() "
             instring = code
             word = ""
             Final_code = ""

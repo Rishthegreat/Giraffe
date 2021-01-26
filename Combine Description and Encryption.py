@@ -173,8 +173,8 @@ def runthroughcipher():
         actual = "octal, numbers"
     else:
         if "," or "." or "?" or "!" or "(" or ";" or ":" in code:
-            cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵ"
-            digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$()"
+            cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
+            digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() "
             instring = code
             word = ""
             Final_code = ""
@@ -330,8 +330,55 @@ def decode():
                                  int(decode_bases[len(decode_bases) - 2]))
             decode_bases.pop()
         elif decode_pathway[y] == "d":
-
-            print("runthroughcipher")
+            decode_cipherused = decode_cipherused.split("")
+            if decode_cipherused[-1] == '1':
+                cipher = "áéíóúüñ¿¡€ëïमपजट"
+                digits = "1234567890ABCDEF"
+                instring = decode_code
+                word = ""
+                Final_code = ""
+                final = ""
+                answer = instring
+                length = len(instring)
+                Final_sentence = ""
+                if answer == instring:
+                    for counter in range(0, length):
+                        Final_code = (digits[cipher.index(instring[counter])])
+                        Final_code = ''.join(Final_code)
+                        final = final + Final_code
+                    decode_code = final
+            elif decode_cipherused[-1] == '2':
+                cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
+                digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() "
+                instring = decode_code
+                word = ""
+                Final_code = ""
+                final = ""
+                answer = instring
+                length = len(instring)
+                Final_sentence = ""
+                if answer == instring:
+                    for counter in range(0, length):
+                        Final_code = (digits[cipher.index(instring[counter])])
+                        Final_code = ''.join(Final_code)
+                        final = final + Final_code
+                    decode_code = final
+            elif decode_cipherused[-1] == '3':
+                cipher = "1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&*()_+=-?><ùûÿ€«»—æ"
+                letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                instring = decode_code
+                word = ""
+                Final_code = ""
+                answer = instring
+                length = len(instring)
+                Final_sentence = ""
+                final = ""
+                if answer == instring:
+                    for counter in range(0, length):
+                        Final_code = (letters[cipher.index(instring[counter])])
+                        Final_code = ''.join(Final_code)
+                        final = final + Final_code
+                    decode_code = final
     print(decode_code)
 
 

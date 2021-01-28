@@ -158,7 +158,7 @@ def beforetobase():
 
 def runthroughcipher():
     global code, currentvalue, pathway
-    if isthere(code, 'digit') and isthere(code, 'lowletter'):
+    if isthere(code, 'digit') and not isthere(code, 'lowletter'):
         cipher = "áéíóúüñ¿¡€ëïमपजट"
         digits = "1234567890ABCDEF"
         instring = code

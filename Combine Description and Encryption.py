@@ -334,6 +334,7 @@ def decode():
             decode_onedig.pop()
             decode_twodig.pop()
             decode_bases.pop()
+            print(decode_code)
         elif decode_pathway[y] == "b":
             decode_code = tobase(str(decode_code), int(decode_bases[len(decode_bases) - 1]),
                                  int(decode_bases[len(decode_bases) - 2]))

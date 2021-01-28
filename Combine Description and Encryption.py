@@ -48,7 +48,7 @@ def newdigits(n):
     return count
 
 
-def ascii():
+def ascii(event):
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
     string = code
     help = []
@@ -81,7 +81,7 @@ def ascii():
     bases.append(",")
 
 
-def notascii():
+def notascii(event):
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
 
     # string = code
@@ -125,7 +125,7 @@ def tobase(n, currbase, finbase):
         return str(answerint)
 
 
-def beforetobase():
+def beforetobase(event):
     global code, pathway, currentvalue, bases
 
     def inputforconversion():
@@ -156,7 +156,7 @@ def beforetobase():
         tobasewindow.mainloop()
 
 
-def runthroughcipher():
+def runthroughcipher(event):
     global code, currentvalue, pathway
     if isthere(code, 'digit') and not isthere(code, 'lowletter'):
         cipher = "áéíóúüñ¿¡€ëïमपजट"
@@ -228,11 +228,11 @@ def runthroughcipher():
             actual = "cipher, accents"
 
 
-def tell():
+def tell(event):
     messagebox.showinfo(Title=None, message=actual)
 
 
-def show():
+def show(event):
     messagebox.showinfo(Title=None, message=code)
 
 
@@ -246,12 +246,12 @@ def complete(event):
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
 
 
-def Eashan():
+def Eashan(event):
     global code
     code = "Eashan"
 
 
-def replace():
+def replace(event):
     def retrieve_input2():
         global code
         inputValue = textboxx.get("1.0", "end-1c")
@@ -417,6 +417,7 @@ def yell():
     b_functions.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_nothing = Button(root, text="Restart", fg="blue", command=replace)
     b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+    root.bind('f', complete)
 
 
 root = tk.Tk()

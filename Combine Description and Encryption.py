@@ -236,7 +236,7 @@ def show():
     messagebox.showinfo(Title=None, message=code)
 
 
-def complete():
+def complete(event):
     global code, pathway, bases, twodig, onedig
     x = "/"
     showcode = [listToString(pathway), code, x, listToString(bases), x, listToString(twodig), x, listToString(onedig),
@@ -413,8 +413,8 @@ def yell():
     b_check.place(relx=(2 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
     b_complete.place(relx=0, rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_eashan = Button(root, text="Change your code to only say ''Eashan'", fg="blue", command=Eashan)
-    b_eashan.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+    b_functions = Button(root, text="See all the Functions", fg="blue", command=Eashan)
+    b_functions.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_nothing = Button(root, text="Restart", fg="blue", command=replace)
     b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
 

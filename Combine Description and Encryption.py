@@ -48,7 +48,7 @@ def newdigits(n):
     return count
 
 
-def ascii(event):
+def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
     string = code
     help = []
@@ -81,7 +81,7 @@ def ascii(event):
     bases.append(",")
 
 
-def notascii(event):
+def notascii():
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
 
     # string = code
@@ -125,7 +125,7 @@ def tobase(n, currbase, finbase):
         return str(answerint)
 
 
-def beforetobase(event):
+def beforetobase():
     global code, pathway, currentvalue, bases
 
     def inputforconversion():
@@ -156,7 +156,7 @@ def beforetobase(event):
         tobasewindow.mainloop()
 
 
-def runthroughcipher(event):
+def runthroughcipher():
     global code, currentvalue, pathway
     if isthere(code, 'digit') and not isthere(code, 'lowletter'):
         cipher = "áéíóúüñ¿¡€ëïमपजट"
@@ -228,15 +228,15 @@ def runthroughcipher(event):
             actual = "cipher, accents"
 
 
-def tell(event):
+def tell():
     messagebox.showinfo(Title=None, message=actual)
 
 
-def show(event):
+def show():
     messagebox.showinfo(Title=None, message=code)
 
 
-def complete(event):
+def complete():
     global code, pathway, bases, twodig, onedig
     x = "/"
     showcode = [listToString(pathway), code, x, listToString(bases), x, listToString(twodig), x, listToString(onedig),
@@ -246,12 +246,12 @@ def complete(event):
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
 
 
-def Eashan(event):
+def Eashan():
     global code
     code = "Eashan"
 
 
-def replace(event):
+def replace():
     def retrieve_input2():
         global code
         inputValue = textboxx.get("1.0", "end-1c")

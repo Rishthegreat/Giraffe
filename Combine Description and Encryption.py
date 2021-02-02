@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import clipboard
+import os
+import sys
 
 import tkinter as tk
 
@@ -8,6 +10,7 @@ import tkinter as tk
 # pathway/code/bases/twodig/onedig/ciphersused/length of pathway
 
 def retrieve_input():
+    global textBox, buttonCommit
     inputValue = textBox.get("1.0", "end-1c")
     global code
     code = inputValue
@@ -17,7 +20,8 @@ def retrieve_input():
     b_decode.place(relx=0.5, rely=0, relheight=1, relwidth=0.5)
     print(code)
 
-def isthere(s,j):
+
+def isthere(s, j):
     if j == 'digit':
         return any(i.isdigit() for i in s)
     elif j == 'lowletter':
@@ -26,6 +30,7 @@ def isthere(s,j):
 
 def nolowletter(d):
     return any(i.islower() for i in d)
+
 
 def num_there(s):
     return any(i.isdigit() for i in s)
@@ -228,10 +233,6 @@ def runthroughcipher():
             actual = "cipher, accents"
 
 
-def tell():
-    messagebox.showinfo(Title=None, message=actual)
-
-
 def show():
     messagebox.showinfo(Title=None, message=code)
 
@@ -244,6 +245,23 @@ def complete():
     finalcode = listToString(showcode)
     clipboard.copy(finalcode)
     messagebox.showinfo(Title=None, message="Your code is " + finalcode + " and it has been copied to your clipboard")
+    code = ""
+    pathway, bases, twodig, onedig, cipherused = [], [], [], [], []
+    b_ascii.destroy()
+    b_nascii.destroy()
+    b_octal.destroy()
+    b_cipher.destroy()
+    b_dontclick.destroy()
+    b_check.destroy()
+    b_complete.destroy()
+    b_functions.destroy()
+    b_nothing.destroy()
+    create_buttons()
+    textBox = Text(root)
+    textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+    buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",
+                          command=retrieve_input)
+    buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 
 def Eashan():
@@ -394,30 +412,35 @@ def decode():
 
 def yell():
     print(code)
+    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing
     b_encode.destroy()
     b_decode.destroy()
     root.title("Start making your code, the parentheses says what each conversion does")
     root.geometry("1000x1000")
-    b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
     b_ascii.place(relx=0, rely=0, relheight=(1 / 3), relwidth=(1 / 3))
-    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
-                      command=notascii)
     b_nascii.place(relx=(1 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
-    b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
     b_octal.place(relx=(2 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
-    b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
     b_cipher.place(relx=0, rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_dontclick = Button(root, text="Last function applied", fg="blue", command=tell)
-    b_dontclick.place(relx=(1 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
     b_check.place(relx=(2 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
     b_complete.place(relx=0, rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_functions = Button(root, text="See all the Functions", fg="blue", command=Eashan)
     b_functions.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_nothing = Button(root, text="Restart", fg="blue", command=replace)
     b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     root.bind('f', complete)
+
+
+def create_buttons():
+    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing
+    b_encode = Button(root, text="Encode", fg="blue", command=yell)
+    b_decode = Button(root, text="Decode", fg="green", command=decode)
+    b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
+    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
+                      command=notascii)
+    b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
+    b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
+    b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
+    b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
+    b_functions = Button(root, text="See all the Functions", fg="blue", command=Eashan)
+    b_nothing = Button(root, text="Restart", fg="blue", command=replace)
 
 
 root = tk.Tk()
@@ -437,12 +460,6 @@ currentvalue = ""
 pathway = []
 lastcompletedfunc = ""
 actual = ""
-
-textBox = Text(root)
-textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",
-                      command=retrieve_input)
-buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
 # both letters and numbers (non base 10 integer)

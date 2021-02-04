@@ -357,7 +357,7 @@ def decode():
             decode_code = tobase(str(decode_code), int(decode_bases[len(decode_bases) - 1]),
                                  int(decode_bases[len(decode_bases) - 2]))
             decode_bases.pop()
-        elif decode_pathway[y] == "d":
+        elif decode_pathway[y] == "c":
             decode_cipherused = decode_cipherused.split()
             if decode_cipherused[-1] == '1':
                 cipher = "áéíóúüñ¿¡€ëïमपजट"
@@ -407,6 +407,12 @@ def decode():
                         Final_code = ''.join(Final_code)
                         final = final + Final_code
                     decode_code = final
+        elif decode_pathway[y] == "f":
+
+        elif decode_pathway[y] == "s":
+
+        elif decode_pathway[y] == "f":
+
     print(decode_code)
     messagebox.showinfo(Title=None, message="The decoded characters is: " + decode_code)
     b_encode.destroy()
@@ -452,6 +458,10 @@ def create_buttons():
 
 
 root = tk.Tk()
+French = Button()
+German = Button()
+Spanish = Button()
+language = ""
 root.geometry("600x400")
 output = []
 bases = []

@@ -238,7 +238,7 @@ def show():
 
 
 def complete():
-    global code, pathway, bases, twodig, onedig
+    global code, pathway, bases, twodig, onedig, cipherused, b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, textBox, buttonCommit
     x = "/"
     showcode = [listToString(pathway), code, x, listToString(bases), x, listToString(twodig), x, listToString(onedig),
                 x, listToString(ciphersused), x, str(len(pathway))]
@@ -291,7 +291,7 @@ def replace():
 
 
 def decode():
-    global code, decode_code
+    global code, decode_code, b_encode, b_decode, textBox, buttonCommit
 
     def a():
         global decode_code, thereisonedig, thereistwodig
@@ -408,6 +408,15 @@ def decode():
                         final = final + Final_code
                     decode_code = final
     print(decode_code)
+    messagebox.showinfo(Title=None, message="The decoded characters is: " + decode_code)
+    b_encode.destroy()
+    b_decode.destroy()
+    create_buttons()
+    textBox = Text(root)
+    textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+    buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",
+                          command=retrieve_input)
+    buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 
 def yell():
@@ -425,7 +434,6 @@ def yell():
     b_complete.place(relx=0, rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_functions.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    root.bind('f', complete)
 
 
 def create_buttons():
@@ -450,9 +458,27 @@ bases = []
 onedig = []
 twodig = []
 ciphersused = []
+b_encode = Button()
+b_decode = Button()
+b_ascii = Button()
+b_nascii = Button()
+b_octal = Button()
+b_cipher = Button()
+b_dontclick = Button()
+b_check = Button()
+b_complete = Button()
+b_functions = Button()
+b_nothing = Button()
+buttonCommit = Button()
+textBox = Text()
 
-b_encode = Button(root, text="Encode", fg="blue", command=yell)
-b_decode = Button(root, text="Decode", fg="green", command=decode)
+textBox = Text(root)
+textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",
+                      command=retrieve_input)
+buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+
+create_buttons()
 
 code = ""
 decode_code = ""

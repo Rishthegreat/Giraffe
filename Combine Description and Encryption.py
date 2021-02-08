@@ -20,6 +20,7 @@ def retrieve_input():
     b_decode.place(relx=0.5, rely=0, relheight=1, relwidth=0.5)
     print(code)
 
+#procedure to get a user input and store it for later processing
 
 def isthere(s, j):
     if j == 'digit':
@@ -27,14 +28,17 @@ def isthere(s, j):
     elif j == 'lowletter':
         return any(i.islower() for i in s)
 
+#procedure to see if two things match
 
 def nolowletter(d):
     return any(i.islower() for i in d)
 
+#procedure to see if there are any lowercase letters in the code
 
 def num_there(s):
     return any(i.isdigit() for i in s)
 
+#procedure to see if there are any numbers in the code
 
 def split(word):
     return [char for char in word]
@@ -44,6 +48,7 @@ def listToString(oflist):
     str1 = ""
     return (str1.join(oflist))
 
+#converts a list into a string
 
 def newdigits(n):
     count = 0
@@ -51,7 +56,6 @@ def newdigits(n):
         n //= 10
         count += 1
     return count
-
 
 def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
@@ -85,6 +89,7 @@ def ascii():
     bases.append("10")
     bases.append(",")
 
+#converts a string into ascii code
 
 def notascii():
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
@@ -129,6 +134,7 @@ def tobase(n, currbase, finbase):
     else:
         return str(answerint)
 
+#converts a number to a different base
 
 def beforetobase():
     global code, pathway, currentvalue, bases
@@ -231,6 +237,8 @@ def runthroughcipher():
             pathway.append("d")
             ciphersused.append("3")
             actual = "cipher, accents"
+
+#runs the code through a cipher
 
 
 def show():

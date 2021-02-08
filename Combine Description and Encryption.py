@@ -188,7 +188,7 @@ def runthroughcipher():
         code = final
         print(code)
         currentvalue = 2
-        pathway.append("d")
+        pathway.append("c")
         ciphersused.append("1")
         actual = "octal, numbers"
     else:
@@ -211,7 +211,7 @@ def runthroughcipher():
             code = final
             print(code)
             currentvalue = 2
-            pathway.append("d")
+            pathway.append("c")
             ciphersused.append("2")
             actual = "octal, numbers"
         else:
@@ -234,7 +234,7 @@ def runthroughcipher():
             code = final
             print(code)
             currentvalue = 3
-            pathway.append("d")
+            pathway.append("c")
             ciphersused.append("3")
             actual = "cipher, accents"
 
@@ -272,9 +272,69 @@ def complete():
     buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 
-def Eashan():
-    global code
-    code = "Eashan"
+
+def function1(lowerconversion,upperconversion, numberconversion):
+    global code, language, French, Spanish, German, Numbers, pathway, code
+    def money(a,y,z):
+        code.split()
+        lowletters = ["a","b","c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        upperletters = ["A", "B", "C", "D", "E", "F", 'J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+        numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        if language == "French":
+            pathway.append("f")
+        elif language == "German":
+            pathway.append("g")
+        elif language == "Spanish":
+            pathway.append("s")
+        for item in range(0, len(code)):
+            if code[item] in lowletters:
+
+
+    def french():
+        global language
+        language = "French"
+        lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "eee", "gee", "kah", "el", "em", "en", "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
+        upperconversion = []
+        for item in lowerconversion:
+            test = item.split()
+            test[0] = test[0].swapcase()
+            teststring = listToString(test)
+            upperconversion.append(teststring)
+        numberconversion = ["Un"]
+        French.destroy()
+        Spanish.destroy()
+        German.destroy()
+        Numbers.destroy()
+        money(lowerconversion,upperconversion,numberconversion)
+    def spanish():
+        global language
+        language = "Spanish"
+        French.destroy()
+        Spanish.destroy()
+        German.destroy()
+        Numbers.destroy()
+        upperconversion = []
+        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "i", "jota", "ca", "ele", "eme", "ene", "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
+        for item in lowerconversion:
+            test = item.split()
+            test[0] = test[0].swapcase()
+            teststring = listToString(test)
+            upperconversion.append(teststring)
+        numberconversion = ["cero", "uno", "dos" ,"tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
+        money(lowerconversion, upperconversion, numberconversion)
+    def german():
+        global language
+        language = "German"
+        money()
+    Numbers = tk.Tk()
+    Numbers.geometry("600x400")
+    French = Button(Numbers, text="French", command=french)
+    Spanish = Button(Numbers, text="Spanish", command=spanish)
+    German = Button(Numbers, text="German", command=german)
+    French.place(relwidth=(1/3), relheight=1, relx=0, rely=0)
+    Spanish.place(relwidth=(1/3), relheight=1, relx=(1/3), rely=0)
+    German.place(relwidth=(1/3), relheight=1, relx=(2/3), rely=0)
+    Numbers.mainloop()
 
 
 def replace():
@@ -461,7 +521,7 @@ def create_buttons():
     b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
     b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
-    b_functions = Button(root, text="See all the Functions", fg="blue", command=Eashan)
+    b_functions = Button(root, text="Change language", fg="blue", command=function1)
     b_nothing = Button(root, text="Restart", fg="blue", command=replace)
 
 

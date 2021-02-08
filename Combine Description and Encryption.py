@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 import clipboard
-import os
-import sys
 
 import tkinter as tk
 

@@ -335,10 +335,8 @@ def function1():
                            "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
         upperconversion = []
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
+        print(upperconversion)
         numberconversion = ["Cero", "Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf"]
         French.destroy()
         Spanish.destroy()
@@ -357,10 +355,7 @@ def function1():
         lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "i", "jota", "ca", "ele", "eme", "ene",
                            "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
         print(upperconversion)
         numberconversion = ["Cero", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"]
         money(lowerconversion, upperconversion, numberconversion)
@@ -376,10 +371,7 @@ def function1():
         lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "i", "jot", "ka", "el", "em", "en",
                            "oh", "pe", "ku", "er", "es", "te", "oo", "vau", "ve", "iks", "oopsilon", "zet"]
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
         numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs", "Sieben", "Acht", "Neun"]
         money(lowerconversion, upperconversion, numberconversion)
 

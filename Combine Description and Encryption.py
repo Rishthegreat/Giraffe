@@ -124,9 +124,9 @@ def tobase(n, currbase, finbase):
     n = str(n)
     orignal = "0123456789ABCDEF"
     answerint = 0
-    converted = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    referencenums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     for x in range((len(n) - 1), -1, -1):
-        answerint += (converted[orignal.index(n[x])]) * (currbase ** ((len(n) - 1) - x))
+        answerint += (referencenums[orignal.index(n[x])]) * (currbase ** ((len(n) - 1) - x))
     if finbase != 10:
         def tobase1(n1, base):
             orignal = "0123456789ABCDEF"
@@ -283,50 +283,35 @@ def function1():
     global code, language, French, Spanish, German, Numbers, pathway, code, bInLow, bInUp, bInNum, indextouse
 
     # a - lowerconversion, y - upperconversion, z - numberconversion
-    def money(a, y, z):
+    def toanotherlang(lower, upper, nums):
         global code, bInLow, bInUp, bInNum, indextouse
-        code = list(code)
+        code = list(code)  # Making the variable code a list so that it is easier to work with in the code
         lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                       "t", "u", "v", "w", "x", "y", "z"]
         upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
                         "T", "U", "V", "W", "X", "Y", "Z"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-        bInLow = False
-        bInUp = False
-        bInNum = False
         if language == "French":
             pathway.append("f")
         elif language == "German":
-            pathway.append("g")
+            pathway.append("g")       # Appending the correspondingg letter for each language to pathway so that the during decoding, correct decoding functions will be executed
         elif language == "Spanish":
             pathway.append("s")
-        for codeitem in range(0, len(code)):
+        for codeitem in range(0, len(code)):  # Iterating through every index of the list code
             for lowitem in range(0, len(lowletters)):
-                if lowletters[lowitem] == code[codeitem]:
-                    bInLow = True
-                    indextouse = lowitem
+                if lowletters[lowitem] == code[codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    code[codeitem] = lower[lowitem]        # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
             for upitem in range(0, len(upperletters)):
-                if upperletters[upitem] == code[codeitem]:
-                    bInUp = True
-                    indextouse = upitem
+                if upperletters[upitem] == code[codeitem]: # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    code[codeitem] = upper[upitem]         # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
             for numitem in range(0, len(numbers)):
-                if numbers[numitem] == code[codeitem]:
-                    bInNum = True
-                    indextouse = numitem
+                if numbers[numitem] == code[codeitem]:     # Iterates through all indexes of the digits and checks whether any of them match the current index of code
+                    code[codeitem] = nums[numitem]         # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
-            if bInLow:
-                code[codeitem] = a[indextouse]
-            elif bInUp:
-                code[codeitem] = y[indextouse]
-            elif bInNum:
-                code[codeitem] = z[indextouse]
-            bInLow = False
-            bInUp = False
-            bInNum = False
-        code = listToString(code)
-        print(code)
+        code = listToString(code)      #A custom created function that converts the list back into a string
+        print(code)                    #Prints out the result
 
     def french():
         global language
@@ -335,16 +320,14 @@ def function1():
                            "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
         upperconversion = []
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
+        print(upperconversion)
         numberconversion = ["Cero", "Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf"]
         French.destroy()
         Spanish.destroy()
         German.destroy()
         Numbers.destroy()
-        money(lowerconversion, upperconversion, numberconversion)
+        toanotherlang(lowerconversion, upperconversion, numberconversion)
 
     def spanish():
         global language
@@ -357,13 +340,10 @@ def function1():
         lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "i", "jota", "ca", "ele", "eme", "ene",
                            "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
         print(upperconversion)
         numberconversion = ["Cero", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"]
-        money(lowerconversion, upperconversion, numberconversion)
+        toanotherlang(lowerconversion, upperconversion, numberconversion)
 
     def german():
         global language
@@ -376,12 +356,9 @@ def function1():
         lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "i", "jot", "ka", "el", "em", "en",
                            "oh", "pe", "ku", "er", "es", "te", "oo", "vau", "ve", "iks", "oopsilon", "zet"]
         for item in lowerconversion:
-            test = item.split()
-            test[0] = test[0].swapcase()
-            teststring = listToString(test)
-            upperconversion.append(teststring)
+            upperconversion.append(item.swapcase())
         numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs", "Sieben", "Acht", "Neun"]
-        money(lowerconversion, upperconversion, numberconversion)
+        toanotherlang(lowerconversion, upperconversion, numberconversion)
 
     Numbers = tk.Tk()
     Numbers.geometry("600x400")

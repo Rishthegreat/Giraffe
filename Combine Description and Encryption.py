@@ -18,7 +18,8 @@ def retrieve_input():
     b_decode.place(relx=0.5, rely=0, relheight=1, relwidth=0.5)
     print(code)
 
-#procedure to get a user input and store it for later processing
+
+# procedure to get a user input and store it for later processing
 
 def isthere(s, j):
     if j == 'digit':
@@ -26,17 +27,20 @@ def isthere(s, j):
     elif j == 'lowletter':
         return any(i.islower() for i in s)
 
-#procedure to see if two things match
+
+# procedure to see if two things match
 
 def nolowletter(d):
     return any(i.islower() for i in d)
 
-#procedure to see if there are any lowercase letters in the code
+
+# procedure to see if there are any lowercase letters in the code
 
 def num_there(s):
     return any(i.isdigit() for i in s)
 
-#procedure to see if there are any numbers in the code
+
+# procedure to see if there are any numbers in the code
 
 def split(word):
     return [char for char in word]
@@ -46,7 +50,8 @@ def listToString(oflist):
     str1 = ""
     return (str1.join(oflist))
 
-#converts a list into a string
+
+# converts a list into a string
 
 def newdigits(n):
     count = 0
@@ -54,6 +59,7 @@ def newdigits(n):
         n //= 10
         count += 1
     return count
+
 
 def ascii():
     global code, pathway, currentvalue, lastcompletedfunc, string, newset, bases, twodig, onedig
@@ -87,7 +93,8 @@ def ascii():
     bases.append("10")
     bases.append(",")
 
-#converts a string into ascii code
+
+# converts a string into ascii code
 
 def notascii():
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
@@ -132,7 +139,8 @@ def tobase(n, currbase, finbase):
     else:
         return str(answerint)
 
-#converts a number to a different base
+
+# converts a number to a different base
 
 def beforetobase():
     global code, pathway, currentvalue, bases
@@ -236,7 +244,8 @@ def runthroughcipher():
             ciphersused.append("3")
             actual = "cipher, accents"
 
-#runs the code through a cipher
+
+# runs the code through a cipher
 
 
 def show():
@@ -270,40 +279,73 @@ def complete():
     buttonCommit.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
 
 
+def function1():
+    global code, language, French, Spanish, German, Numbers, pathway, code, bInLow, bInUp, bInNum, indextouse
 
-def function1(lowerconversion,upperconversion, numberconversion):
-    global code, language, French, Spanish, German, Numbers, pathway, code
-    def money(a,y,z):
-        code.split()
-        lowletters = ["a","b","c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-        upperletters = ["A", "B", "C", "D", "E", "F", 'J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+    # a - lowerconversion, y - upperconversion, z - numberconversion
+    def money(a, y, z):
+        global code, bInLow, bInUp, bInNum, indextouse
+        code = list(code)
+        lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
+                      "t", "u", "v", "w", "x", "y", "z"]
+        upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
+                        "T", "U", "V", "W", "X", "Y", "Z"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        bInLow = False
+        bInUp = False
+        bInNum = False
         if language == "French":
             pathway.append("f")
         elif language == "German":
             pathway.append("g")
         elif language == "Spanish":
             pathway.append("s")
-        for item in range(0, len(code)):
-            if code[item] in lowletters:
-
+        for codeitem in range(0, len(code)):
+            for lowitem in range(0, len(lowletters)):
+                if lowletters[lowitem] == code[codeitem]:
+                    bInLow = True
+                    indextouse = lowitem
+                    break
+            for upitem in range(0, len(upperletters)):
+                if upperletters[upitem] == code[codeitem]:
+                    bInUp = True
+                    indextouse = upitem
+                    break
+            for numitem in range(0, len(numbers)):
+                if numbers[numitem] == code[codeitem]:
+                    bInNum = True
+                    indextouse = numitem
+                    break
+            if bInLow:
+                code[codeitem] = a[indextouse]
+            elif bInUp:
+                code[codeitem] = y[indextouse]
+            elif bInNum:
+                code[codeitem] = z[indextouse]
+            bInLow = False
+            bInUp = False
+            bInNum = False
+        code = listToString(code)
+        print(code)
 
     def french():
         global language
         language = "French"
-        lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "eee", "gee", "kah", "el", "em", "en", "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
+        lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "eee", "gee", "kah", "el", "em", "en",
+                           "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
         upperconversion = []
         for item in lowerconversion:
             test = item.split()
             test[0] = test[0].swapcase()
             teststring = listToString(test)
             upperconversion.append(teststring)
-        numberconversion = ["Un"]
+        numberconversion = ["Cero", "Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf"]
         French.destroy()
         Spanish.destroy()
         German.destroy()
         Numbers.destroy()
-        money(lowerconversion,upperconversion,numberconversion)
+        money(lowerconversion, upperconversion, numberconversion)
+
     def spanish():
         global language
         language = "Spanish"
@@ -312,26 +354,43 @@ def function1(lowerconversion,upperconversion, numberconversion):
         German.destroy()
         Numbers.destroy()
         upperconversion = []
-        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "i", "jota", "ca", "ele", "eme", "ene", "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
+        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "i", "jota", "ca", "ele", "eme", "ene",
+                           "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
         for item in lowerconversion:
             test = item.split()
             test[0] = test[0].swapcase()
             teststring = listToString(test)
             upperconversion.append(teststring)
-        numberconversion = ["cero", "uno", "dos" ,"tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"]
+        print(upperconversion)
+        numberconversion = ["Cero", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"]
         money(lowerconversion, upperconversion, numberconversion)
+
     def german():
         global language
         language = "German"
-        money()
+        French.destroy()
+        Spanish.destroy()
+        German.destroy()
+        Numbers.destroy()
+        upperconversion = []
+        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "i", "jot", "ka", "el", "em", "en",
+                           "oh", "pe", "ku", "er", "es", "te", "oo", "vau", "ve", "iks", "oopsilon", "zet"]
+        for item in lowerconversion:
+            test = item.split()
+            test[0] = test[0].swapcase()
+            teststring = listToString(test)
+            upperconversion.append(teststring)
+        numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs", "Sieben", "Acht", "Neun"]
+        money(lowerconversion, upperconversion, numberconversion)
+
     Numbers = tk.Tk()
     Numbers.geometry("600x400")
     French = Button(Numbers, text="French", command=french)
     Spanish = Button(Numbers, text="Spanish", command=spanish)
     German = Button(Numbers, text="German", command=german)
-    French.place(relwidth=(1/3), relheight=1, relx=0, rely=0)
-    Spanish.place(relwidth=(1/3), relheight=1, relx=(1/3), rely=0)
-    German.place(relwidth=(1/3), relheight=1, relx=(2/3), rely=0)
+    French.place(relwidth=(1 / 3), relheight=1, relx=0, rely=0)
+    Spanish.place(relwidth=(1 / 3), relheight=1, relx=(1 / 3), rely=0)
+    German.place(relwidth=(1 / 3), relheight=1, relx=(2 / 3), rely=0)
     Numbers.mainloop()
 
 
@@ -474,10 +533,11 @@ def decode():
                         final = final + Final_code
                     decode_code = final
         elif decode_pathway[y] == "f":
-
+            print("IDIOT")
         elif decode_pathway[y] == "s":
-
-        elif decode_pathway[y] == "f":
+            print("IDIOT")
+        elif decode_pathway[y] == "g":
+            print("IDIOT")
 
     print(decode_code)
     messagebox.showinfo(Title=None, message="The decoded characters is: " + decode_code)
@@ -528,6 +588,9 @@ French = Button()
 German = Button()
 Spanish = Button()
 language = ""
+lowerconversion = []
+upperconversion = []
+numberconversion = []
 root.geometry("600x400")
 output = []
 bases = []
@@ -547,7 +610,10 @@ b_functions = Button()
 b_nothing = Button()
 buttonCommit = Button()
 textBox = Text()
-
+indextouse = 0
+bInLow = False
+bInUp = False
+bInNum = False
 textBox = Text(root)
 textBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
 buttonCommit = Button(root, text="Upload text to be encoded or decoded, then click this button to continue",

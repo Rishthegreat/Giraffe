@@ -1,3 +1,4 @@
+
 from tkinter import *
 from tkinter import messagebox
 import clipboard
@@ -271,7 +272,7 @@ def complete():
 
 
 
-def function1(lowerconversion,upperconversion, numberconversion):
+def function1():
     global code, language, French, Spanish, German, Numbers, pathway, code
     def money(a,y,z):
         code.split()
@@ -286,6 +287,16 @@ def function1(lowerconversion,upperconversion, numberconversion):
             pathway.append("s")
         for item in range(0, len(code)):
             if code[item] in lowletters:
+                x = lowletters.index(code[item])
+                code[item]=lowerconversion[x]
+            elif code[item] in upperletters:
+                x = upperletters.index(code[item])
+                code[item] = upperconversion[x]
+            elif code[item] in numbers:
+                x = numbers.index(code[item])
+                code[item] = numberconversion[x]
+        listToString(code)
+
 
 
     def french():
@@ -298,7 +309,7 @@ def function1(lowerconversion,upperconversion, numberconversion):
             test[0] = test[0].swapcase()
             teststring = listToString(test)
             upperconversion.append(teststring)
-        numberconversion = ["Un"]
+        numberconversion = ["Cero","Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf"]
         French.destroy()
         Spanish.destroy()
         German.destroy()
@@ -323,7 +334,20 @@ def function1(lowerconversion,upperconversion, numberconversion):
     def german():
         global language
         language = "German"
-        money()
+        French.destroy()
+        Spanish.destroy()
+        German.destroy()
+        Numbers.destroy()
+        upperconversion = []
+        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "i", "jot", "ka", "el", "em", "en",
+                           "oh", "pe", "ku", "er", "es", "te", "oo", "vau", "ve", "iks", "oopsilon", "zet"]
+        for item in lowerconversion:
+            test = item.split()
+            test[0] = test[0].swapcase()
+            teststring = listToString(test)
+            upperconversion.append(teststring)
+        numberconversion = ["null", "eins", "zwei", "drei", "vier", "funf", "sechs", "sieben", "acht", "neun"]
+        money(lowerconversion, upperconversion, numberconversion)
     Numbers = tk.Tk()
     Numbers.geometry("600x400")
     French = Button(Numbers, text="French", command=french)
@@ -474,10 +498,11 @@ def decode():
                         final = final + Final_code
                     decode_code = final
         elif decode_pathway[y] == "f":
-
+            print("IDIOT")
         elif decode_pathway[y] == "s":
-
-        elif decode_pathway[y] == "f":
+            print("IDIOT")
+        elif decode_pathway[y] == "g":
+            print("IDIOT")
 
     print(decode_code)
     messagebox.showinfo(Title=None, message="The decoded characters is: " + decode_code)
@@ -528,6 +553,9 @@ French = Button()
 German = Button()
 Spanish = Button()
 language = ""
+lowerconversion = []
+upperconversion = []
+numberconversion = []
 root.geometry("600x400")
 output = []
 bases = []

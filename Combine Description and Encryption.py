@@ -282,9 +282,8 @@ def complete():
 def function1():
     global code, language, French, Spanish, German, Numbers, pathway, code, bInLow, bInUp, bInNum, indextouse
 
-    # a - lowerconversion, y - upperconversion, z - numberconversion
     def toanotherlang(lower, upper, nums):
-        global code, bInLow, bInUp, bInNum, indextouse
+        global code
         code = list(code)  # Making the variable code a list so that it is easier to work with in the code
         lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
                       "t", "u", "v", "w", "x", "y", "z"]
@@ -294,21 +293,21 @@ def function1():
         if language == "French":
             pathway.append("f")
         elif language == "German":
-            pathway.append("g")       # Appending the correspondingg letter for each language to pathway so that the during decoding, correct decoding functions will be executed
+            pathway.append("g")       # Appending the corresponding letter for each language to pathway so that the during decoding, correct decoding functions will be executed
         elif language == "Spanish":
             pathway.append("s")
-        for codeitem in range(0, len(code)):  # Iterating through every index of the list code
+        for codeitem in range(0, len(code)):                # Iterating through every index of the list code
             for lowitem in range(0, len(lowletters)):
-                if lowletters[lowitem] == code[codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
-                    code[codeitem] = lower[lowitem]        # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                if lowletters[lowitem] == code[codeitem]:   # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    code[codeitem] = lower[lowitem]         # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
             for upitem in range(0, len(upperletters)):
-                if upperletters[upitem] == code[codeitem]: # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
-                    code[codeitem] = upper[upitem]         # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                if upperletters[upitem] == code[codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    code[codeitem] = upper[upitem]          # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
             for numitem in range(0, len(numbers)):
-                if numbers[numitem] == code[codeitem]:     # Iterates through all indexes of the digits and checks whether any of them match the current index of code
-                    code[codeitem] = nums[numitem]         # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                if numbers[numitem] == code[codeitem]:      # Iterates through all indexes of the digits and checks whether any of them match the current index of code
+                    code[codeitem] = nums[numitem]          # If it matches, then it is replaced with the corresponding index of the items in the selected language
                     break
         code = listToString(code)      #A custom created function that converts the list back into a string
         print(code)                    #Prints out the result

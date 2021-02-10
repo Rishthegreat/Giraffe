@@ -96,25 +96,106 @@ def ascii():
 
 # converts a string into ascii code
 
-def notascii():
-    global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig
+def calc():
+    global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations
+
+    def add1():
+        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
+        def actadd():
+            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            inputValue = ntextBox.get("1.0", "end-1c")
+            code += inputValue
+            addwin.destroy()
+            add2.destroy()
+            ntextBox.destroy()
+
+        newind.destroy()
+        add.destroy()
+        subtract.destroy()
+        multiply.destroy()
+        divide.destroy()
+        addwin = tk.Tk()
+        add2 = Button(addwin, text="commit addition", command=actadd)
+        ntextBox = Text(addwin)
+        pathway.append("z")
+        operations.append(inputValue)
+
+    def subtract1():
+        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
+        def actsub():
+            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            inputValue = stextBox.get("1.0", "end-1c")
+            code -= inputValue
+            subwin.destroy()
+            sub2.destroy()
+            stextBox.destroy()
+
+        newind.destroy()
+        add.destroy()
+        subtract.destroy()
+        multiply.destroy()
+        divide.destroy()
+        subwin = tk.Tk()
+        sub2 = Button(subwin, text="commit addition", command=actsub)
+        stextBox = Text(subwin)
+        pathway.append("y")
+        operations.append(inputValue)
+
+    def multiply1():
+        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
+        def actmul():
+            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            inputValue = mtextBox.get("1.0", "end-1c")
+            code *= inputValue
+            mulwin.destroy()
+            mul2.destroy()
+            mtextBox.destroy()
+
+        newind.destroy()
+        add.destroy()
+        subtract.destroy()
+        multiply.destroy()
+        divide.destroy()
+        mulwin = tk.Tk()
+        mul2 = Button(mulwin, text="commit addition", command=actmul)
+        mtextBox = Text(mulwin)
+        pathway.append("x")
+        operations.append(inputValue)
+
+    def divide1():
+        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
+        def actdiv():
+            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            inputValue = dtextBox.get("1.0", "end-1c")
+            code *= inputValue
+            divwin.destroy()
+            div2.destroy()
+            dtextBox.destroy()
+
+        newind.destroy()
+        add.destroy()
+        subtract.destroy()
+        multiply.destroy()
+        divide.destroy()
+        divwin = tk.Tk()
+        div2 = Button(divwin, text="commit addition", command=actdiv)
+        dtextBox = Text(divwin)
+        pathway.append("w")
+        operations.append(inputValue)
 
     # string = code
+    if bases[-1] != 10:
+        tobase(code, bases[-1], 10)
+    newind = tk.Tk()
+    add = Button(newind, text="Add a number", command=add1)
+    subtract = Button(newind, text="Subtract a number", command=subtract1)
+    multiply = Button(newind, text="Multiply a number", command=multiply1)
+    divide = Button(newind, text="Divide a number", command=divide1)
 
-    code = code.split(" ")
-    help = []
-    print(code)
-    for item in code:
-        item = chr(int(item))
-        print(item)
-        help.append(item)
-    print(help)
-    code = "".join(help)
-    print(code)
-    currentvalue = 0
-    pathway.append("n")
-    lastcompletedfunc = "notascii"
-    actual = "notascii, letters"
 
 # messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
 
@@ -629,9 +710,9 @@ def yell():
     b_nascii.place(relx=(1 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
     b_octal.place(relx=(2 / 3), rely=0, relheight=(1 / 3), relwidth=(1 / 3))
     b_cipher.place(relx=0, rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_check.place(relx=(2 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+    b_check.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_complete.place(relx=0, rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
-    b_functions.place(relx=(1 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
+    b_functions.place(relx=(2 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     b_nothing.place(relx=(2 / 3), rely=(2 / 3), relheight=(1 / 3), relwidth=(1 / 3))
     Logo2.place(relx=(1 / 3), rely=(1 / 3), relheight=(1 / 3), relwidth=(1 / 3))
 
@@ -642,7 +723,7 @@ def create_buttons():
     b_decode = Button(root, text="Decode", fg="green", command=decode)
     b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
     b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
-                      command=notascii)
+                      command=calc)
     b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
     b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
     b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
@@ -669,6 +750,7 @@ bases = []
 onedig = []
 twodig = []
 ciphersused = []
+operations = []
 b_encode = Button()
 b_decode = Button()
 b_ascii = Button()

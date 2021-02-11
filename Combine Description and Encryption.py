@@ -101,6 +101,7 @@ def calc():
 
     def add1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
         def actadd():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = ntextBox.get("1.0", "end-1c")
@@ -110,12 +111,14 @@ def calc():
             add2.destroy()
             ntextBox.destroy()
             addwin.destroy()
+
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
         newind.destroy()
         addwin = tk.Tk()
+        addwin.geometry("600x400")
         add2 = Button(addwin, text="commit addition", command=actadd)
         ntextBox = Text(addwin)
         add2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
@@ -127,6 +130,7 @@ def calc():
 
     def subtract1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
         def actsub():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = stextBox.get("1.0", "end-1c")
@@ -137,6 +141,7 @@ def calc():
             stextBox.destroy()
             subwin.destroy()
             print(code)
+
         add.destroy()
         subtract.destroy()
         multiply.destroy()
@@ -145,13 +150,16 @@ def calc():
         subwin = tk.Tk()
         sub2 = Button(subwin, text="commit addition", command=actsub)
         stextBox = Text(subwin)
-        pathway.append("y")
-        operations.append(inputValue)
-        code = tobase(code, 10, int(bases[-2]))
+        subwin.geometry("600x400")
+        sub2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+        stextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+        pathway.append(inputValue + "y")
+        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     def multiply1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+
         def actmul():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = mtextBox.get("1.0", "end-1c")
@@ -161,6 +169,7 @@ def calc():
             mul2.destroy()
             mtextBox.destroy()
             mulwin.destroy()
+
         add.destroy()
         subtract.destroy()
         multiply.destroy()
@@ -186,6 +195,7 @@ def calc():
             div2.destroy()
             dtextBox.destroy()
             divwin.destroy()
+
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -205,6 +215,7 @@ def calc():
     else:
         code = int(code)
     newind = tk.Tk()
+    newind.geometry("600x400")
     add = Button(newind, text="Add a number", command=add1)
     subtract = Button(newind, text="Subtract a number", command=subtract1)
     multiply = Button(newind, text="Multiply a number", command=multiply1)
@@ -354,7 +365,8 @@ def show():
 def complete():
     global code, pathway, bases, twodig, onedig, cipherused, b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, textBox, buttonCommit, Logo2
     x = "/"
-    showcode = [listToString(pathway), code, x, listToString(bases), x, listToString(twodig), x, listToString(onedig),
+    showcode = [listToString(pathway), str(code), x, listToString(bases), x, listToString(twodig), x,
+                listToString(onedig),
                 x, listToString(ciphersused), x, str(len(pathway))]
     finalcode = listToString(showcode)
     clipboard.copy(finalcode)
@@ -599,6 +611,7 @@ def decode():
                 finalcode.append(Value)
                 continue
         decode_code = listToString(finalcode)
+
     code = code.split("/")
     decode_pathway = []
     decode_code = code[0]
@@ -741,7 +754,7 @@ def create_buttons():
     b_encode = Button(root, text="Encode", fg="blue", command=yell)
     b_decode = Button(root, text="Decode", fg="green", command=decode)
     b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
-    b_nascii = Button(root, text="convert to letters from ascii (Numbers (base 10) to letters)", fg="blue",
+    b_nascii = Button(root, text="Math Functions", fg="blue",
                       command=calc)
     b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
     b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)

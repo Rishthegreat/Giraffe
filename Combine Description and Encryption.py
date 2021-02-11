@@ -101,69 +101,72 @@ def calc():
 
     def add1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actadd():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = ntextBox.get("1.0", "end-1c")
             code += inputValue
-            addwin.destroy()
             add2.destroy()
             ntextBox.destroy()
-
-        newind.destroy()
+            addwin.destroy()
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
+        newind.destroy()
         addwin = tk.Tk()
         add2 = Button(addwin, text="commit addition", command=actadd)
         ntextBox = Text(addwin)
+        add2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+        ntextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
         pathway.append("z")
         operations.append(inputValue)
+        code = tobase(code, 10, int(bases[-2]))
+        print(code)
 
     def subtract1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actsub():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = stextBox.get("1.0", "end-1c")
             code -= inputValue
-            subwin.destroy()
             sub2.destroy()
             stextBox.destroy()
-
-        newind.destroy()
+            subwin.destroy()
+            print(code)
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
+        newind.destroy()
         subwin = tk.Tk()
         sub2 = Button(subwin, text="commit addition", command=actsub)
         stextBox = Text(subwin)
         pathway.append("y")
         operations.append(inputValue)
+        code = tobase(code, 10, int(bases[-2]))
+        print(code)
 
     def multiply1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actmul():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = mtextBox.get("1.0", "end-1c")
             code *= inputValue
-            mulwin.destroy()
             mul2.destroy()
             mtextBox.destroy()
-
-        newind.destroy()
+            mulwin.destroy()
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
+        newind.destroy()
         mulwin = tk.Tk()
         mul2 = Button(mulwin, text="commit addition", command=actmul)
         mtextBox = Text(mulwin)
         pathway.append("x")
         operations.append(inputValue)
+        code = tobase(code, 10, int(bases[-2]))
+        print(code)
 
     def divide1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
@@ -171,11 +174,12 @@ def calc():
         def actdiv():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = dtextBox.get("1.0", "end-1c")
+            inputValue = int(inputValue)
+            code = int(code)
             code *= inputValue
-            divwin.destroy()
             div2.destroy()
             dtextBox.destroy()
-
+            divwin.destroy()
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -186,15 +190,23 @@ def calc():
         dtextBox = Text(divwin)
         pathway.append("w")
         operations.append(inputValue)
+        code = tobase(code, 10, int(bases[-2]))
+        print(code)
 
     # string = code
     if bases[-2] != 10:
-        code = tobase(code, int(bases[-2]), 10)
+        code = int(tobase(code, int(bases[-2]), 10))
+    else:
+        code = int(code)
     newind = tk.Tk()
     add = Button(newind, text="Add a number", command=add1)
     subtract = Button(newind, text="Subtract a number", command=subtract1)
     multiply = Button(newind, text="Multiply a number", command=multiply1)
     divide = Button(newind, text="Divide a number", command=divide1)
+    add.place(relx=0, rely=0, relheight=0.5, relwidth=0.5)
+    subtract.place(relx=0.5, rely=0, relheight=0.5, relwidth=0.5)
+    multiply.place(relx=0, rely=0.5, relheight=0.5, relwidth=0.5)
+    divide.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.5)
 
 
 # messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
@@ -202,6 +214,7 @@ def calc():
 
 def tobase(n, currbase, finbase):
     n = str(n)
+    currbase = int(currbase)
     orignal = "0123456789ABCDEF"
     answerint = 0
     referencenums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]

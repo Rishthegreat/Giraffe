@@ -101,7 +101,6 @@ def calc():
 
     def add1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actadd():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = ntextBox.get("1.0", "end-1c")
@@ -109,7 +108,6 @@ def calc():
             addwin.destroy()
             add2.destroy()
             ntextBox.destroy()
-
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -120,10 +118,10 @@ def calc():
         ntextBox = Text(addwin)
         pathway.append("z")
         operations.append(inputValue)
+        tobase(code, 10, bases[-2])
 
     def subtract1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actsub():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = stextBox.get("1.0", "end-1c")
@@ -131,7 +129,6 @@ def calc():
             subwin.destroy()
             sub2.destroy()
             stextBox.destroy()
-
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -142,10 +139,10 @@ def calc():
         stextBox = Text(subwin)
         pathway.append("y")
         operations.append(inputValue)
+        tobase(code, 10, bases[-2])
 
     def multiply1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
-
         def actmul():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = mtextBox.get("1.0", "end-1c")
@@ -153,7 +150,6 @@ def calc():
             mulwin.destroy()
             mul2.destroy()
             mtextBox.destroy()
-
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -164,6 +160,7 @@ def calc():
         mtextBox = Text(mulwin)
         pathway.append("x")
         operations.append(inputValue)
+        tobase(code, 10, bases[-2])
 
     def divide1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
@@ -175,7 +172,6 @@ def calc():
             divwin.destroy()
             div2.destroy()
             dtextBox.destroy()
-
         newind.destroy()
         add.destroy()
         subtract.destroy()
@@ -186,10 +182,11 @@ def calc():
         dtextBox = Text(divwin)
         pathway.append("w")
         operations.append(inputValue)
+        tobase(code, 10, bases[-2])
 
     # string = code
-    if bases[-2] != 10:
-        code = tobase(code, int(bases[-2]), 10)
+    if bases[-1] != 10:
+        tobase(code, bases[-2], 10)
     newind = tk.Tk()
     add = Button(newind, text="Add a number", command=add1)
     subtract = Button(newind, text="Subtract a number", command=subtract1)
@@ -202,6 +199,7 @@ def calc():
 
 def tobase(n, currbase, finbase):
     n = str(n)
+    currbase = int(currbase)
     orignal = "0123456789ABCDEF"
     answerint = 0
     referencenums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -730,10 +728,10 @@ def create_buttons():
     b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
     b_functions = Button(root, text="Change language", fg="blue", command=function1)
     b_nothing = Button(root, text="Restart", fg="blue", command=replace)
-    Logo = Image.open("Logo.png")
-    Logo1 = ImageTk.PhotoImage(Logo)
-    Logo2 = Label(root, image=Logo1)
-    Logo2.image = Logo1
+    ##Logo = Image.open("Logo.png")
+    ##Logo1 = ImageTk.PhotoImage(Logo)
+    ##Logo2 = Label(root, image=Logo1)
+    ##Logo2.image = Logo1
 
 
 root = tk.Tk()
@@ -762,10 +760,10 @@ b_check = Button()
 b_complete = Button()
 b_functions = Button()
 b_nothing = Button()
-Logo = Image.open("Logo.png")
-Logo1 = ImageTk.PhotoImage(Logo)
-Logo2 = Label(image=Logo1)
-Logo2.image = Logo1
+##Logo = Image.open("Logo.png")
+##Logo1 = ImageTk.PhotoImage(Logo)
+##Logo2 = Label(image=Logo1)
+##Logo2.image = Logo1
 buttonCommit = Button()
 textBox = Text()
 bInLow = False

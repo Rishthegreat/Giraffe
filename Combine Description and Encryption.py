@@ -188,8 +188,8 @@ def calc():
         operations.append(inputValue)
 
     # string = code
-    if bases[-1] != 10:
-        tobase(code, bases[-1], 10)
+    if bases[-2] != 10:
+        code = tobase(code, int(bases[-2]), 10)
     newind = tk.Tk()
     add = Button(newind, text="Add a number", command=add1)
     subtract = Button(newind, text="Subtract a number", command=subtract1)

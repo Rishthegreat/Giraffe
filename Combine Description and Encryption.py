@@ -104,6 +104,8 @@ def calc():
         def actadd():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = ntextBox.get("1.0", "end-1c")
+            inputValue = int(inputValue)
+            code = int(code)
             code += inputValue
             add2.destroy()
             ntextBox.destroy()
@@ -128,6 +130,8 @@ def calc():
         def actsub():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = stextBox.get("1.0", "end-1c")
+            inputValue = int(inputValue)
+            code = int(code)
             code -= inputValue
             sub2.destroy()
             stextBox.destroy()
@@ -151,6 +155,8 @@ def calc():
         def actmul():
             global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
             inputValue = mtextBox.get("1.0", "end-1c")
+            inputValue = int(inputValue)
+            code = int(code)
             code *= inputValue
             mul2.destroy()
             mtextBox.destroy()
@@ -801,6 +807,7 @@ currentvalue = ""
 pathway = []
 lastcompletedfunc = ""
 actual = ""
+inputValue = ""
 
 # when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
 # both letters and numbers (non base 10 integer)

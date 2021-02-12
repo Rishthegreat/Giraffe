@@ -123,9 +123,8 @@ def calc():
         ntextBox = Text(addwin)
         add2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
         ntextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-        pathway.append("z")
-        operations.append(inputValue)
-        code = tobase(code, 10, int(bases[-2]))
+        pathway.append(inputValue + "z")
+        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     def subtract1():
@@ -178,9 +177,11 @@ def calc():
         mulwin = tk.Tk()
         mul2 = Button(mulwin, text="commit addition", command=actmul)
         mtextBox = Text(mulwin)
-        pathway.append("x")
-        operations.append(inputValue)
-        code = tobase(code, 10, int(bases[-2]))
+        mulwin.geometry("600x400")
+        mul2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+        mtextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+        pathway.append(inputValue + "x")
+        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     def divide1():
@@ -204,9 +205,11 @@ def calc():
         divwin = tk.Tk()
         div2 = Button(divwin, text="commit addition", command=actdiv)
         dtextBox = Text(divwin)
-        pathway.append("w")
-        operations.append(inputValue)
-        code = tobase(code, 10, int(bases[-2]))
+        divwin.geometry("600x400")
+        div2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
+        dtextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
+        pathway.append(inputValue + "w")
+        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     # string = code
@@ -629,6 +632,35 @@ def decode():
     decode_twodig.pop()
     decode_bases = decode_bases.split(",")
     decode_bases.pop()
+    totalen = len(decode_pathway)
+    currindex = 0
+    numstouse = []
+    numstem = []
+    numberone = ""
+    beginningindex = 0
+    first = False
+    while totalen != currindex:
+        if decode_pathway[currindex] == "1" or decode_pathway[currindex] == "2" or decode_pathway[currindex] == "3" or \
+                decode_pathway[currindex] == "4" or decode_pathway[currindex] == "5" or decode_pathway[
+            currindex] == "6" or decode_pathway[currindex] == "7" or decode_pathway[currindex] == "8" or decode_pathway[
+            currindex] == "9":
+            numstem.append(decode_pathway[currindex])
+            if first == False:
+                beginningindex = decode_pathway[currindex]
+                first = True
+        if decode_pathway[currindex].islower:
+            if numstem:
+                numberone = listToString(numstem)
+                numstem = []
+                numstouse.append(numberone)
+                print(numberone)
+                numberone = ""
+                first = False
+                del decode_pathway[beginningindex:currindex]
+        currindex += 1
+        totalen = len(decode_pathway)
+        currindex = 0
+    print(numstouse)
     for y in range((len(decode_pathway) - 1), -1, -1):
         if decode_pathway[y] == "a":
             a()

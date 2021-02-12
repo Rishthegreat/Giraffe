@@ -108,6 +108,12 @@ def calc():
             inputValue = int(inputValue)
             code = int(code)
             code += inputValue
+            inputValue = str(inputValue)
+            for item in inputValue:
+                pathway.append(item)
+            pathway.append("z")
+            code = str(code)
+            code = str(tobase(code, 10, int(bases[-2])))
             add2.destroy()
             ntextBox.destroy()
             addwin.destroy()
@@ -123,9 +129,6 @@ def calc():
         ntextBox = Text(addwin)
         add2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
         ntextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-        pathway.append(inputValue + "z")
-        code = str(tobase(code, 10, int(bases[-2])))
-        print(code)
 
     def subtract1():
         global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
@@ -136,6 +139,12 @@ def calc():
             inputValue = int(inputValue)
             code = int(code)
             code -= inputValue
+            inputValue = str(inputValue)
+            for item in inputValue:
+                pathway.append(item)
+            pathway.append("y")
+            code = str(code)
+            code = str(tobase(code, 10, int(bases[-2])))
             sub2.destroy()
             stextBox.destroy()
             subwin.destroy()
@@ -152,8 +161,6 @@ def calc():
         subwin.geometry("600x400")
         sub2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
         stextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-        pathway.append(inputValue + "y")
-        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     def multiply1():
@@ -165,6 +172,12 @@ def calc():
             inputValue = int(inputValue)
             code = int(code)
             code *= inputValue
+            code = str(code)
+            code = str(tobase(code, 10, int(bases[-2])))
+            inputValue = str(inputValue)
+            for item in inputValue:
+                pathway.append(item)
+            pathway.append("x")
             mul2.destroy()
             mtextBox.destroy()
             mulwin.destroy()
@@ -180,8 +193,6 @@ def calc():
         mulwin.geometry("600x400")
         mul2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
         mtextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-        pathway.append(inputValue + "x")
-        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     def divide1():
@@ -193,6 +204,12 @@ def calc():
             inputValue = int(inputValue)
             code = int(code)
             code *= inputValue
+            code = str(code)
+            code = str(tobase(code, 10, int(bases[-2])))
+            inputValue = str(inputValue)
+            for item in inputValue:
+                pathway.append(item)
+            pathway.append("w")
             div2.destroy()
             dtextBox.destroy()
             divwin.destroy()
@@ -208,8 +225,6 @@ def calc():
         divwin.geometry("600x400")
         div2.place(relx=0.125, rely=0.5, relheight=0.4, relwidth=0.75)
         dtextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
-        pathway.append(inputValue + "w")
-        code = str(tobase(code, 10, int(bases[-2])))
         print(code)
 
     # string = code
@@ -514,7 +529,7 @@ def replace():
 
 
 def decode():
-    global code, decode_code, b_encode, b_decode, textBox, buttonCommit, CanUpNum, CanNum, Nothing
+    global code, decode_code, b_encode, b_decode, textBox, buttonCommit, CanUpNum, CanNum, Nothing, numstem
 
     def a():
         global decode_code, thereisonedig, thereistwodig
@@ -636,31 +651,30 @@ def decode():
     currindex = 0
     numstouse = []
     numstem = []
-    numberone = ""
+    print(len(numstem))
     beginningindex = 0
-    first = False
+    first = True
+    print(decode_pathway)
     while totalen != currindex:
-        if decode_pathway[currindex] == "1" or decode_pathway[currindex] == "2" or decode_pathway[currindex] == "3" or \
-                decode_pathway[currindex] == "4" or decode_pathway[currindex] == "5" or decode_pathway[
-            currindex] == "6" or decode_pathway[currindex] == "7" or decode_pathway[currindex] == "8" or decode_pathway[
-            currindex] == "9":
+        if decode_pathway[currindex].isdigit():
             numstem.append(decode_pathway[currindex])
-            if first == False:
-                beginningindex = decode_pathway[currindex]
-                first = True
-        if decode_pathway[currindex].islower:
-            if numstem:
-                numberone = listToString(numstem)
-                numstem = []
-                numstouse.append(numberone)
-                print(numberone)
-                numberone = ""
+            if first:
+                beginningindex = currindex
                 first = False
+            currindex += 1
+            totalen = len(decode_pathway)
+        else:
+            if len(numstem) != 0:
+                print(decode_pathway[currindex])
+                numstouse.append(listToString(numstem))
+                numstem = []
+                first = True
                 del decode_pathway[beginningindex:currindex]
-        currindex += 1
-        totalen = len(decode_pathway)
-        currindex = 0
-    print(numstouse)
+                currindex = 0
+                totalen = len(decode_pathway)
+            else:
+                currindex += 1
+                totalen = len(decode_pathway)
     for y in range((len(decode_pathway) - 1), -1, -1):
         if decode_pathway[y] == "a":
             a()
@@ -750,6 +764,21 @@ def decode():
                 upperconversion.append(item.swapcase())
             numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs", "Sieben", "Acht", "Neun"]
             toeng(lowerconversion, upperconversion, numberconversion)
+        elif decode_pathway[y] == "z":
+            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            decode_code -= int(numstouse[0])
+            numstouse.pop(0)
+            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
+        elif decode_pathway[y] == "y":
+            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            decode_code += int(numstouse[0])
+            numstouse.pop(0)
+            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
+        elif decode_pathway[y] == "x":
+            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            decode_code /= int(numstouse[0])
+            numstouse.pop(0)
+            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
 
     print(decode_code)
     messagebox.showinfo(Title=None, message="The decoded characters is: " + decode_code)
@@ -813,6 +842,7 @@ output = []
 bases = []
 onedig = []
 twodig = []
+numstem = []
 ciphersused = []
 operations = []
 b_encode = Button()

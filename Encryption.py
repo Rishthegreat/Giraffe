@@ -26,3 +26,23 @@ final = y.replace("¿¡ó", "b")
 y = final.replace("aóú", "c")
 final = y.replace("aúó", "d")
 print(final)
+
+while totalen != currindex:
+    if decode_pathway[currindex] == "0" or decode_pathway[currindex] == "1" or decode_pathway[currindex] == "2" or \
+            decode_pathway[currindex] == "3" or \
+            decode_pathway[currindex] == "4" or decode_pathway[currindex] == "5" or decode_pathway[
+        currindex] == "6" or decode_pathway[currindex] == "7" or decode_pathway[currindex] == "8" or decode_pathway[
+        currindex] == "9":
+        numstem.append(decode_pathway[currindex])
+        if first:
+            beginningindex = currindex
+            first = False
+    if decode_pathway[currindex].islower:
+        if len(numstem) != 0:
+            print(decode_pathway[currindex])
+            numstouse.append(listToString(numstem))
+            numstem = []
+            first = True
+            del decode_pathway[beginningindex:currindex]
+    currindex += 1
+    totalen = len(decode_pathway)

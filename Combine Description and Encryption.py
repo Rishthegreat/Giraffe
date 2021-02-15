@@ -274,14 +274,15 @@ def beforetobase():
 
     def inputforconversion():
         global code, currentvalue, bases
-        base = int(enterbox.get("1.0", "end-1c"))
+        currentbase = int(bases[-2])
+        finalbase = int(enterbox.get("1.0", "end-1c"))
+        code = tobase(code, currentbase, finalbase)
         entbase.destroy()
         enterbox.destroy()
-        code = tobase(code, int(bases[len(bases) - 2]), int(base))
         print(code)
         tobasewindow.destroy()
         pathway.append("b")
-        bases.append(str(base))
+        bases.append(str(finalbase))
         bases.append(",")
         print(pathway)
         print(bases)
@@ -769,10 +770,12 @@ def decode():
             numstouse.pop(0)
             decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
         elif decode_pathway[y] == "y":
-            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            currentbase = int(decode_bases[-1])
+            decode_code = int(tobase(decode_code, currentbase, 10))
             decode_code += int(numstouse[0])
             numstouse.pop(0)
-            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
+            finalbase = currentbase
+            decode_code = str(tobase(decode_code, 10, finalbase))
         elif decode_pathway[y] == "x":
             decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
             decode_code /= int(numstouse[0])

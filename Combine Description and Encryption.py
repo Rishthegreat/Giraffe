@@ -250,17 +250,17 @@ def calc():
 def tobase(n, currbase, finbase):
     n = str(n)    # n is the number that needs to be converted to another base
     currbase = int(currbase)
-    orignal = "0123456789ABCDEF"
+    original = "0123456789ABCDEF"
     answerint = 0
     referencenums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     for x in range((len(n) - 1), -1, -1):
-        answerint += (referencenums[orignal.index(n[x])]) * (currbase ** ((len(n) - 1) - x))   # Converts the number into base 10
+        answerint += (referencenums[original.index(n[x])]) * (currbase ** ((len(n) - 1) - x))   # Converts the number into base 10
     if finbase != 10:
         def tobase1(n1, base):
             if n1 < base:
-                return str(orignal[n1])
+                return str(original[n1])
             else:
-                return str(tobase1(n1 // base, base) + orignal[(n1 % base)])   # Converts the number into the base that the user inputs (as a parameter called finbase)
+                return str(tobase1(n1 // base, base) + original[(n1 % base)])   # Converts the number into the base that the user inputs (as a parameter called finbase)
 
         return str(tobase1(answerint, finbase))   # return type string
     else:

@@ -203,22 +203,26 @@ def calc():
             inputValue = dtextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
-            code *= inputValue
-            code = str(code)
-            code = str(tobase(code, 10, int(bases[-2])))
-            inputValue = str(inputValue)
-            for item in inputValue:
-                pathway.append(item)
-            pathway.append("w")
-            div2.destroy()
-            dtextBox.destroy()
-            divwin.destroy()
-
-        newind.destroy()
+            if code % inputValue != 0:
+                messtext = "Your code is " + str(code) + " and this is not divisible by " + str(inputValue)
+                messagebox.showinfo(message=messtext)
+                code = str(tobase(code, 10, int(bases[-2])))
+            else:
+                code /= inputValue
+                code = str(int(code))
+                code = str(tobase(code, 10, int(bases[-2])))
+                inputValue = str(inputValue)
+                for item in inputValue:
+                    pathway.append(item)
+                pathway.append("w")
+                div2.destroy()
+                dtextBox.destroy()
+                divwin.destroy()
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
+        newind.destroy()
         divwin = tk.Tk()
         div2 = Button(divwin, text="commit addition", command=actdiv)
         dtextBox = Text(divwin)
@@ -517,8 +521,13 @@ def replace():
         TK.destroy()
         print(code)
 
-    global code
+    global code, bases, pathway, ciphersused, twodig, onedig
     code = ""
+    pathway = ""
+    bases = []
+    cipherused = []
+    twodig = []
+    onedig=[]
     TK = tk.Tk()
     TK.geometry("600x400")
     textboxx = Text(TK)
@@ -779,6 +788,13 @@ def decode():
         elif decode_pathway[y] == "x":
             decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
             decode_code /= int(numstouse[0])
+            decode_code = int(decode_code)
+            numstouse.pop(0)
+            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
+        elif decode_pathway[y] == "w":
+            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            decode_code *= int(numstouse[0])
+            decode_code = int(decode_code)
             numstouse.pop(0)
             decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
 
@@ -814,17 +830,17 @@ def yell():
 
 def create_buttons():
     global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, Logo, Logo1, Logo2
-    b_encode = Button(root, text="Encode", fg="blue", command=yell)
-    b_decode = Button(root, text="Decode", fg="green", command=decode)
-    b_ascii = Button(root, text="convert to ascii (Letters to Numbers)", fg="blue", command=ascii)
-    b_nascii = Button(root, text="Math Functions", fg="blue",
-                      command=calc)
-    b_octal = Button(root, text="Convert to any base (Numbers to Numbers)", fg="blue", command=beforetobase)
-    b_cipher = Button(root, text="Run your code through a cipher (Anything)", fg="blue", command=runthroughcipher)
-    b_check = Button(root, text="See what the current status of your code is", fg="blue", command=show)
-    b_complete = Button(root, text="Find your completed code", fg="blue", command=complete)
-    b_functions = Button(root, text="Change language", fg="blue", command=function1)
-    b_nothing = Button(root, text="Restart", fg="blue", command=replace)
+    b_encode = Button(root, text="Encode", fg="goldenrod", bg="gray25", command=yell, font=('Helvetica', 20, 'bold'))
+    b_decode = Button(root, text="Decode", fg="gray25", bg="goldenrod", command=decode, font=('Helvetica', 20, 'bold'))
+    b_ascii = Button(root, text="Convert to ASCII", fg="hot pink", bg="slate gray", font=('Helvetica', 20, 'bold'), command=ascii)
+    b_nascii = Button(root, text="Math Functions", fg="white", bg="red",
+                      command=calc, font=('Helvetica', 20, 'bold'))
+    b_octal = Button(root, text="Convert to any base", fg="white smoke", bg="midnight blue", command=beforetobase, font=('Helvetica', 20, 'bold'))
+    b_cipher = Button(root, text="Cipher Encryption", fg="slate gray", bg="hot pink", command=runthroughcipher, font=('Helvetica', 20, 'bold'))
+    b_check = Button(root, text="Current Status: Code", fg="red", bg="white", command=show, font=('Helvetica', 20, 'bold'))
+    b_complete = Button(root, text="Complete your code", fg="midnight blue", bg="white smoke", command=complete, font=('Helvetica', 20, 'bold'))
+    b_functions = Button(root, text="Change language", fg="blue", command=function1, font=('Helvetica', 20, 'bold'))
+    b_nothing = Button(root, text="Restart", fg="blue", command=replace, font=('Helvetica', 20, 'bold'))
     Logo = Image.open("Logo.png")
     Logo1 = ImageTk.PhotoImage(Logo)
     Logo2 = Label(root, image=Logo1)

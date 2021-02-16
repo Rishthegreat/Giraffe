@@ -203,22 +203,26 @@ def calc():
             inputValue = dtextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
-            code *= inputValue
-            code = str(code)
-            code = str(tobase(code, 10, int(bases[-2])))
-            inputValue = str(inputValue)
-            for item in inputValue:
-                pathway.append(item)
-            pathway.append("w")
-            div2.destroy()
-            dtextBox.destroy()
-            divwin.destroy()
-
-        newind.destroy()
+            if code % inputValue != 0:
+                messtext = "Your code is " + str(code) + " and this is not divisible by " + str(inputValue)
+                messagebox.showinfo(message=messtext)
+                code = str(tobase(code, 10, int(bases[-2])))
+            else:
+                code /= inputValue
+                code = str(int(code))
+                code = str(tobase(code, 10, int(bases[-2])))
+                inputValue = str(inputValue)
+                for item in inputValue:
+                    pathway.append(item)
+                pathway.append("w")
+                div2.destroy()
+                dtextBox.destroy()
+                divwin.destroy()
         add.destroy()
         subtract.destroy()
         multiply.destroy()
         divide.destroy()
+        newind.destroy()
         divwin = tk.Tk()
         div2 = Button(divwin, text="commit addition", command=actdiv)
         dtextBox = Text(divwin)
@@ -779,6 +783,13 @@ def decode():
         elif decode_pathway[y] == "x":
             decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
             decode_code /= int(numstouse[0])
+            decode_code = int(decode_code)
+            numstouse.pop(0)
+            decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
+        elif decode_pathway[y] == "w":
+            decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
+            decode_code *= int(numstouse[0])
+            decode_code = int(decode_code)
             numstouse.pop(0)
             decode_code = str(tobase(decode_code, 10, int(decode_bases[-1])))
 

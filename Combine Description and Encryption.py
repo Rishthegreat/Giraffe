@@ -248,9 +248,6 @@ def calc():
     divide.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.5)
 
 
-# messagebox.showinfo(Title=None, message="Not possible, please reread what will be changed by this button")
-
-
 def tobase(n, currbase, finbase):
     n = str(n)    # n is the number that needs to be converted to another base
     currbase = int(currbase)

@@ -1,0 +1,947 @@
+<html>
+<head>
+<title>Encryption and Decryption.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Encryption and Decryption.py</font>
+</center></td></tr></table>
+<pre><a name="l1"><span class="ln">1    </span></a><span class="s0">from </span><span class="s1">tkinter </span><span class="s0">import </span><span class="s1">*</span>
+<a name="l2"><span class="ln">2    </span></a><span class="s0">from </span><span class="s1">tkinter </span><span class="s0">import </span><span class="s1">messagebox</span>
+<a name="l3"><span class="ln">3    </span></a><span class="s0">import </span><span class="s1">clipboard</span>
+<a name="l4"><span class="ln">4    </span></a><span class="s0">from </span><span class="s1">PIL </span><span class="s0">import </span><span class="s1">ImageTk</span><span class="s0">, </span><span class="s1">Image</span>
+<a name="l5"><span class="ln">5    </span></a><span class="s0">import </span><span class="s1">tkinter </span><span class="s0">as </span><span class="s1">tk</span>
+<a name="l6"><span class="ln">6    </span></a>
+<a name="l7"><span class="ln">7    </span></a>
+<a name="l8"><span class="ln">8    </span></a><span class="s2"># pathway/code/bases/twodig/onedig/ciphersused/length of pathway</span>
+<a name="l9"><span class="ln">9    </span></a>
+<a name="l10"><span class="ln">10   </span></a><span class="s0">def </span><span class="s1">retrieve_input():</span>
+<a name="l11"><span class="ln">11   </span></a>    <span class="s0">global </span><span class="s1">textBox</span><span class="s0">, </span><span class="s1">buttonCommit</span>
+<a name="l12"><span class="ln">12   </span></a>    <span class="s1">inputValue = textBox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l13"><span class="ln">13   </span></a>    <span class="s0">global </span><span class="s1">code</span>
+<a name="l14"><span class="ln">14   </span></a>    <span class="s1">code = inputValue</span>
+<a name="l15"><span class="ln">15   </span></a>    <span class="s1">buttonCommit.destroy()</span>
+<a name="l16"><span class="ln">16   </span></a>    <span class="s1">textBox.destroy()</span>
+<a name="l17"><span class="ln">17   </span></a>    <span class="s1">b_encode.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">1</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l18"><span class="ln">18   </span></a>    <span class="s1">b_decode.place(relx=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">1</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l19"><span class="ln">19   </span></a>    <span class="s1">print(code)</span>
+<a name="l20"><span class="ln">20   </span></a>
+<a name="l21"><span class="ln">21   </span></a>
+<a name="l22"><span class="ln">22   </span></a><span class="s2"># procedure to get a user input and store it for later processing</span>
+<a name="l23"><span class="ln">23   </span></a>
+<a name="l24"><span class="ln">24   </span></a><span class="s0">def </span><span class="s1">isthere(s</span><span class="s0">, </span><span class="s1">j):</span>
+<a name="l25"><span class="ln">25   </span></a>    <span class="s0">if </span><span class="s1">j == </span><span class="s3">'digit'</span><span class="s1">:</span>
+<a name="l26"><span class="ln">26   </span></a>        <span class="s0">return </span><span class="s1">any(i.isdigit() </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">s)</span>
+<a name="l27"><span class="ln">27   </span></a>    <span class="s0">elif </span><span class="s1">j == </span><span class="s3">'lowletter'</span><span class="s1">:</span>
+<a name="l28"><span class="ln">28   </span></a>        <span class="s0">return </span><span class="s1">any(i.islower() </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">s)</span>
+<a name="l29"><span class="ln">29   </span></a>
+<a name="l30"><span class="ln">30   </span></a>
+<a name="l31"><span class="ln">31   </span></a><span class="s2"># procedure to see if two things match</span>
+<a name="l32"><span class="ln">32   </span></a>
+<a name="l33"><span class="ln">33   </span></a><span class="s0">def </span><span class="s1">nolowletter(d):</span>
+<a name="l34"><span class="ln">34   </span></a>    <span class="s0">return </span><span class="s1">any(i.islower() </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">d)</span>
+<a name="l35"><span class="ln">35   </span></a>
+<a name="l36"><span class="ln">36   </span></a>
+<a name="l37"><span class="ln">37   </span></a><span class="s2"># procedure to see if there are any lowercase letters in the code</span>
+<a name="l38"><span class="ln">38   </span></a>
+<a name="l39"><span class="ln">39   </span></a><span class="s0">def </span><span class="s1">num_there(s):</span>
+<a name="l40"><span class="ln">40   </span></a>    <span class="s0">return </span><span class="s1">any(i.isdigit() </span><span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">s)</span>
+<a name="l41"><span class="ln">41   </span></a>
+<a name="l42"><span class="ln">42   </span></a>
+<a name="l43"><span class="ln">43   </span></a><span class="s2"># procedure to see if there are any numbers in the code</span>
+<a name="l44"><span class="ln">44   </span></a>
+<a name="l45"><span class="ln">45   </span></a><span class="s0">def </span><span class="s1">split(word):</span>
+<a name="l46"><span class="ln">46   </span></a>    <span class="s0">return </span><span class="s1">[char </span><span class="s0">for </span><span class="s1">char </span><span class="s0">in </span><span class="s1">word]</span>
+<a name="l47"><span class="ln">47   </span></a>
+<a name="l48"><span class="ln">48   </span></a>
+<a name="l49"><span class="ln">49   </span></a><span class="s0">def </span><span class="s1">listToString(oflist):</span>
+<a name="l50"><span class="ln">50   </span></a>    <span class="s1">str1 = </span><span class="s3">&quot;&quot;</span>
+<a name="l51"><span class="ln">51   </span></a>    <span class="s0">return </span><span class="s1">(str1.join(oflist))</span>
+<a name="l52"><span class="ln">52   </span></a>
+<a name="l53"><span class="ln">53   </span></a>
+<a name="l54"><span class="ln">54   </span></a><span class="s2"># converts a list into a string</span>
+<a name="l55"><span class="ln">55   </span></a>
+<a name="l56"><span class="ln">56   </span></a><span class="s0">def </span><span class="s1">newdigits(n):</span>
+<a name="l57"><span class="ln">57   </span></a>    <span class="s1">count = </span><span class="s4">0</span>
+<a name="l58"><span class="ln">58   </span></a>    <span class="s0">while </span><span class="s1">n != </span><span class="s4">0</span><span class="s1">:</span>
+<a name="l59"><span class="ln">59   </span></a>        <span class="s1">n //= </span><span class="s4">10</span>
+<a name="l60"><span class="ln">60   </span></a>        <span class="s1">count += </span><span class="s4">1</span>
+<a name="l61"><span class="ln">61   </span></a>    <span class="s0">return </span><span class="s1">count</span>
+<a name="l62"><span class="ln">62   </span></a>
+<a name="l63"><span class="ln">63   </span></a>
+<a name="l64"><span class="ln">64   </span></a><span class="s0">def </span><span class="s1">ascii():</span>
+<a name="l65"><span class="ln">65   </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">newset</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span>
+<a name="l66"><span class="ln">66   </span></a>    <span class="s1">string = code</span>
+<a name="l67"><span class="ln">67   </span></a>    <span class="s1">help = []</span>
+<a name="l68"><span class="ln">68   </span></a>    <span class="s1">code = split(code)</span>
+<a name="l69"><span class="ln">69   </span></a>    <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(code)):</span>
+<a name="l70"><span class="ln">70   </span></a>        <span class="s1">code[item] = str(ord(code[item]))</span>
+<a name="l71"><span class="ln">71   </span></a>        <span class="s1">help.append(code[item])</span>
+<a name="l72"><span class="ln">72   </span></a>    <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(help)):</span>
+<a name="l73"><span class="ln">73   </span></a>        <span class="s1">help[item] = int(help[item])</span>
+<a name="l74"><span class="ln">74   </span></a>        <span class="s0">if </span><span class="s1">newdigits(help[item]) == </span><span class="s4">2</span><span class="s1">:</span>
+<a name="l75"><span class="ln">75   </span></a>            <span class="s1">twodig.append(str(item))</span>
+<a name="l76"><span class="ln">76   </span></a>            <span class="s1">twodig.append(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l77"><span class="ln">77   </span></a>        <span class="s0">if </span><span class="s1">newdigits(help[item]) == </span><span class="s4">1</span><span class="s1">:</span>
+<a name="l78"><span class="ln">78   </span></a>            <span class="s1">onedig.append(str(item))</span>
+<a name="l79"><span class="ln">79   </span></a>            <span class="s1">onedig.append(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l80"><span class="ln">80   </span></a>        <span class="s1">help[item] = str(help[item])</span>
+<a name="l81"><span class="ln">81   </span></a>    <span class="s1">code = listToString(help)</span>
+<a name="l82"><span class="ln">82   </span></a>    <span class="s1">onedig.append(</span><span class="s3">&quot;;&quot;</span><span class="s1">)</span>
+<a name="l83"><span class="ln">83   </span></a>    <span class="s1">twodig.append(</span><span class="s3">&quot;;&quot;</span><span class="s1">)</span>
+<a name="l84"><span class="ln">84   </span></a>    <span class="s1">print(code)</span>
+<a name="l85"><span class="ln">85   </span></a>    <span class="s1">print(twodig)</span>
+<a name="l86"><span class="ln">86   </span></a>    <span class="s1">print(onedig)</span>
+<a name="l87"><span class="ln">87   </span></a>    <span class="s1">actual = </span><span class="s3">&quot;Ascii, numbers&quot;</span>
+<a name="l88"><span class="ln">88   </span></a>    <span class="s1">pathway.append(</span><span class="s3">&quot;a&quot;</span><span class="s1">)</span>
+<a name="l89"><span class="ln">89   </span></a>    <span class="s1">print(pathway)</span>
+<a name="l90"><span class="ln">90   </span></a>    <span class="s1">lastcompletedfunc = </span><span class="s3">&quot;ascii&quot;</span>
+<a name="l91"><span class="ln">91   </span></a>    <span class="s1">currentvalue = </span><span class="s4">1</span>
+<a name="l92"><span class="ln">92   </span></a>    <span class="s1">newset = </span><span class="s4">0</span>
+<a name="l93"><span class="ln">93   </span></a>    <span class="s1">bases.append(</span><span class="s3">&quot;10&quot;</span><span class="s1">)</span>
+<a name="l94"><span class="ln">94   </span></a>    <span class="s1">bases.append(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l95"><span class="ln">95   </span></a>
+<a name="l96"><span class="ln">96   </span></a>
+<a name="l97"><span class="ln">97   </span></a><span class="s2"># converts a string into ascii code</span>
+<a name="l98"><span class="ln">98   </span></a>
+<a name="l99"><span class="ln">99   </span></a><span class="s0">def </span><span class="s1">calc():</span>
+<a name="l100"><span class="ln">100  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span>
+<a name="l101"><span class="ln">101  </span></a>
+<a name="l102"><span class="ln">102  </span></a>    <span class="s0">def </span><span class="s1">add1():</span>
+<a name="l103"><span class="ln">103  </span></a>        <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l104"><span class="ln">104  </span></a>
+<a name="l105"><span class="ln">105  </span></a>        <span class="s0">def </span><span class="s1">actadd():</span>
+<a name="l106"><span class="ln">106  </span></a>            <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l107"><span class="ln">107  </span></a>            <span class="s1">inputValue = ntextBox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l108"><span class="ln">108  </span></a>            <span class="s1">inputValue = int(inputValue)</span>
+<a name="l109"><span class="ln">109  </span></a>            <span class="s1">code = int(code)</span>
+<a name="l110"><span class="ln">110  </span></a>            <span class="s1">code += inputValue</span>
+<a name="l111"><span class="ln">111  </span></a>            <span class="s1">inputValue = str(inputValue)</span>
+<a name="l112"><span class="ln">112  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">inputValue:</span>
+<a name="l113"><span class="ln">113  </span></a>                <span class="s1">pathway.append(item)</span>
+<a name="l114"><span class="ln">114  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;z&quot;</span><span class="s1">)</span>
+<a name="l115"><span class="ln">115  </span></a>            <span class="s1">code = str(code)</span>
+<a name="l116"><span class="ln">116  </span></a>            <span class="s1">code = str(tobase(code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])))</span>
+<a name="l117"><span class="ln">117  </span></a>            <span class="s1">add2.destroy()</span>
+<a name="l118"><span class="ln">118  </span></a>            <span class="s1">ntextBox.destroy()</span>
+<a name="l119"><span class="ln">119  </span></a>            <span class="s1">addwin.destroy()</span>
+<a name="l120"><span class="ln">120  </span></a>
+<a name="l121"><span class="ln">121  </span></a>        <span class="s1">add.destroy()</span>
+<a name="l122"><span class="ln">122  </span></a>        <span class="s1">subtract.destroy()</span>
+<a name="l123"><span class="ln">123  </span></a>        <span class="s1">multiply.destroy()</span>
+<a name="l124"><span class="ln">124  </span></a>        <span class="s1">divide.destroy()</span>
+<a name="l125"><span class="ln">125  </span></a>        <span class="s1">newind.destroy()</span>
+<a name="l126"><span class="ln">126  </span></a>        <span class="s1">addwin = tk.Tk()</span>
+<a name="l127"><span class="ln">127  </span></a>        <span class="s1">addwin.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l128"><span class="ln">128  </span></a>        <span class="s1">add2 = Button(addwin</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;commit addition&quot;</span><span class="s0">, </span><span class="s1">command=actadd)</span>
+<a name="l129"><span class="ln">129  </span></a>        <span class="s1">ntextBox = Text(addwin)</span>
+<a name="l130"><span class="ln">130  </span></a>        <span class="s1">add2.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l131"><span class="ln">131  </span></a>        <span class="s1">ntextBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l132"><span class="ln">132  </span></a>
+<a name="l133"><span class="ln">133  </span></a>    <span class="s0">def </span><span class="s1">subtract1():</span>
+<a name="l134"><span class="ln">134  </span></a>        <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l135"><span class="ln">135  </span></a>
+<a name="l136"><span class="ln">136  </span></a>        <span class="s0">def </span><span class="s1">actsub():</span>
+<a name="l137"><span class="ln">137  </span></a>            <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l138"><span class="ln">138  </span></a>            <span class="s1">inputValue = stextBox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l139"><span class="ln">139  </span></a>            <span class="s1">inputValue = int(inputValue)</span>
+<a name="l140"><span class="ln">140  </span></a>            <span class="s1">code = int(code)</span>
+<a name="l141"><span class="ln">141  </span></a>            <span class="s1">code -= inputValue</span>
+<a name="l142"><span class="ln">142  </span></a>            <span class="s1">inputValue = str(inputValue)</span>
+<a name="l143"><span class="ln">143  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">inputValue:</span>
+<a name="l144"><span class="ln">144  </span></a>                <span class="s1">pathway.append(item)</span>
+<a name="l145"><span class="ln">145  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;y&quot;</span><span class="s1">)</span>
+<a name="l146"><span class="ln">146  </span></a>            <span class="s1">code = str(code)</span>
+<a name="l147"><span class="ln">147  </span></a>            <span class="s1">code = str(tobase(code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])))</span>
+<a name="l148"><span class="ln">148  </span></a>            <span class="s1">sub2.destroy()</span>
+<a name="l149"><span class="ln">149  </span></a>            <span class="s1">stextBox.destroy()</span>
+<a name="l150"><span class="ln">150  </span></a>            <span class="s1">subwin.destroy()</span>
+<a name="l151"><span class="ln">151  </span></a>            <span class="s1">print(code)</span>
+<a name="l152"><span class="ln">152  </span></a>
+<a name="l153"><span class="ln">153  </span></a>        <span class="s1">add.destroy()</span>
+<a name="l154"><span class="ln">154  </span></a>        <span class="s1">subtract.destroy()</span>
+<a name="l155"><span class="ln">155  </span></a>        <span class="s1">multiply.destroy()</span>
+<a name="l156"><span class="ln">156  </span></a>        <span class="s1">divide.destroy()</span>
+<a name="l157"><span class="ln">157  </span></a>        <span class="s1">newind.destroy()</span>
+<a name="l158"><span class="ln">158  </span></a>        <span class="s1">subwin = tk.Tk()</span>
+<a name="l159"><span class="ln">159  </span></a>        <span class="s1">sub2 = Button(subwin</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;commit addition&quot;</span><span class="s0">, </span><span class="s1">command=actsub)</span>
+<a name="l160"><span class="ln">160  </span></a>        <span class="s1">stextBox = Text(subwin)</span>
+<a name="l161"><span class="ln">161  </span></a>        <span class="s1">subwin.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l162"><span class="ln">162  </span></a>        <span class="s1">sub2.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l163"><span class="ln">163  </span></a>        <span class="s1">stextBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l164"><span class="ln">164  </span></a>        <span class="s1">print(code)</span>
+<a name="l165"><span class="ln">165  </span></a>
+<a name="l166"><span class="ln">166  </span></a>    <span class="s0">def </span><span class="s1">multiply1():</span>
+<a name="l167"><span class="ln">167  </span></a>        <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l168"><span class="ln">168  </span></a>
+<a name="l169"><span class="ln">169  </span></a>        <span class="s0">def </span><span class="s1">actmul():</span>
+<a name="l170"><span class="ln">170  </span></a>            <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l171"><span class="ln">171  </span></a>            <span class="s1">inputValue = mtextBox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l172"><span class="ln">172  </span></a>            <span class="s1">inputValue = int(inputValue)</span>
+<a name="l173"><span class="ln">173  </span></a>            <span class="s1">code = int(code)</span>
+<a name="l174"><span class="ln">174  </span></a>            <span class="s1">code *= inputValue</span>
+<a name="l175"><span class="ln">175  </span></a>            <span class="s1">code = str(code)</span>
+<a name="l176"><span class="ln">176  </span></a>            <span class="s1">code = str(tobase(code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])))</span>
+<a name="l177"><span class="ln">177  </span></a>            <span class="s1">inputValue = str(inputValue)</span>
+<a name="l178"><span class="ln">178  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">inputValue:</span>
+<a name="l179"><span class="ln">179  </span></a>                <span class="s1">pathway.append(item)</span>
+<a name="l180"><span class="ln">180  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;x&quot;</span><span class="s1">)</span>
+<a name="l181"><span class="ln">181  </span></a>            <span class="s1">mul2.destroy()</span>
+<a name="l182"><span class="ln">182  </span></a>            <span class="s1">mtextBox.destroy()</span>
+<a name="l183"><span class="ln">183  </span></a>            <span class="s1">mulwin.destroy()</span>
+<a name="l184"><span class="ln">184  </span></a>
+<a name="l185"><span class="ln">185  </span></a>        <span class="s1">add.destroy()</span>
+<a name="l186"><span class="ln">186  </span></a>        <span class="s1">subtract.destroy()</span>
+<a name="l187"><span class="ln">187  </span></a>        <span class="s1">multiply.destroy()</span>
+<a name="l188"><span class="ln">188  </span></a>        <span class="s1">divide.destroy()</span>
+<a name="l189"><span class="ln">189  </span></a>        <span class="s1">newind.destroy()</span>
+<a name="l190"><span class="ln">190  </span></a>        <span class="s1">mulwin = tk.Tk()</span>
+<a name="l191"><span class="ln">191  </span></a>        <span class="s1">mul2 = Button(mulwin</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;commit addition&quot;</span><span class="s0">, </span><span class="s1">command=actmul)</span>
+<a name="l192"><span class="ln">192  </span></a>        <span class="s1">mtextBox = Text(mulwin)</span>
+<a name="l193"><span class="ln">193  </span></a>        <span class="s1">mulwin.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l194"><span class="ln">194  </span></a>        <span class="s1">mul2.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l195"><span class="ln">195  </span></a>        <span class="s1">mtextBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l196"><span class="ln">196  </span></a>        <span class="s1">print(code)</span>
+<a name="l197"><span class="ln">197  </span></a>
+<a name="l198"><span class="ln">198  </span></a>    <span class="s0">def </span><span class="s1">divide1():</span>
+<a name="l199"><span class="ln">199  </span></a>        <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l200"><span class="ln">200  </span></a>
+<a name="l201"><span class="ln">201  </span></a>        <span class="s0">def </span><span class="s1">actdiv():</span>
+<a name="l202"><span class="ln">202  </span></a>            <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">lastcompletedfunc</span><span class="s0">, </span><span class="s1">string</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">operations</span><span class="s0">, </span><span class="s1">inputValue</span>
+<a name="l203"><span class="ln">203  </span></a>            <span class="s1">inputValue = dtextBox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l204"><span class="ln">204  </span></a>            <span class="s1">inputValue = int(inputValue)</span>
+<a name="l205"><span class="ln">205  </span></a>            <span class="s1">code = int(code)</span>
+<a name="l206"><span class="ln">206  </span></a>            <span class="s0">if </span><span class="s1">code % inputValue != </span><span class="s4">0</span><span class="s1">:</span>
+<a name="l207"><span class="ln">207  </span></a>                <span class="s1">messtext = </span><span class="s3">&quot;Your code is &quot; </span><span class="s1">+ str(code) + </span><span class="s3">&quot; and this is not divisible by &quot; </span><span class="s1">+ str(inputValue)</span>
+<a name="l208"><span class="ln">208  </span></a>                <span class="s1">messagebox.showinfo(message=messtext)</span>
+<a name="l209"><span class="ln">209  </span></a>                <span class="s1">code = str(tobase(code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])))</span>
+<a name="l210"><span class="ln">210  </span></a>            <span class="s0">else</span><span class="s1">:</span>
+<a name="l211"><span class="ln">211  </span></a>                <span class="s1">code /= inputValue</span>
+<a name="l212"><span class="ln">212  </span></a>                <span class="s1">code = str(int(code))</span>
+<a name="l213"><span class="ln">213  </span></a>                <span class="s1">code = str(tobase(code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])))</span>
+<a name="l214"><span class="ln">214  </span></a>                <span class="s1">inputValue = str(inputValue)</span>
+<a name="l215"><span class="ln">215  </span></a>                <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">inputValue:</span>
+<a name="l216"><span class="ln">216  </span></a>                    <span class="s1">pathway.append(item)</span>
+<a name="l217"><span class="ln">217  </span></a>                <span class="s1">pathway.append(</span><span class="s3">&quot;w&quot;</span><span class="s1">)</span>
+<a name="l218"><span class="ln">218  </span></a>                <span class="s1">div2.destroy()</span>
+<a name="l219"><span class="ln">219  </span></a>                <span class="s1">dtextBox.destroy()</span>
+<a name="l220"><span class="ln">220  </span></a>                <span class="s1">divwin.destroy()</span>
+<a name="l221"><span class="ln">221  </span></a>        <span class="s1">add.destroy()</span>
+<a name="l222"><span class="ln">222  </span></a>        <span class="s1">subtract.destroy()</span>
+<a name="l223"><span class="ln">223  </span></a>        <span class="s1">multiply.destroy()</span>
+<a name="l224"><span class="ln">224  </span></a>        <span class="s1">divide.destroy()</span>
+<a name="l225"><span class="ln">225  </span></a>        <span class="s1">newind.destroy()</span>
+<a name="l226"><span class="ln">226  </span></a>        <span class="s1">divwin = tk.Tk()</span>
+<a name="l227"><span class="ln">227  </span></a>        <span class="s1">div2 = Button(divwin</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;commit addition&quot;</span><span class="s0">, </span><span class="s1">command=actdiv)</span>
+<a name="l228"><span class="ln">228  </span></a>        <span class="s1">dtextBox = Text(divwin)</span>
+<a name="l229"><span class="ln">229  </span></a>        <span class="s1">divwin.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l230"><span class="ln">230  </span></a>        <span class="s1">div2.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l231"><span class="ln">231  </span></a>        <span class="s1">dtextBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l232"><span class="ln">232  </span></a>        <span class="s1">print(code)</span>
+<a name="l233"><span class="ln">233  </span></a>
+<a name="l234"><span class="ln">234  </span></a>    <span class="s2"># string = code</span>
+<a name="l235"><span class="ln">235  </span></a>    <span class="s0">if </span><span class="s1">bases[-</span><span class="s4">2</span><span class="s1">] != </span><span class="s4">10</span><span class="s1">:</span>
+<a name="l236"><span class="ln">236  </span></a>        <span class="s1">code = int(tobase(code</span><span class="s0">, </span><span class="s1">int(bases[-</span><span class="s4">2</span><span class="s1">])</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span>
+<a name="l237"><span class="ln">237  </span></a>    <span class="s0">else</span><span class="s1">:</span>
+<a name="l238"><span class="ln">238  </span></a>        <span class="s1">code = int(code)</span>
+<a name="l239"><span class="ln">239  </span></a>    <span class="s1">newind = tk.Tk()</span>
+<a name="l240"><span class="ln">240  </span></a>    <span class="s1">newind.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l241"><span class="ln">241  </span></a>    <span class="s1">add = Button(newind</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Add a number&quot;</span><span class="s0">, </span><span class="s1">command=add1)</span>
+<a name="l242"><span class="ln">242  </span></a>    <span class="s1">subtract = Button(newind</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Subtract a number&quot;</span><span class="s0">, </span><span class="s1">command=subtract1)</span>
+<a name="l243"><span class="ln">243  </span></a>    <span class="s1">multiply = Button(newind</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Multiply a number&quot;</span><span class="s0">, </span><span class="s1">command=multiply1)</span>
+<a name="l244"><span class="ln">244  </span></a>    <span class="s1">divide = Button(newind</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Divide a number&quot;</span><span class="s0">, </span><span class="s1">command=divide1)</span>
+<a name="l245"><span class="ln">245  </span></a>    <span class="s1">add.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l246"><span class="ln">246  </span></a>    <span class="s1">subtract.place(relx=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l247"><span class="ln">247  </span></a>    <span class="s1">multiply.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l248"><span class="ln">248  </span></a>    <span class="s1">divide.place(relx=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.5</span><span class="s1">)</span>
+<a name="l249"><span class="ln">249  </span></a>
+<a name="l250"><span class="ln">250  </span></a>
+<a name="l251"><span class="ln">251  </span></a><span class="s0">def </span><span class="s1">tobase(n</span><span class="s0">, </span><span class="s1">currbase</span><span class="s0">, </span><span class="s1">finbase):</span>
+<a name="l252"><span class="ln">252  </span></a>    <span class="s1">n = str(n)    </span><span class="s2"># n is the number that needs to be converted to another base</span>
+<a name="l253"><span class="ln">253  </span></a>    <span class="s1">currbase = int(currbase)</span>
+<a name="l254"><span class="ln">254  </span></a>    <span class="s1">original = </span><span class="s3">&quot;0123456789ABCDEF&quot;</span>
+<a name="l255"><span class="ln">255  </span></a>    <span class="s1">answerint = </span><span class="s4">0</span>
+<a name="l256"><span class="ln">256  </span></a>    <span class="s1">referencenums = [</span><span class="s4">0</span><span class="s0">, </span><span class="s4">1</span><span class="s0">, </span><span class="s4">2</span><span class="s0">, </span><span class="s4">3</span><span class="s0">, </span><span class="s4">4</span><span class="s0">, </span><span class="s4">5</span><span class="s0">, </span><span class="s4">6</span><span class="s0">, </span><span class="s4">7</span><span class="s0">, </span><span class="s4">8</span><span class="s0">, </span><span class="s4">9</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s4">11</span><span class="s0">, </span><span class="s4">12</span><span class="s0">, </span><span class="s4">13</span><span class="s0">, </span><span class="s4">14</span><span class="s0">, </span><span class="s4">15</span><span class="s1">]</span>
+<a name="l257"><span class="ln">257  </span></a>    <span class="s0">for </span><span class="s1">x </span><span class="s0">in </span><span class="s1">range((len(n) - </span><span class="s4">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">-</span><span class="s4">1</span><span class="s0">, </span><span class="s1">-</span><span class="s4">1</span><span class="s1">):</span>
+<a name="l258"><span class="ln">258  </span></a>        <span class="s1">answerint += (referencenums[original.index(n[x])]) * (currbase ** ((len(n) - </span><span class="s4">1</span><span class="s1">) - x))</span>
+<a name="l259"><span class="ln">259  </span></a>                                                    <span class="s2"># Converts the number into base 10</span>
+<a name="l260"><span class="ln">260  </span></a>    <span class="s0">if </span><span class="s1">finbase != </span><span class="s4">10</span><span class="s1">:</span>
+<a name="l261"><span class="ln">261  </span></a>        <span class="s0">def </span><span class="s1">tobase1(n1</span><span class="s0">, </span><span class="s1">base):</span>
+<a name="l262"><span class="ln">262  </span></a>            <span class="s0">if </span><span class="s1">n1 &lt; base:</span>
+<a name="l263"><span class="ln">263  </span></a>                <span class="s0">return </span><span class="s1">str(original[n1])</span>
+<a name="l264"><span class="ln">264  </span></a>            <span class="s0">else</span><span class="s1">:</span>
+<a name="l265"><span class="ln">265  </span></a>                <span class="s0">return </span><span class="s1">str(tobase1(n1 // base</span><span class="s0">, </span><span class="s1">base) + original[(n1 % base)])   </span><span class="s2"># Converts the number into the</span>
+<a name="l266"><span class="ln">266  </span></a>                                                            <span class="s2"># base that the user inputs (as a parameter called finbase)</span>
+<a name="l267"><span class="ln">267  </span></a>
+<a name="l268"><span class="ln">268  </span></a>        <span class="s0">return </span><span class="s1">str(tobase1(answerint</span><span class="s0">, </span><span class="s1">finbase))   </span><span class="s2"># return type string</span>
+<a name="l269"><span class="ln">269  </span></a>    <span class="s0">else</span><span class="s1">:</span>
+<a name="l270"><span class="ln">270  </span></a>        <span class="s0">return </span><span class="s1">str(answerint)    </span><span class="s2"># return type string</span>
+<a name="l271"><span class="ln">271  </span></a>
+<a name="l272"><span class="ln">272  </span></a>
+<a name="l273"><span class="ln">273  </span></a><span class="s2"># converts a number to a different base</span>
+<a name="l274"><span class="ln">274  </span></a>
+<a name="l275"><span class="ln">275  </span></a><span class="s0">def </span><span class="s1">beforetobase():</span>
+<a name="l276"><span class="ln">276  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">bases</span>
+<a name="l277"><span class="ln">277  </span></a>
+<a name="l278"><span class="ln">278  </span></a>    <span class="s0">def </span><span class="s1">inputforconversion():</span>
+<a name="l279"><span class="ln">279  </span></a>        <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">bases</span>
+<a name="l280"><span class="ln">280  </span></a>        <span class="s1">currentbase = int(bases[-</span><span class="s4">2</span><span class="s1">])</span>
+<a name="l281"><span class="ln">281  </span></a>        <span class="s1">finalbase = int(enterbox.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">))</span>
+<a name="l282"><span class="ln">282  </span></a>        <span class="s1">code = tobase(code</span><span class="s0">, </span><span class="s1">currentbase</span><span class="s0">, </span><span class="s1">finalbase)</span>
+<a name="l283"><span class="ln">283  </span></a>        <span class="s1">entbase.destroy()</span>
+<a name="l284"><span class="ln">284  </span></a>        <span class="s1">enterbox.destroy()</span>
+<a name="l285"><span class="ln">285  </span></a>        <span class="s1">print(code)</span>
+<a name="l286"><span class="ln">286  </span></a>        <span class="s1">tobasewindow.destroy()</span>
+<a name="l287"><span class="ln">287  </span></a>        <span class="s1">pathway.append(</span><span class="s3">&quot;b&quot;</span><span class="s1">)</span>
+<a name="l288"><span class="ln">288  </span></a>        <span class="s1">bases.append(str(finalbase))</span>
+<a name="l289"><span class="ln">289  </span></a>        <span class="s1">bases.append(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l290"><span class="ln">290  </span></a>        <span class="s1">print(pathway)</span>
+<a name="l291"><span class="ln">291  </span></a>        <span class="s1">print(bases)</span>
+<a name="l292"><span class="ln">292  </span></a>        <span class="s1">currentvalue = </span><span class="s4">2</span>
+<a name="l293"><span class="ln">293  </span></a>
+<a name="l294"><span class="ln">294  </span></a>    <span class="s0">if </span><span class="s1">currentvalue == </span><span class="s4">0</span><span class="s1">:</span>
+<a name="l295"><span class="ln">295  </span></a>        <span class="s1">messagebox.showinfo(Title=</span><span class="s0">None, </span><span class="s1">message=</span><span class="s3">&quot;Not possible, please reread what will be changed by this button&quot;</span><span class="s1">)</span>
+<a name="l296"><span class="ln">296  </span></a>    <span class="s0">else</span><span class="s1">:</span>
+<a name="l297"><span class="ln">297  </span></a>        <span class="s1">tobasewindow = tk.Tk()</span>
+<a name="l298"><span class="ln">298  </span></a>        <span class="s1">tobasewindow.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l299"><span class="ln">299  </span></a>        <span class="s1">entbase = tk.Button(tobasewindow</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Enter the base you want to convert to and then click this button.&quot;</span><span class="s0">,</span>
+<a name="l300"><span class="ln">300  </span></a>                            <span class="s1">command=inputforconversion)</span>
+<a name="l301"><span class="ln">301  </span></a>        <span class="s1">enterbox = tk.Text(tobasewindow)</span>
+<a name="l302"><span class="ln">302  </span></a>        <span class="s1">enterbox.place(relwidth=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.25</span><span class="s0">, </span><span class="s1">relx=</span><span class="s4">0.25</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l303"><span class="ln">303  </span></a>        <span class="s1">entbase.place(relwidth=</span><span class="s4">0.75</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.45</span><span class="s1">)</span>
+<a name="l304"><span class="ln">304  </span></a>        <span class="s1">tobasewindow.mainloop()</span>
+<a name="l305"><span class="ln">305  </span></a>
+<a name="l306"><span class="ln">306  </span></a>
+<a name="l307"><span class="ln">307  </span></a><span class="s0">def </span><span class="s1">runthroughcipher():</span>
+<a name="l308"><span class="ln">308  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">currentvalue</span><span class="s0">, </span><span class="s1">pathway</span>
+<a name="l309"><span class="ln">309  </span></a>    <span class="s0">if </span><span class="s1">isthere(code</span><span class="s0">, </span><span class="s3">'digit'</span><span class="s1">) </span><span class="s0">and not </span><span class="s1">isthere(code</span><span class="s0">, </span><span class="s3">'lowletter'</span><span class="s1">):</span>
+<a name="l310"><span class="ln">310  </span></a>        <span class="s1">cipher = </span><span class="s3">&quot;áéíóúüñ¿¡€ëïमपजट&quot;</span>
+<a name="l311"><span class="ln">311  </span></a>        <span class="s1">digits = </span><span class="s3">&quot;1234567890ABCDEF&quot;</span>
+<a name="l312"><span class="ln">312  </span></a>        <span class="s1">instring = code</span>
+<a name="l313"><span class="ln">313  </span></a>        <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l314"><span class="ln">314  </span></a>        <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l315"><span class="ln">315  </span></a>        <span class="s1">answer = instring</span>
+<a name="l316"><span class="ln">316  </span></a>        <span class="s1">length = len(instring)</span>
+<a name="l317"><span class="ln">317  </span></a>        <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l318"><span class="ln">318  </span></a>        <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l319"><span class="ln">319  </span></a>        <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l320"><span class="ln">320  </span></a>            <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l321"><span class="ln">321  </span></a>                <span class="s1">Final_code = (cipher[digits.index(instring[counter])])</span>
+<a name="l322"><span class="ln">322  </span></a>                <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l323"><span class="ln">323  </span></a>                <span class="s1">final = final + Final_code</span>
+<a name="l324"><span class="ln">324  </span></a>        <span class="s1">print(final)</span>
+<a name="l325"><span class="ln">325  </span></a>        <span class="s1">code = final</span>
+<a name="l326"><span class="ln">326  </span></a>        <span class="s1">print(code)</span>
+<a name="l327"><span class="ln">327  </span></a>        <span class="s1">currentvalue = </span><span class="s4">2</span>
+<a name="l328"><span class="ln">328  </span></a>        <span class="s1">pathway.append(</span><span class="s3">&quot;c&quot;</span><span class="s1">)</span>
+<a name="l329"><span class="ln">329  </span></a>        <span class="s1">ciphersused.append(</span><span class="s3">&quot;1&quot;</span><span class="s1">)</span>
+<a name="l330"><span class="ln">330  </span></a>        <span class="s1">actual = </span><span class="s3">&quot;octal, numbers&quot;</span>
+<a name="l331"><span class="ln">331  </span></a>    <span class="s0">else</span><span class="s1">:</span>
+<a name="l332"><span class="ln">332  </span></a>        <span class="s0">if </span><span class="s3">&quot;,&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;.&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;?&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;!&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;(&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;;&quot; </span><span class="s0">in </span><span class="s1">code </span><span class="s0">or </span><span class="s3">&quot;:&quot; </span><span class="s0">in </span><span class="s1">code:</span>
+<a name="l333"><span class="ln">333  </span></a>            <span class="s1">cipher = </span><span class="s3">&quot;बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé&quot;</span>
+<a name="l334"><span class="ln">334  </span></a>            <span class="s1">digits = </span><span class="s3">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() &quot;</span>
+<a name="l335"><span class="ln">335  </span></a>            <span class="s1">instring = code</span>
+<a name="l336"><span class="ln">336  </span></a>            <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l337"><span class="ln">337  </span></a>            <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l338"><span class="ln">338  </span></a>            <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l339"><span class="ln">339  </span></a>            <span class="s1">answer = instring</span>
+<a name="l340"><span class="ln">340  </span></a>            <span class="s1">length = len(instring)</span>
+<a name="l341"><span class="ln">341  </span></a>            <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l342"><span class="ln">342  </span></a>            <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l343"><span class="ln">343  </span></a>                <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l344"><span class="ln">344  </span></a>                    <span class="s1">Final_code = (cipher[digits.index(instring[counter])])</span>
+<a name="l345"><span class="ln">345  </span></a>                    <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l346"><span class="ln">346  </span></a>                    <span class="s1">final = final + Final_code</span>
+<a name="l347"><span class="ln">347  </span></a>            <span class="s1">print(final)</span>
+<a name="l348"><span class="ln">348  </span></a>            <span class="s1">code = final</span>
+<a name="l349"><span class="ln">349  </span></a>            <span class="s1">print(code)</span>
+<a name="l350"><span class="ln">350  </span></a>            <span class="s1">currentvalue = </span><span class="s4">2</span>
+<a name="l351"><span class="ln">351  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;c&quot;</span><span class="s1">)</span>
+<a name="l352"><span class="ln">352  </span></a>            <span class="s1">ciphersused.append(</span><span class="s3">&quot;2&quot;</span><span class="s1">)</span>
+<a name="l353"><span class="ln">353  </span></a>            <span class="s1">actual = </span><span class="s3">&quot;octal, numbers&quot;</span>
+<a name="l354"><span class="ln">354  </span></a>        <span class="s0">else</span><span class="s1">:</span>
+<a name="l355"><span class="ln">355  </span></a>            <span class="s1">cipher = </span><span class="s3">&quot;1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&amp;*()_+=-?&gt;&lt;ùûÿ€«»—æ&quot;</span>
+<a name="l356"><span class="ln">356  </span></a>            <span class="s1">letters = </span><span class="s3">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>
+<a name="l357"><span class="ln">357  </span></a>            <span class="s1">instring = code</span>
+<a name="l358"><span class="ln">358  </span></a>            <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l359"><span class="ln">359  </span></a>            <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l360"><span class="ln">360  </span></a>            <span class="s1">answer = instring</span>
+<a name="l361"><span class="ln">361  </span></a>            <span class="s1">length = len(instring)</span>
+<a name="l362"><span class="ln">362  </span></a>            <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l363"><span class="ln">363  </span></a>            <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l364"><span class="ln">364  </span></a>            <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l365"><span class="ln">365  </span></a>                <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l366"><span class="ln">366  </span></a>                    <span class="s1">Final_code = (cipher[letters.index(instring[counter])])</span>
+<a name="l367"><span class="ln">367  </span></a>                    <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l368"><span class="ln">368  </span></a>                    <span class="s2"># print(Final_code)</span>
+<a name="l369"><span class="ln">369  </span></a>                    <span class="s1">final = final + Final_code</span>
+<a name="l370"><span class="ln">370  </span></a>            <span class="s1">print(final)</span>
+<a name="l371"><span class="ln">371  </span></a>            <span class="s1">code = final</span>
+<a name="l372"><span class="ln">372  </span></a>            <span class="s1">print(code)</span>
+<a name="l373"><span class="ln">373  </span></a>            <span class="s1">currentvalue = </span><span class="s4">3</span>
+<a name="l374"><span class="ln">374  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;c&quot;</span><span class="s1">)</span>
+<a name="l375"><span class="ln">375  </span></a>            <span class="s1">ciphersused.append(</span><span class="s3">&quot;3&quot;</span><span class="s1">)</span>
+<a name="l376"><span class="ln">376  </span></a>            <span class="s1">actual = </span><span class="s3">&quot;cipher, accents&quot;</span>
+<a name="l377"><span class="ln">377  </span></a>
+<a name="l378"><span class="ln">378  </span></a>
+<a name="l379"><span class="ln">379  </span></a><span class="s2"># runs the code through a cipher</span>
+<a name="l380"><span class="ln">380  </span></a>
+<a name="l381"><span class="ln">381  </span></a>
+<a name="l382"><span class="ln">382  </span></a><span class="s0">def </span><span class="s1">show():</span>
+<a name="l383"><span class="ln">383  </span></a>    <span class="s1">messagebox.showinfo(Title=</span><span class="s0">None, </span><span class="s1">message=code)</span>
+<a name="l384"><span class="ln">384  </span></a>
+<a name="l385"><span class="ln">385  </span></a>
+<a name="l386"><span class="ln">386  </span></a><span class="s0">def </span><span class="s1">complete():</span>
+<a name="l387"><span class="ln">387  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">cipherused</span><span class="s0">, </span><span class="s1">b_encode</span><span class="s0">, </span><span class="s1">b_decode</span><span class="s0">, </span><span class="s1">b_ascii</span><span class="s0">, </span><span class="s1">\</span>
+<a name="l388"><span class="ln">388  </span></a>        <span class="s1">b_nascii</span><span class="s0">, </span><span class="s1">b_octal</span><span class="s0">, </span><span class="s1">b_cipher</span><span class="s0">, </span><span class="s1">b_dontclick</span><span class="s0">, </span><span class="s1">b_check</span><span class="s0">, </span><span class="s1">b_complete</span><span class="s0">, </span><span class="s1">b_functions</span><span class="s0">, </span><span class="s1">\</span>
+<a name="l389"><span class="ln">389  </span></a>        <span class="s1">b_nothing</span><span class="s0">, </span><span class="s1">textBox</span><span class="s0">, </span><span class="s1">buttonCommit</span><span class="s0">, </span><span class="s1">Logo2</span>
+<a name="l390"><span class="ln">390  </span></a>    <span class="s1">x = </span><span class="s3">&quot;/&quot;</span>
+<a name="l391"><span class="ln">391  </span></a>    <span class="s1">showcode = [listToString(pathway)</span><span class="s0">, </span><span class="s1">str(code)</span><span class="s0">, </span><span class="s1">x</span><span class="s0">, </span><span class="s1">listToString(bases)</span><span class="s0">, </span><span class="s1">x</span><span class="s0">, </span><span class="s1">listToString(twodig)</span><span class="s0">, </span><span class="s1">x</span><span class="s0">,</span>
+<a name="l392"><span class="ln">392  </span></a>                <span class="s1">listToString(onedig)</span><span class="s0">,</span>
+<a name="l393"><span class="ln">393  </span></a>                <span class="s1">x</span><span class="s0">, </span><span class="s1">listToString(ciphersused)</span><span class="s0">, </span><span class="s1">x</span><span class="s0">, </span><span class="s1">str(len(pathway))]</span>
+<a name="l394"><span class="ln">394  </span></a>    <span class="s1">finalcode = listToString(showcode)</span>
+<a name="l395"><span class="ln">395  </span></a>    <span class="s1">clipboard.copy(finalcode)</span>
+<a name="l396"><span class="ln">396  </span></a>    <span class="s1">messagebox.showinfo(Title=</span><span class="s0">None, </span><span class="s1">message=</span><span class="s3">&quot;Your code is &quot; </span><span class="s1">+ finalcode + </span><span class="s3">&quot; and it has been copied to your clipboard&quot;</span><span class="s1">)</span>
+<a name="l397"><span class="ln">397  </span></a>    <span class="s1">code = </span><span class="s3">&quot;&quot;</span>
+<a name="l398"><span class="ln">398  </span></a>    <span class="s1">pathway</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span><span class="s0">, </span><span class="s1">cipherused = []</span><span class="s0">, </span><span class="s1">[]</span><span class="s0">, </span><span class="s1">[]</span><span class="s0">, </span><span class="s1">[]</span><span class="s0">, </span><span class="s1">[]</span>
+<a name="l399"><span class="ln">399  </span></a>    <span class="s1">b_ascii.destroy()</span>
+<a name="l400"><span class="ln">400  </span></a>    <span class="s1">b_nascii.destroy()</span>
+<a name="l401"><span class="ln">401  </span></a>    <span class="s1">b_octal.destroy()</span>
+<a name="l402"><span class="ln">402  </span></a>    <span class="s1">b_cipher.destroy()</span>
+<a name="l403"><span class="ln">403  </span></a>    <span class="s1">b_dontclick.destroy()</span>
+<a name="l404"><span class="ln">404  </span></a>    <span class="s1">b_check.destroy()</span>
+<a name="l405"><span class="ln">405  </span></a>    <span class="s1">b_complete.destroy()</span>
+<a name="l406"><span class="ln">406  </span></a>    <span class="s1">b_functions.destroy()</span>
+<a name="l407"><span class="ln">407  </span></a>    <span class="s1">b_nothing.destroy()</span>
+<a name="l408"><span class="ln">408  </span></a>    <span class="s1">Logo2.destroy()</span>
+<a name="l409"><span class="ln">409  </span></a>    <span class="s1">create_buttons()</span>
+<a name="l410"><span class="ln">410  </span></a>    <span class="s1">textBox = Text(root)</span>
+<a name="l411"><span class="ln">411  </span></a>    <span class="s1">textBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l412"><span class="ln">412  </span></a>    <span class="s1">buttonCommit = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Upload text to be encoded or decoded, then click this button to continue&quot;</span><span class="s0">,</span>
+<a name="l413"><span class="ln">413  </span></a>                          <span class="s1">command=retrieve_input)</span>
+<a name="l414"><span class="ln">414  </span></a>    <span class="s1">buttonCommit.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l415"><span class="ln">415  </span></a>
+<a name="l416"><span class="ln">416  </span></a>
+<a name="l417"><span class="ln">417  </span></a><span class="s0">def </span><span class="s1">function1():</span>
+<a name="l418"><span class="ln">418  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">language</span><span class="s0">, </span><span class="s1">French</span><span class="s0">, </span><span class="s1">Spanish</span><span class="s0">, </span><span class="s1">German</span><span class="s0">, </span><span class="s1">Numbers</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">code</span><span class="s0">, </span><span class="s1">bInLow</span><span class="s0">, </span><span class="s1">bInUp</span><span class="s0">, </span><span class="s1">bInNum</span><span class="s0">, </span><span class="s1">indextouse</span>
+<a name="l419"><span class="ln">419  </span></a>
+<a name="l420"><span class="ln">420  </span></a>    <span class="s0">def </span><span class="s1">toanotherlang(lower</span><span class="s0">, </span><span class="s1">upper</span><span class="s0">, </span><span class="s1">nums):</span>
+<a name="l421"><span class="ln">421  </span></a>        <span class="s0">global </span><span class="s1">code</span>
+<a name="l422"><span class="ln">422  </span></a>        <span class="s1">code = list(code)  </span><span class="s2"># Making the variable code a list so that it is easier to work with in the code</span>
+<a name="l423"><span class="ln">423  </span></a>        <span class="s1">lowletters = [</span><span class="s3">&quot;a&quot;</span><span class="s0">, </span><span class="s3">&quot;b&quot;</span><span class="s0">, </span><span class="s3">&quot;c&quot;</span><span class="s0">, </span><span class="s3">&quot;d&quot;</span><span class="s0">, </span><span class="s3">&quot;e&quot;</span><span class="s0">, </span><span class="s3">&quot;f&quot;</span><span class="s0">, </span><span class="s3">&quot;g&quot;</span><span class="s0">, </span><span class="s3">&quot;h&quot;</span><span class="s0">, </span><span class="s3">&quot;i&quot;</span><span class="s0">, </span><span class="s3">&quot;j&quot;</span><span class="s0">, </span><span class="s3">&quot;k&quot;</span><span class="s0">, </span><span class="s3">&quot;l&quot;</span><span class="s0">, </span><span class="s3">&quot;m&quot;</span><span class="s0">, </span><span class="s3">&quot;n&quot;</span><span class="s0">, </span><span class="s3">&quot;o&quot;</span><span class="s0">, </span><span class="s3">&quot;p&quot;</span><span class="s0">, </span><span class="s3">&quot;q&quot;</span><span class="s0">, </span><span class="s3">&quot;r&quot;</span><span class="s0">, </span><span class="s3">&quot;s&quot;</span><span class="s0">,</span>
+<a name="l424"><span class="ln">424  </span></a>                      <span class="s3">&quot;t&quot;</span><span class="s0">, </span><span class="s3">&quot;u&quot;</span><span class="s0">, </span><span class="s3">&quot;v&quot;</span><span class="s0">, </span><span class="s3">&quot;w&quot;</span><span class="s0">, </span><span class="s3">&quot;x&quot;</span><span class="s0">, </span><span class="s3">&quot;y&quot;</span><span class="s0">, </span><span class="s3">&quot;z&quot;</span><span class="s1">]</span>
+<a name="l425"><span class="ln">425  </span></a>        <span class="s1">upperletters = [</span><span class="s3">&quot;A&quot;</span><span class="s0">, </span><span class="s3">&quot;B&quot;</span><span class="s0">, </span><span class="s3">&quot;C&quot;</span><span class="s0">, </span><span class="s3">&quot;D&quot;</span><span class="s0">, </span><span class="s3">&quot;E&quot;</span><span class="s0">, </span><span class="s3">&quot;F&quot;</span><span class="s0">, </span><span class="s3">&quot;G&quot;</span><span class="s0">, </span><span class="s3">&quot;H&quot;</span><span class="s0">, </span><span class="s3">&quot;I&quot;</span><span class="s0">, </span><span class="s3">&quot;J&quot;</span><span class="s0">, </span><span class="s3">&quot;K&quot;</span><span class="s0">, </span><span class="s3">&quot;L&quot;</span><span class="s0">, </span><span class="s3">&quot;M&quot;</span><span class="s0">, </span><span class="s3">&quot;N&quot;</span><span class="s0">, </span><span class="s3">&quot;O&quot;</span><span class="s0">, </span><span class="s3">&quot;P&quot;</span><span class="s0">, </span><span class="s3">&quot;Q&quot;</span><span class="s0">, </span><span class="s3">&quot;R&quot;</span><span class="s0">, </span><span class="s3">&quot;S&quot;</span><span class="s0">,</span>
+<a name="l426"><span class="ln">426  </span></a>                        <span class="s3">&quot;T&quot;</span><span class="s0">, </span><span class="s3">&quot;U&quot;</span><span class="s0">, </span><span class="s3">&quot;V&quot;</span><span class="s0">, </span><span class="s3">&quot;W&quot;</span><span class="s0">, </span><span class="s3">&quot;X&quot;</span><span class="s0">, </span><span class="s3">&quot;Y&quot;</span><span class="s0">, </span><span class="s3">&quot;Z&quot;</span><span class="s1">]</span>
+<a name="l427"><span class="ln">427  </span></a>        <span class="s1">numbers = [</span><span class="s3">&quot;0&quot;</span><span class="s0">, </span><span class="s3">&quot;1&quot;</span><span class="s0">, </span><span class="s3">&quot;2&quot;</span><span class="s0">, </span><span class="s3">&quot;3&quot;</span><span class="s0">, </span><span class="s3">&quot;4&quot;</span><span class="s0">, </span><span class="s3">&quot;5&quot;</span><span class="s0">, </span><span class="s3">&quot;6&quot;</span><span class="s0">, </span><span class="s3">&quot;7&quot;</span><span class="s0">, </span><span class="s3">&quot;8&quot;</span><span class="s0">, </span><span class="s3">&quot;9&quot;</span><span class="s1">]</span>
+<a name="l428"><span class="ln">428  </span></a>        <span class="s0">if </span><span class="s1">language == </span><span class="s3">&quot;French&quot;</span><span class="s1">:</span>
+<a name="l429"><span class="ln">429  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;f&quot;</span><span class="s1">)</span>
+<a name="l430"><span class="ln">430  </span></a>        <span class="s0">elif </span><span class="s1">language == </span><span class="s3">&quot;German&quot;</span><span class="s1">:</span>
+<a name="l431"><span class="ln">431  </span></a>            <span class="s1">pathway.append(</span>
+<a name="l432"><span class="ln">432  </span></a>                <span class="s3">&quot;g&quot;</span><span class="s1">)  </span><span class="s2"># Appending the corresponding letter for each language to pathway so that the during decoding,</span>
+<a name="l433"><span class="ln">433  </span></a>                      <span class="s2"># correct decoding functions will be executed</span>
+<a name="l434"><span class="ln">434  </span></a>        <span class="s0">elif </span><span class="s1">language == </span><span class="s3">&quot;Spanish&quot;</span><span class="s1">:</span>
+<a name="l435"><span class="ln">435  </span></a>            <span class="s1">pathway.append(</span><span class="s3">&quot;s&quot;</span><span class="s1">)</span>
+<a name="l436"><span class="ln">436  </span></a>        <span class="s0">for </span><span class="s1">codeitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(code)):  </span><span class="s2"># Iterating through every index of the list code</span>
+<a name="l437"><span class="ln">437  </span></a>            <span class="s0">for </span><span class="s1">lowitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(lowletters)):</span>
+<a name="l438"><span class="ln">438  </span></a>                <span class="s0">if </span><span class="s1">lowletters[lowitem] == code[</span>
+<a name="l439"><span class="ln">439  </span></a>                    <span class="s1">codeitem]:  </span><span class="s2"># Iterates through all indexes of the uppercase and checks whether any of them match</span>
+<a name="l440"><span class="ln">440  </span></a>                                <span class="s2"># the current index of code</span>
+<a name="l441"><span class="ln">441  </span></a>                    <span class="s1">code[codeitem] = lower[</span>
+<a name="l442"><span class="ln">442  </span></a>                        <span class="s1">lowitem]  </span><span class="s2"># If it matches, then it is replaced with the corresponding index of the items</span>
+<a name="l443"><span class="ln">443  </span></a>                                  <span class="s2"># in the selected language</span>
+<a name="l444"><span class="ln">444  </span></a>                    <span class="s0">break</span>
+<a name="l445"><span class="ln">445  </span></a>            <span class="s0">for </span><span class="s1">upitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(upperletters)):</span>
+<a name="l446"><span class="ln">446  </span></a>                <span class="s0">if </span><span class="s1">upperletters[upitem] == code[</span>
+<a name="l447"><span class="ln">447  </span></a>                    <span class="s1">codeitem]:  </span><span class="s2"># Iterates through all indexes of the uppercase and checks whether any of them</span>
+<a name="l448"><span class="ln">448  </span></a>                                <span class="s2"># match the current index of code</span>
+<a name="l449"><span class="ln">449  </span></a>                    <span class="s1">code[codeitem] = upper[</span>
+<a name="l450"><span class="ln">450  </span></a>                        <span class="s1">upitem]  </span><span class="s2"># If it matches, then it is replaced with the corresponding index of the items</span>
+<a name="l451"><span class="ln">451  </span></a>                                 <span class="s2"># in the selected language</span>
+<a name="l452"><span class="ln">452  </span></a>                    <span class="s0">break</span>
+<a name="l453"><span class="ln">453  </span></a>            <span class="s0">for </span><span class="s1">numitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(numbers)):</span>
+<a name="l454"><span class="ln">454  </span></a>                <span class="s0">if </span><span class="s1">numbers[numitem] == code[</span>
+<a name="l455"><span class="ln">455  </span></a>                    <span class="s1">codeitem]:  </span><span class="s2"># Iterates through all indexes of the digits and checks whether any of</span>
+<a name="l456"><span class="ln">456  </span></a>                                <span class="s2"># them match the current index of code</span>
+<a name="l457"><span class="ln">457  </span></a>                    <span class="s1">code[codeitem] = nums[</span>
+<a name="l458"><span class="ln">458  </span></a>                        <span class="s1">numitem]  </span><span class="s2"># If it matches, then it is replaced with the corresponding index of the</span>
+<a name="l459"><span class="ln">459  </span></a>                                  <span class="s2"># items in the selected language</span>
+<a name="l460"><span class="ln">460  </span></a>                    <span class="s0">break</span>
+<a name="l461"><span class="ln">461  </span></a>        <span class="s1">code = listToString(code)  </span><span class="s2"># A custom created function that converts the list back into a string</span>
+<a name="l462"><span class="ln">462  </span></a>        <span class="s1">print(code)  </span><span class="s2"># Prints out the result</span>
+<a name="l463"><span class="ln">463  </span></a>
+<a name="l464"><span class="ln">464  </span></a>    <span class="s0">def </span><span class="s1">french():</span>
+<a name="l465"><span class="ln">465  </span></a>        <span class="s0">global </span><span class="s1">language</span>
+<a name="l466"><span class="ln">466  </span></a>        <span class="s1">language = </span><span class="s3">&quot;French&quot;</span>
+<a name="l467"><span class="ln">467  </span></a>        <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;bey&quot;</span><span class="s0">, </span><span class="s3">&quot;cay&quot;</span><span class="s0">, </span><span class="s3">&quot;day&quot;</span><span class="s0">, </span><span class="s3">&quot;euh&quot;</span><span class="s0">, </span><span class="s3">&quot;eff&quot;</span><span class="s0">, </span><span class="s3">&quot;jay&quot;</span><span class="s0">, </span><span class="s3">&quot;ash&quot;</span><span class="s0">, </span><span class="s3">&quot;ei&quot;</span><span class="s0">, </span><span class="s3">&quot;gee&quot;</span><span class="s0">, </span><span class="s3">&quot;kah&quot;</span><span class="s0">, </span><span class="s3">&quot;el&quot;</span><span class="s0">, </span><span class="s3">&quot;em&quot;</span><span class="s0">, </span><span class="s3">&quot;en&quot;</span><span class="s0">,</span>
+<a name="l468"><span class="ln">468  </span></a>                           <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pay&quot;</span><span class="s0">, </span><span class="s3">&quot;cou&quot;</span><span class="s0">, </span><span class="s3">&quot;air&quot;</span><span class="s0">, </span><span class="s3">&quot;es&quot;</span><span class="s0">, </span><span class="s3">'tay'</span><span class="s0">, </span><span class="s3">&quot;ou&quot;</span><span class="s0">, </span><span class="s3">&quot;vay&quot;</span><span class="s0">, </span><span class="s3">&quot;doublevay&quot;</span><span class="s0">, </span><span class="s3">&quot;eeks&quot;</span><span class="s0">, </span><span class="s3">&quot;egrecke&quot;</span><span class="s0">, </span><span class="s3">&quot;zed&quot;</span><span class="s1">]</span>
+<a name="l469"><span class="ln">469  </span></a>        <span class="s1">upperconversion = []</span>
+<a name="l470"><span class="ln">470  </span></a>        <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l471"><span class="ln">471  </span></a>            <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l472"><span class="ln">472  </span></a>        <span class="s1">print(upperconversion)</span>
+<a name="l473"><span class="ln">473  </span></a>        <span class="s1">numberconversion = [</span><span class="s3">&quot;Cero&quot;</span><span class="s0">, </span><span class="s3">&quot;Un&quot;</span><span class="s0">, </span><span class="s3">&quot;Deux&quot;</span><span class="s0">, </span><span class="s3">&quot;Trois&quot;</span><span class="s0">, </span><span class="s3">&quot;Quatre&quot;</span><span class="s0">, </span><span class="s3">&quot;Cinq&quot;</span><span class="s0">, </span><span class="s3">&quot;Six&quot;</span><span class="s0">, </span><span class="s3">&quot;Sept&quot;</span><span class="s0">, </span><span class="s3">&quot;Huit&quot;</span><span class="s0">, </span><span class="s3">&quot;Neuf&quot;</span><span class="s1">]</span>
+<a name="l474"><span class="ln">474  </span></a>        <span class="s1">French.destroy()</span>
+<a name="l475"><span class="ln">475  </span></a>        <span class="s1">Spanish.destroy()</span>
+<a name="l476"><span class="ln">476  </span></a>        <span class="s1">German.destroy()</span>
+<a name="l477"><span class="ln">477  </span></a>        <span class="s1">Numbers.destroy()</span>
+<a name="l478"><span class="ln">478  </span></a>        <span class="s1">toanotherlang(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l479"><span class="ln">479  </span></a>
+<a name="l480"><span class="ln">480  </span></a>    <span class="s0">def </span><span class="s1">spanish():</span>
+<a name="l481"><span class="ln">481  </span></a>        <span class="s0">global </span><span class="s1">language</span>
+<a name="l482"><span class="ln">482  </span></a>        <span class="s1">language = </span><span class="s3">&quot;Spanish&quot;</span>
+<a name="l483"><span class="ln">483  </span></a>        <span class="s1">French.destroy()</span>
+<a name="l484"><span class="ln">484  </span></a>        <span class="s1">Spanish.destroy()</span>
+<a name="l485"><span class="ln">485  </span></a>        <span class="s1">German.destroy()</span>
+<a name="l486"><span class="ln">486  </span></a>        <span class="s1">Numbers.destroy()</span>
+<a name="l487"><span class="ln">487  </span></a>        <span class="s1">upperconversion = []</span>
+<a name="l488"><span class="ln">488  </span></a>        <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;be&quot;</span><span class="s0">, </span><span class="s3">&quot;ce&quot;</span><span class="s0">, </span><span class="s3">&quot;de&quot;</span><span class="s0">, </span><span class="s3">&quot;eh&quot;</span><span class="s0">, </span><span class="s3">&quot;efe&quot;</span><span class="s0">, </span><span class="s3">&quot;ge&quot;</span><span class="s0">, </span><span class="s3">&quot;hache&quot;</span><span class="s0">, </span><span class="s3">&quot;ii&quot;</span><span class="s0">, </span><span class="s3">&quot;jota&quot;</span><span class="s0">, </span><span class="s3">&quot;ca&quot;</span><span class="s0">, </span><span class="s3">&quot;ele&quot;</span><span class="s0">, </span><span class="s3">&quot;eme&quot;</span><span class="s0">, </span><span class="s3">&quot;ene&quot;</span><span class="s0">,</span>
+<a name="l489"><span class="ln">489  </span></a>                           <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pe&quot;</span><span class="s0">, </span><span class="s3">&quot;cu&quot;</span><span class="s0">, </span><span class="s3">&quot;ere&quot;</span><span class="s0">, </span><span class="s3">&quot;ese&quot;</span><span class="s0">, </span><span class="s3">&quot;te&quot;</span><span class="s0">, </span><span class="s3">&quot;uh&quot;</span><span class="s0">, </span><span class="s3">&quot;ve&quot;</span><span class="s0">, </span><span class="s3">&quot;dobleve&quot;</span><span class="s0">, </span><span class="s3">&quot;equis&quot;</span><span class="s0">, </span><span class="s3">&quot;igriega&quot;</span><span class="s0">, </span><span class="s3">&quot;zeta&quot;</span><span class="s1">]</span>
+<a name="l490"><span class="ln">490  </span></a>        <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l491"><span class="ln">491  </span></a>            <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l492"><span class="ln">492  </span></a>        <span class="s1">print(upperconversion)</span>
+<a name="l493"><span class="ln">493  </span></a>        <span class="s1">numberconversion = [</span><span class="s3">&quot;Cero&quot;</span><span class="s0">, </span><span class="s3">&quot;Uno&quot;</span><span class="s0">, </span><span class="s3">&quot;Dos&quot;</span><span class="s0">, </span><span class="s3">&quot;Tres&quot;</span><span class="s0">, </span><span class="s3">&quot;Cuatro&quot;</span><span class="s0">, </span><span class="s3">&quot;Cinco&quot;</span><span class="s0">, </span><span class="s3">&quot;Seis&quot;</span><span class="s0">, </span><span class="s3">&quot;Siete&quot;</span><span class="s0">, </span><span class="s3">&quot;Ocho&quot;</span><span class="s0">, </span><span class="s3">&quot;Nueve&quot;</span><span class="s1">]</span>
+<a name="l494"><span class="ln">494  </span></a>        <span class="s1">toanotherlang(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l495"><span class="ln">495  </span></a>
+<a name="l496"><span class="ln">496  </span></a>    <span class="s0">def </span><span class="s1">german():</span>
+<a name="l497"><span class="ln">497  </span></a>        <span class="s0">global </span><span class="s1">language</span>
+<a name="l498"><span class="ln">498  </span></a>        <span class="s1">language = </span><span class="s3">&quot;German&quot;</span>
+<a name="l499"><span class="ln">499  </span></a>        <span class="s1">French.destroy()</span>
+<a name="l500"><span class="ln">500  </span></a>        <span class="s1">Spanish.destroy()</span>
+<a name="l501"><span class="ln">501  </span></a>        <span class="s1">German.destroy()</span>
+<a name="l502"><span class="ln">502  </span></a>        <span class="s1">Numbers.destroy()</span>
+<a name="l503"><span class="ln">503  </span></a>        <span class="s1">upperconversion = []</span>
+<a name="l504"><span class="ln">504  </span></a>        <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;be&quot;</span><span class="s0">, </span><span class="s3">&quot;ce&quot;</span><span class="s0">, </span><span class="s3">&quot;de&quot;</span><span class="s0">, </span><span class="s3">&quot;eh&quot;</span><span class="s0">, </span><span class="s3">&quot;efe&quot;</span><span class="s0">, </span><span class="s3">&quot;ge&quot;</span><span class="s0">, </span><span class="s3">&quot;ha&quot;</span><span class="s0">, </span><span class="s3">&quot;ii&quot;</span><span class="s0">, </span><span class="s3">&quot;jot&quot;</span><span class="s0">, </span><span class="s3">&quot;ka&quot;</span><span class="s0">, </span><span class="s3">&quot;el&quot;</span><span class="s0">, </span><span class="s3">&quot;em&quot;</span><span class="s0">, </span><span class="s3">&quot;en&quot;</span><span class="s0">,</span>
+<a name="l505"><span class="ln">505  </span></a>                           <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pe&quot;</span><span class="s0">, </span><span class="s3">&quot;ku&quot;</span><span class="s0">, </span><span class="s3">&quot;er&quot;</span><span class="s0">, </span><span class="s3">&quot;es&quot;</span><span class="s0">, </span><span class="s3">&quot;te&quot;</span><span class="s0">, </span><span class="s3">&quot;oo&quot;</span><span class="s0">, </span><span class="s3">&quot;vau&quot;</span><span class="s0">, </span><span class="s3">&quot;ve&quot;</span><span class="s0">, </span><span class="s3">&quot;iks&quot;</span><span class="s0">, </span><span class="s3">&quot;opsilon&quot;</span><span class="s0">, </span><span class="s3">&quot;zet&quot;</span><span class="s1">]</span>
+<a name="l506"><span class="ln">506  </span></a>        <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l507"><span class="ln">507  </span></a>            <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l508"><span class="ln">508  </span></a>        <span class="s1">numberconversion = [</span><span class="s3">&quot;Null&quot;</span><span class="s0">, </span><span class="s3">&quot;Eins&quot;</span><span class="s0">, </span><span class="s3">&quot;Zwei&quot;</span><span class="s0">, </span><span class="s3">&quot;Drei&quot;</span><span class="s0">, </span><span class="s3">&quot;Vier&quot;</span><span class="s0">, </span><span class="s3">&quot;Funf&quot;</span><span class="s0">, </span><span class="s3">&quot;Sechs&quot;</span><span class="s0">, </span><span class="s3">&quot;Sieben&quot;</span><span class="s0">, </span><span class="s3">&quot;Acht&quot;</span><span class="s0">, </span><span class="s3">&quot;Neun&quot;</span><span class="s1">]</span>
+<a name="l509"><span class="ln">509  </span></a>        <span class="s1">toanotherlang(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l510"><span class="ln">510  </span></a>
+<a name="l511"><span class="ln">511  </span></a>    <span class="s1">Numbers = tk.Tk()</span>
+<a name="l512"><span class="ln">512  </span></a>    <span class="s1">Numbers.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l513"><span class="ln">513  </span></a>    <span class="s1">French = Button(Numbers</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;French&quot;</span><span class="s0">, </span><span class="s1">command=french)</span>
+<a name="l514"><span class="ln">514  </span></a>    <span class="s1">Spanish = Button(Numbers</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Spanish&quot;</span><span class="s0">, </span><span class="s1">command=spanish)</span>
+<a name="l515"><span class="ln">515  </span></a>    <span class="s1">German = Button(Numbers</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;German&quot;</span><span class="s0">, </span><span class="s1">command=german)</span>
+<a name="l516"><span class="ln">516  </span></a>    <span class="s1">French.place(relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">1</span><span class="s0">, </span><span class="s1">relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l517"><span class="ln">517  </span></a>    <span class="s1">Spanish.place(relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">1</span><span class="s0">, </span><span class="s1">relx=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l518"><span class="ln">518  </span></a>    <span class="s1">German.place(relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">1</span><span class="s0">, </span><span class="s1">relx=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l519"><span class="ln">519  </span></a>    <span class="s1">Numbers.mainloop()</span>
+<a name="l520"><span class="ln">520  </span></a>
+<a name="l521"><span class="ln">521  </span></a>
+<a name="l522"><span class="ln">522  </span></a><span class="s0">def </span><span class="s1">replace():</span>
+<a name="l523"><span class="ln">523  </span></a>    <span class="s0">def </span><span class="s1">retrieve_input2():</span>
+<a name="l524"><span class="ln">524  </span></a>        <span class="s0">global </span><span class="s1">code</span>
+<a name="l525"><span class="ln">525  </span></a>        <span class="s1">inputValue = textboxx.get(</span><span class="s3">&quot;1.0&quot;</span><span class="s0">, </span><span class="s3">&quot;end-1c&quot;</span><span class="s1">)</span>
+<a name="l526"><span class="ln">526  </span></a>        <span class="s1">code = inputValue</span>
+<a name="l527"><span class="ln">527  </span></a>        <span class="s1">ButtonCommitx.destroy()</span>
+<a name="l528"><span class="ln">528  </span></a>        <span class="s1">textboxx.destroy()</span>
+<a name="l529"><span class="ln">529  </span></a>        <span class="s1">TK.destroy()</span>
+<a name="l530"><span class="ln">530  </span></a>        <span class="s1">print(code)</span>
+<a name="l531"><span class="ln">531  </span></a>
+<a name="l532"><span class="ln">532  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">bases</span><span class="s0">, </span><span class="s1">pathway</span><span class="s0">, </span><span class="s1">ciphersused</span><span class="s0">, </span><span class="s1">twodig</span><span class="s0">, </span><span class="s1">onedig</span>
+<a name="l533"><span class="ln">533  </span></a>    <span class="s1">code = </span><span class="s3">&quot;&quot;</span>
+<a name="l534"><span class="ln">534  </span></a>    <span class="s1">pathway = </span><span class="s3">&quot;&quot;</span>
+<a name="l535"><span class="ln">535  </span></a>    <span class="s1">bases = []</span>
+<a name="l536"><span class="ln">536  </span></a>    <span class="s1">cipherused = []</span>
+<a name="l537"><span class="ln">537  </span></a>    <span class="s1">twodig = []</span>
+<a name="l538"><span class="ln">538  </span></a>    <span class="s1">onedig=[]</span>
+<a name="l539"><span class="ln">539  </span></a>    <span class="s1">TK = tk.Tk()</span>
+<a name="l540"><span class="ln">540  </span></a>    <span class="s1">TK.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l541"><span class="ln">541  </span></a>    <span class="s1">textboxx = Text(TK)</span>
+<a name="l542"><span class="ln">542  </span></a>    <span class="s1">textboxx.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l543"><span class="ln">543  </span></a>    <span class="s1">ButtonCommitx = Button(TK</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Apply your new words&quot;</span><span class="s0">, </span><span class="s1">command=retrieve_input2)</span>
+<a name="l544"><span class="ln">544  </span></a>    <span class="s1">ButtonCommitx.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l545"><span class="ln">545  </span></a>    <span class="s1">TK.mainloop()</span>
+<a name="l546"><span class="ln">546  </span></a>
+<a name="l547"><span class="ln">547  </span></a>
+<a name="l548"><span class="ln">548  </span></a><span class="s0">def </span><span class="s1">decode():</span>
+<a name="l549"><span class="ln">549  </span></a>    <span class="s0">global </span><span class="s1">code</span><span class="s0">, </span><span class="s1">decode_code</span><span class="s0">, </span><span class="s1">b_encode</span><span class="s0">, </span><span class="s1">b_decode</span><span class="s0">, </span><span class="s1">textBox</span><span class="s0">, </span><span class="s1">buttonCommit</span><span class="s0">, </span><span class="s1">CanUpNum</span><span class="s0">, </span><span class="s1">CanNum</span><span class="s0">, </span><span class="s1">Nothing</span><span class="s0">, </span><span class="s1">numstem</span>
+<a name="l550"><span class="ln">550  </span></a>
+<a name="l551"><span class="ln">551  </span></a>    <span class="s0">def </span><span class="s1">a():</span>
+<a name="l552"><span class="ln">552  </span></a>        <span class="s0">global </span><span class="s1">decode_code</span><span class="s0">, </span><span class="s1">thereisonedig</span><span class="s0">, </span><span class="s1">thereistwodig</span>
+<a name="l553"><span class="ln">553  </span></a>        <span class="s1">thereisonedig = </span><span class="s0">False</span>
+<a name="l554"><span class="ln">554  </span></a>        <span class="s1">thereistwodig = </span><span class="s0">False</span>
+<a name="l555"><span class="ln">555  </span></a>        <span class="s1">onedigsp = decode_onedig[-</span><span class="s4">1</span><span class="s1">]</span>
+<a name="l556"><span class="ln">556  </span></a>        <span class="s1">twodigsp = decode_twodig[-</span><span class="s4">1</span><span class="s1">]</span>
+<a name="l557"><span class="ln">557  </span></a>        <span class="s1">codetemp = []</span>
+<a name="l558"><span class="ln">558  </span></a>        <span class="s1">codeindex = </span><span class="s4">0</span>
+<a name="l559"><span class="ln">559  </span></a>        <span class="s1">coderange = </span><span class="s4">0</span>
+<a name="l560"><span class="ln">560  </span></a>        <span class="s0">if </span><span class="s1">len(onedigsp) &gt; </span><span class="s4">1</span><span class="s1">:</span>
+<a name="l561"><span class="ln">561  </span></a>            <span class="s1">onedigsp = onedigsp.split(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l562"><span class="ln">562  </span></a>            <span class="s1">onedigsp.pop()</span>
+<a name="l563"><span class="ln">563  </span></a>            <span class="s1">thereisonedig = </span><span class="s0">True</span>
+<a name="l564"><span class="ln">564  </span></a>        <span class="s0">if </span><span class="s1">len(twodigsp) &gt; </span><span class="s4">1</span><span class="s1">:</span>
+<a name="l565"><span class="ln">565  </span></a>            <span class="s1">twodigsp = twodigsp.split(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l566"><span class="ln">566  </span></a>            <span class="s1">twodigsp.pop()</span>
+<a name="l567"><span class="ln">567  </span></a>            <span class="s1">thereistwodig = </span><span class="s0">True</span>
+<a name="l568"><span class="ln">568  </span></a>        <span class="s0">for </span><span class="s1">index </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(onedigsp)):</span>
+<a name="l569"><span class="ln">569  </span></a>            <span class="s1">onedigsp[index] = int(onedigsp[index])</span>
+<a name="l570"><span class="ln">570  </span></a>        <span class="s0">for </span><span class="s1">index </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(twodigsp)):</span>
+<a name="l571"><span class="ln">571  </span></a>            <span class="s1">twodigsp[index] = int(twodigsp[index])</span>
+<a name="l572"><span class="ln">572  </span></a>        <span class="s0">while </span><span class="s1">coderange &lt; len(decode_code):</span>
+<a name="l573"><span class="ln">573  </span></a>            <span class="s0">if </span><span class="s1">thereisonedig </span><span class="s0">and </span><span class="s1">codeindex </span><span class="s0">in </span><span class="s1">onedigsp:</span>
+<a name="l574"><span class="ln">574  </span></a>                <span class="s1">codetemp.append(decode_code[coderange:(coderange + </span><span class="s4">1</span><span class="s1">)])</span>
+<a name="l575"><span class="ln">575  </span></a>                <span class="s1">coderange += </span><span class="s4">1</span>
+<a name="l576"><span class="ln">576  </span></a>            <span class="s0">elif </span><span class="s1">thereistwodig </span><span class="s0">and </span><span class="s1">codeindex </span><span class="s0">in </span><span class="s1">twodigsp:</span>
+<a name="l577"><span class="ln">577  </span></a>                <span class="s1">codetemp.append(decode_code[coderange:(coderange + </span><span class="s4">2</span><span class="s1">)])</span>
+<a name="l578"><span class="ln">578  </span></a>                <span class="s1">coderange += </span><span class="s4">2</span>
+<a name="l579"><span class="ln">579  </span></a>            <span class="s0">else</span><span class="s1">:</span>
+<a name="l580"><span class="ln">580  </span></a>                <span class="s1">codetemp.append(decode_code[coderange:(coderange + </span><span class="s4">3</span><span class="s1">)])</span>
+<a name="l581"><span class="ln">581  </span></a>                <span class="s1">coderange += </span><span class="s4">3</span>
+<a name="l582"><span class="ln">582  </span></a>            <span class="s1">codeindex += </span><span class="s4">1</span>
+<a name="l583"><span class="ln">583  </span></a>        <span class="s0">for </span><span class="s1">index </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(codetemp)):</span>
+<a name="l584"><span class="ln">584  </span></a>            <span class="s1">codetemp[index] = chr(int(codetemp[index]))</span>
+<a name="l585"><span class="ln">585  </span></a>        <span class="s1">decode_code = listToString(codetemp)</span>
+<a name="l586"><span class="ln">586  </span></a>
+<a name="l587"><span class="ln">587  </span></a>    <span class="s0">def </span><span class="s1">toeng(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion):</span>
+<a name="l588"><span class="ln">588  </span></a>        <span class="s0">global </span><span class="s1">decode_code</span>
+<a name="l589"><span class="ln">589  </span></a>        <span class="s1">lowletters = [</span><span class="s3">&quot;a&quot;</span><span class="s0">, </span><span class="s3">&quot;b&quot;</span><span class="s0">, </span><span class="s3">&quot;c&quot;</span><span class="s0">, </span><span class="s3">&quot;d&quot;</span><span class="s0">, </span><span class="s3">&quot;e&quot;</span><span class="s0">, </span><span class="s3">&quot;f&quot;</span><span class="s0">, </span><span class="s3">&quot;g&quot;</span><span class="s0">, </span><span class="s3">&quot;h&quot;</span><span class="s0">, </span><span class="s3">&quot;i&quot;</span><span class="s0">, </span><span class="s3">&quot;j&quot;</span><span class="s0">, </span><span class="s3">&quot;k&quot;</span><span class="s0">, </span><span class="s3">&quot;l&quot;</span><span class="s0">, </span><span class="s3">&quot;m&quot;</span><span class="s0">, </span><span class="s3">&quot;n&quot;</span><span class="s0">, </span><span class="s3">&quot;o&quot;</span><span class="s0">, </span><span class="s3">&quot;p&quot;</span><span class="s0">, </span><span class="s3">&quot;q&quot;</span><span class="s0">, </span><span class="s3">&quot;r&quot;</span><span class="s0">, </span><span class="s3">&quot;s&quot;</span><span class="s0">,</span>
+<a name="l590"><span class="ln">590  </span></a>                      <span class="s3">&quot;t&quot;</span><span class="s0">, </span><span class="s3">&quot;u&quot;</span><span class="s0">, </span><span class="s3">&quot;v&quot;</span><span class="s0">, </span><span class="s3">&quot;w&quot;</span><span class="s0">, </span><span class="s3">&quot;x&quot;</span><span class="s0">, </span><span class="s3">&quot;y&quot;</span><span class="s0">, </span><span class="s3">&quot;z&quot;</span><span class="s1">]</span>
+<a name="l591"><span class="ln">591  </span></a>        <span class="s1">upperletters = [</span><span class="s3">&quot;A&quot;</span><span class="s0">, </span><span class="s3">&quot;B&quot;</span><span class="s0">, </span><span class="s3">&quot;C&quot;</span><span class="s0">, </span><span class="s3">&quot;D&quot;</span><span class="s0">, </span><span class="s3">&quot;E&quot;</span><span class="s0">, </span><span class="s3">&quot;F&quot;</span><span class="s0">, </span><span class="s3">&quot;G&quot;</span><span class="s0">, </span><span class="s3">&quot;H&quot;</span><span class="s0">, </span><span class="s3">&quot;I&quot;</span><span class="s0">, </span><span class="s3">&quot;J&quot;</span><span class="s0">, </span><span class="s3">&quot;K&quot;</span><span class="s0">, </span><span class="s3">&quot;L&quot;</span><span class="s0">, </span><span class="s3">&quot;M&quot;</span><span class="s0">, </span><span class="s3">&quot;N&quot;</span><span class="s0">, </span><span class="s3">&quot;O&quot;</span><span class="s0">, </span><span class="s3">&quot;P&quot;</span><span class="s0">, </span><span class="s3">&quot;Q&quot;</span><span class="s0">, </span><span class="s3">&quot;R&quot;</span><span class="s0">,</span>
+<a name="l592"><span class="ln">592  </span></a>                        <span class="s3">&quot;S&quot;</span><span class="s0">,</span>
+<a name="l593"><span class="ln">593  </span></a>                        <span class="s3">&quot;T&quot;</span><span class="s0">, </span><span class="s3">&quot;U&quot;</span><span class="s0">, </span><span class="s3">&quot;V&quot;</span><span class="s0">, </span><span class="s3">&quot;W&quot;</span><span class="s0">, </span><span class="s3">&quot;X&quot;</span><span class="s0">, </span><span class="s3">&quot;Y&quot;</span><span class="s0">, </span><span class="s3">&quot;Z&quot;</span><span class="s1">]</span>
+<a name="l594"><span class="ln">594  </span></a>        <span class="s1">numbers = [</span><span class="s3">&quot;0&quot;</span><span class="s0">, </span><span class="s3">&quot;1&quot;</span><span class="s0">, </span><span class="s3">&quot;2&quot;</span><span class="s0">, </span><span class="s3">&quot;3&quot;</span><span class="s0">, </span><span class="s3">&quot;4&quot;</span><span class="s0">, </span><span class="s3">&quot;5&quot;</span><span class="s0">, </span><span class="s3">&quot;6&quot;</span><span class="s0">, </span><span class="s3">&quot;7&quot;</span><span class="s0">, </span><span class="s3">&quot;8&quot;</span><span class="s0">, </span><span class="s3">&quot;9&quot;</span><span class="s1">]</span>
+<a name="l595"><span class="ln">595  </span></a>        <span class="s1">indextouse = </span><span class="s4">0</span>
+<a name="l596"><span class="ln">596  </span></a>        <span class="s1">finalcode = []</span>
+<a name="l597"><span class="ln">597  </span></a>        <span class="s1">indexincrease = </span><span class="s4">2</span>
+<a name="l598"><span class="ln">598  </span></a>        <span class="s1">CanUpNum = </span><span class="s0">True</span>
+<a name="l599"><span class="ln">599  </span></a>        <span class="s1">CanNum = </span><span class="s0">False</span>
+<a name="l600"><span class="ln">600  </span></a>        <span class="s1">Nothing = </span><span class="s0">False</span>
+<a name="l601"><span class="ln">601  </span></a>        <span class="s1">decode_code = list(decode_code)</span>
+<a name="l602"><span class="ln">602  </span></a>        <span class="s0">while </span><span class="s1">indextouse &lt;= len(decode_code) - </span><span class="s4">1</span><span class="s1">:</span>
+<a name="l603"><span class="ln">603  </span></a>            <span class="s1">Value = decode_code[indextouse:(indextouse + </span><span class="s4">1</span><span class="s1">)]</span>
+<a name="l604"><span class="ln">604  </span></a>            <span class="s1">Value = listToString(Value)</span>
+<a name="l605"><span class="ln">605  </span></a>            <span class="s0">if </span><span class="s1">Value </span><span class="s0">in </span><span class="s1">lowletters </span><span class="s0">or </span><span class="s1">Value </span><span class="s0">in </span><span class="s1">upperletters </span><span class="s0">or </span><span class="s1">Value </span><span class="s0">in </span><span class="s1">numbers:</span>
+<a name="l606"><span class="ln">606  </span></a>                <span class="s1">Value = decode_code[indextouse:(indextouse + indexincrease)]</span>
+<a name="l607"><span class="ln">607  </span></a>                <span class="s1">Value = listToString(Value)</span>
+<a name="l608"><span class="ln">608  </span></a>                <span class="s0">for </span><span class="s1">lowitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(lowerconversion)):</span>
+<a name="l609"><span class="ln">609  </span></a>                    <span class="s0">if </span><span class="s1">Value == lowerconversion[lowitem]:</span>
+<a name="l610"><span class="ln">610  </span></a>                        <span class="s1">finalcode.append(lowletters[lowitem])</span>
+<a name="l611"><span class="ln">611  </span></a>                        <span class="s1">indextouse += indexincrease</span>
+<a name="l612"><span class="ln">612  </span></a>                        <span class="s1">indexincrease = </span><span class="s4">2</span>
+<a name="l613"><span class="ln">613  </span></a>                        <span class="s1">CanUpNum = </span><span class="s0">False</span>
+<a name="l614"><span class="ln">614  </span></a>                        <span class="s1">CanNum = </span><span class="s0">False</span>
+<a name="l615"><span class="ln">615  </span></a>                        <span class="s1">Nothing = </span><span class="s0">False</span>
+<a name="l616"><span class="ln">616  </span></a>                        <span class="s0">break</span>
+<a name="l617"><span class="ln">617  </span></a>                    <span class="s0">else</span><span class="s1">:</span>
+<a name="l618"><span class="ln">618  </span></a>                        <span class="s1">CanUpNum = </span><span class="s0">True</span>
+<a name="l619"><span class="ln">619  </span></a>                        <span class="s1">Nothing = </span><span class="s0">True</span>
+<a name="l620"><span class="ln">620  </span></a>                <span class="s0">if </span><span class="s1">CanUpNum:</span>
+<a name="l621"><span class="ln">621  </span></a>                    <span class="s0">for </span><span class="s1">upitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(upperconversion)):</span>
+<a name="l622"><span class="ln">622  </span></a>                        <span class="s0">if </span><span class="s1">Value == upperconversion[upitem]:</span>
+<a name="l623"><span class="ln">623  </span></a>                            <span class="s1">finalcode.append(upperletters[upitem])</span>
+<a name="l624"><span class="ln">624  </span></a>                            <span class="s1">indextouse += indexincrease</span>
+<a name="l625"><span class="ln">625  </span></a>                            <span class="s1">indexincrease = </span><span class="s4">2</span>
+<a name="l626"><span class="ln">626  </span></a>                            <span class="s1">CanNum = </span><span class="s0">False</span>
+<a name="l627"><span class="ln">627  </span></a>                            <span class="s1">Nothing = </span><span class="s0">False</span>
+<a name="l628"><span class="ln">628  </span></a>                            <span class="s0">break</span>
+<a name="l629"><span class="ln">629  </span></a>                        <span class="s0">else</span><span class="s1">:</span>
+<a name="l630"><span class="ln">630  </span></a>                            <span class="s1">CanNum = </span><span class="s0">True</span>
+<a name="l631"><span class="ln">631  </span></a>                            <span class="s1">Nothing = </span><span class="s0">True</span>
+<a name="l632"><span class="ln">632  </span></a>                <span class="s0">if </span><span class="s1">CanNum:</span>
+<a name="l633"><span class="ln">633  </span></a>                    <span class="s0">for </span><span class="s1">numitem </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">len(numberconversion)):</span>
+<a name="l634"><span class="ln">634  </span></a>                        <span class="s0">if </span><span class="s1">Value == numberconversion[numitem]:</span>
+<a name="l635"><span class="ln">635  </span></a>                            <span class="s1">finalcode.append(numbers[numitem])</span>
+<a name="l636"><span class="ln">636  </span></a>                            <span class="s1">indextouse += indexincrease</span>
+<a name="l637"><span class="ln">637  </span></a>                            <span class="s1">indexincrease = </span><span class="s4">2</span>
+<a name="l638"><span class="ln">638  </span></a>                            <span class="s1">Nothing = </span><span class="s0">False</span>
+<a name="l639"><span class="ln">639  </span></a>                            <span class="s0">break</span>
+<a name="l640"><span class="ln">640  </span></a>                        <span class="s0">else</span><span class="s1">:</span>
+<a name="l641"><span class="ln">641  </span></a>                            <span class="s1">Nothing = </span><span class="s0">True</span>
+<a name="l642"><span class="ln">642  </span></a>                <span class="s0">if </span><span class="s1">Nothing:</span>
+<a name="l643"><span class="ln">643  </span></a>                    <span class="s1">indexincrease += </span><span class="s4">1</span>
+<a name="l644"><span class="ln">644  </span></a>            <span class="s0">else</span><span class="s1">:</span>
+<a name="l645"><span class="ln">645  </span></a>                <span class="s1">indextouse += </span><span class="s4">1</span>
+<a name="l646"><span class="ln">646  </span></a>                <span class="s1">finalcode.append(Value)</span>
+<a name="l647"><span class="ln">647  </span></a>                <span class="s0">continue</span>
+<a name="l648"><span class="ln">648  </span></a>        <span class="s1">decode_code = listToString(finalcode)</span>
+<a name="l649"><span class="ln">649  </span></a>
+<a name="l650"><span class="ln">650  </span></a>    <span class="s1">code = code.split(</span><span class="s3">&quot;/&quot;</span><span class="s1">)</span>
+<a name="l651"><span class="ln">651  </span></a>    <span class="s1">decode_pathway = []</span>
+<a name="l652"><span class="ln">652  </span></a>    <span class="s1">decode_code = code[</span><span class="s4">0</span><span class="s1">]</span>
+<a name="l653"><span class="ln">653  </span></a>    <span class="s1">decode_bases = code[</span><span class="s4">1</span><span class="s1">]</span>
+<a name="l654"><span class="ln">654  </span></a>    <span class="s1">decode_twodig = code[</span><span class="s4">2</span><span class="s1">]</span>
+<a name="l655"><span class="ln">655  </span></a>    <span class="s1">decode_onedig = code[</span><span class="s4">3</span><span class="s1">]</span>
+<a name="l656"><span class="ln">656  </span></a>    <span class="s1">decode_cipherused = code[</span><span class="s4">4</span><span class="s1">]</span>
+<a name="l657"><span class="ln">657  </span></a>    <span class="s1">decode_lenpath = int(code[</span><span class="s4">5</span><span class="s1">])</span>
+<a name="l658"><span class="ln">658  </span></a>    <span class="s0">for </span><span class="s1">index </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">decode_lenpath):</span>
+<a name="l659"><span class="ln">659  </span></a>        <span class="s1">decode_pathway.append(decode_code[index])</span>
+<a name="l660"><span class="ln">660  </span></a>    <span class="s1">decode_code = decode_code[decode_lenpath:]</span>
+<a name="l661"><span class="ln">661  </span></a>    <span class="s1">decode_onedig = decode_onedig.split(</span><span class="s3">&quot;;&quot;</span><span class="s1">)</span>
+<a name="l662"><span class="ln">662  </span></a>    <span class="s1">decode_twodig = decode_twodig.split(</span><span class="s3">&quot;;&quot;</span><span class="s1">)</span>
+<a name="l663"><span class="ln">663  </span></a>    <span class="s1">decode_onedig.pop()</span>
+<a name="l664"><span class="ln">664  </span></a>    <span class="s1">decode_twodig.pop()</span>
+<a name="l665"><span class="ln">665  </span></a>    <span class="s1">decode_bases = decode_bases.split(</span><span class="s3">&quot;,&quot;</span><span class="s1">)</span>
+<a name="l666"><span class="ln">666  </span></a>    <span class="s1">decode_bases.pop()</span>
+<a name="l667"><span class="ln">667  </span></a>    <span class="s1">totalen = len(decode_pathway)</span>
+<a name="l668"><span class="ln">668  </span></a>    <span class="s1">currindex = </span><span class="s4">0</span>
+<a name="l669"><span class="ln">669  </span></a>    <span class="s1">numstouse = []</span>
+<a name="l670"><span class="ln">670  </span></a>    <span class="s1">numstem = []</span>
+<a name="l671"><span class="ln">671  </span></a>    <span class="s1">print(len(numstem))</span>
+<a name="l672"><span class="ln">672  </span></a>    <span class="s1">beginningindex = </span><span class="s4">0</span>
+<a name="l673"><span class="ln">673  </span></a>    <span class="s1">first = </span><span class="s0">True</span>
+<a name="l674"><span class="ln">674  </span></a>    <span class="s1">print(decode_pathway)</span>
+<a name="l675"><span class="ln">675  </span></a>    <span class="s0">while </span><span class="s1">totalen != currindex:</span>
+<a name="l676"><span class="ln">676  </span></a>        <span class="s0">if </span><span class="s1">decode_pathway[currindex].isdigit():</span>
+<a name="l677"><span class="ln">677  </span></a>            <span class="s1">numstem.append(decode_pathway[currindex])</span>
+<a name="l678"><span class="ln">678  </span></a>            <span class="s0">if </span><span class="s1">first:</span>
+<a name="l679"><span class="ln">679  </span></a>                <span class="s1">beginningindex = currindex</span>
+<a name="l680"><span class="ln">680  </span></a>                <span class="s1">first = </span><span class="s0">False</span>
+<a name="l681"><span class="ln">681  </span></a>            <span class="s1">currindex += </span><span class="s4">1</span>
+<a name="l682"><span class="ln">682  </span></a>            <span class="s1">totalen = len(decode_pathway)</span>
+<a name="l683"><span class="ln">683  </span></a>        <span class="s0">else</span><span class="s1">:</span>
+<a name="l684"><span class="ln">684  </span></a>            <span class="s0">if </span><span class="s1">len(numstem) != </span><span class="s4">0</span><span class="s1">:</span>
+<a name="l685"><span class="ln">685  </span></a>                <span class="s1">print(decode_pathway[currindex])</span>
+<a name="l686"><span class="ln">686  </span></a>                <span class="s1">numstouse.append(listToString(numstem))</span>
+<a name="l687"><span class="ln">687  </span></a>                <span class="s1">numstem = []</span>
+<a name="l688"><span class="ln">688  </span></a>                <span class="s1">first = </span><span class="s0">True</span>
+<a name="l689"><span class="ln">689  </span></a>                <span class="s0">del </span><span class="s1">decode_pathway[beginningindex:currindex]</span>
+<a name="l690"><span class="ln">690  </span></a>                <span class="s1">currindex = </span><span class="s4">0</span>
+<a name="l691"><span class="ln">691  </span></a>                <span class="s1">totalen = len(decode_pathway)</span>
+<a name="l692"><span class="ln">692  </span></a>            <span class="s0">else</span><span class="s1">:</span>
+<a name="l693"><span class="ln">693  </span></a>                <span class="s1">currindex += </span><span class="s4">1</span>
+<a name="l694"><span class="ln">694  </span></a>                <span class="s1">totalen = len(decode_pathway)</span>
+<a name="l695"><span class="ln">695  </span></a>    <span class="s0">for </span><span class="s1">y </span><span class="s0">in </span><span class="s1">range((len(decode_pathway) - </span><span class="s4">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">-</span><span class="s4">1</span><span class="s0">, </span><span class="s1">-</span><span class="s4">1</span><span class="s1">):</span>
+<a name="l696"><span class="ln">696  </span></a>        <span class="s0">if </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;a&quot;</span><span class="s1">:</span>
+<a name="l697"><span class="ln">697  </span></a>            <span class="s1">a()</span>
+<a name="l698"><span class="ln">698  </span></a>            <span class="s1">decode_onedig.pop()</span>
+<a name="l699"><span class="ln">699  </span></a>            <span class="s1">decode_twodig.pop()</span>
+<a name="l700"><span class="ln">700  </span></a>            <span class="s1">decode_bases.pop()</span>
+<a name="l701"><span class="ln">701  </span></a>            <span class="s1">print(decode_code)</span>
+<a name="l702"><span class="ln">702  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;b&quot;</span><span class="s1">:</span>
+<a name="l703"><span class="ln">703  </span></a>            <span class="s1">decode_code = tobase(str(decode_code)</span><span class="s0">, </span><span class="s1">int(decode_bases[len(decode_bases) - </span><span class="s4">1</span><span class="s1">])</span><span class="s0">,</span>
+<a name="l704"><span class="ln">704  </span></a>                                 <span class="s1">int(decode_bases[len(decode_bases) - </span><span class="s4">2</span><span class="s1">]))</span>
+<a name="l705"><span class="ln">705  </span></a>            <span class="s1">decode_bases.pop()</span>
+<a name="l706"><span class="ln">706  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;c&quot;</span><span class="s1">:</span>
+<a name="l707"><span class="ln">707  </span></a>            <span class="s1">decode_cipherused = decode_cipherused.split()</span>
+<a name="l708"><span class="ln">708  </span></a>            <span class="s0">if </span><span class="s1">decode_cipherused[-</span><span class="s4">1</span><span class="s1">] == </span><span class="s3">'1'</span><span class="s1">:</span>
+<a name="l709"><span class="ln">709  </span></a>                <span class="s1">cipher = </span><span class="s3">&quot;áéíóúüñ¿¡€ëïमपजट&quot;</span>
+<a name="l710"><span class="ln">710  </span></a>                <span class="s1">digits = </span><span class="s3">&quot;1234567890ABCDEF&quot;</span>
+<a name="l711"><span class="ln">711  </span></a>                <span class="s1">instring = decode_code</span>
+<a name="l712"><span class="ln">712  </span></a>                <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l713"><span class="ln">713  </span></a>                <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l714"><span class="ln">714  </span></a>                <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l715"><span class="ln">715  </span></a>                <span class="s1">answer = instring</span>
+<a name="l716"><span class="ln">716  </span></a>                <span class="s1">length = len(instring)</span>
+<a name="l717"><span class="ln">717  </span></a>                <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l718"><span class="ln">718  </span></a>                <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l719"><span class="ln">719  </span></a>                    <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l720"><span class="ln">720  </span></a>                        <span class="s1">Final_code = (digits[cipher.index(instring[counter])])</span>
+<a name="l721"><span class="ln">721  </span></a>                        <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l722"><span class="ln">722  </span></a>                        <span class="s1">final = final + Final_code</span>
+<a name="l723"><span class="ln">723  </span></a>                    <span class="s1">decode_code = final</span>
+<a name="l724"><span class="ln">724  </span></a>            <span class="s0">elif </span><span class="s1">decode_cipherused[-</span><span class="s4">1</span><span class="s1">] == </span><span class="s3">'2'</span><span class="s1">:</span>
+<a name="l725"><span class="ln">725  </span></a>                <span class="s1">cipher = </span><span class="s3">&quot;बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé&quot;</span>
+<a name="l726"><span class="ln">726  </span></a>                <span class="s1">digits = </span><span class="s3">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() &quot;</span>
+<a name="l727"><span class="ln">727  </span></a>                <span class="s1">instring = decode_code</span>
+<a name="l728"><span class="ln">728  </span></a>                <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l729"><span class="ln">729  </span></a>                <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l730"><span class="ln">730  </span></a>                <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l731"><span class="ln">731  </span></a>                <span class="s1">answer = instring</span>
+<a name="l732"><span class="ln">732  </span></a>                <span class="s1">length = len(instring)</span>
+<a name="l733"><span class="ln">733  </span></a>                <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l734"><span class="ln">734  </span></a>                <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l735"><span class="ln">735  </span></a>                    <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l736"><span class="ln">736  </span></a>                        <span class="s1">Final_code = (digits[cipher.index(instring[counter])])</span>
+<a name="l737"><span class="ln">737  </span></a>                        <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l738"><span class="ln">738  </span></a>                        <span class="s1">final = final + Final_code</span>
+<a name="l739"><span class="ln">739  </span></a>                    <span class="s1">decode_code = final</span>
+<a name="l740"><span class="ln">740  </span></a>            <span class="s0">elif </span><span class="s1">decode_cipherused[-</span><span class="s4">1</span><span class="s1">] == </span><span class="s3">'3'</span><span class="s1">:</span>
+<a name="l741"><span class="ln">741  </span></a>                <span class="s1">cipher = </span><span class="s3">&quot;1234567890áéíóúüñ¿¡[]/,.;':!@#$%^&amp;*()_+=-?&gt;&lt;ùûÿ€«»—æ&quot;</span>
+<a name="l742"><span class="ln">742  </span></a>                <span class="s1">letters = </span><span class="s3">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;</span>
+<a name="l743"><span class="ln">743  </span></a>                <span class="s1">instring = decode_code</span>
+<a name="l744"><span class="ln">744  </span></a>                <span class="s1">word = </span><span class="s3">&quot;&quot;</span>
+<a name="l745"><span class="ln">745  </span></a>                <span class="s1">Final_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l746"><span class="ln">746  </span></a>                <span class="s1">answer = instring</span>
+<a name="l747"><span class="ln">747  </span></a>                <span class="s1">length = len(instring)</span>
+<a name="l748"><span class="ln">748  </span></a>                <span class="s1">Final_sentence = </span><span class="s3">&quot;&quot;</span>
+<a name="l749"><span class="ln">749  </span></a>                <span class="s1">final = </span><span class="s3">&quot;&quot;</span>
+<a name="l750"><span class="ln">750  </span></a>                <span class="s0">if </span><span class="s1">answer == instring:</span>
+<a name="l751"><span class="ln">751  </span></a>                    <span class="s0">for </span><span class="s1">counter </span><span class="s0">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s0">, </span><span class="s1">length):</span>
+<a name="l752"><span class="ln">752  </span></a>                        <span class="s1">Final_code = (letters[cipher.index(instring[counter])])</span>
+<a name="l753"><span class="ln">753  </span></a>                        <span class="s1">Final_code = </span><span class="s3">''</span><span class="s1">.join(Final_code)</span>
+<a name="l754"><span class="ln">754  </span></a>                        <span class="s1">final = final + Final_code</span>
+<a name="l755"><span class="ln">755  </span></a>                    <span class="s1">decode_code = final</span>
+<a name="l756"><span class="ln">756  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;f&quot;</span><span class="s1">:</span>
+<a name="l757"><span class="ln">757  </span></a>            <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;bey&quot;</span><span class="s0">, </span><span class="s3">&quot;cay&quot;</span><span class="s0">, </span><span class="s3">&quot;day&quot;</span><span class="s0">, </span><span class="s3">&quot;euh&quot;</span><span class="s0">, </span><span class="s3">&quot;eff&quot;</span><span class="s0">, </span><span class="s3">&quot;jay&quot;</span><span class="s0">, </span><span class="s3">&quot;ash&quot;</span><span class="s0">, </span><span class="s3">&quot;ei&quot;</span><span class="s0">, </span><span class="s3">&quot;gee&quot;</span><span class="s0">, </span><span class="s3">&quot;kah&quot;</span><span class="s0">, </span><span class="s3">&quot;el&quot;</span><span class="s0">, </span><span class="s3">&quot;em&quot;</span><span class="s0">,</span>
+<a name="l758"><span class="ln">758  </span></a>                               <span class="s3">&quot;en&quot;</span><span class="s0">,</span>
+<a name="l759"><span class="ln">759  </span></a>                               <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pay&quot;</span><span class="s0">, </span><span class="s3">&quot;cou&quot;</span><span class="s0">, </span><span class="s3">&quot;air&quot;</span><span class="s0">, </span><span class="s3">&quot;es&quot;</span><span class="s0">, </span><span class="s3">'tay'</span><span class="s0">, </span><span class="s3">&quot;ou&quot;</span><span class="s0">, </span><span class="s3">&quot;vay&quot;</span><span class="s0">, </span><span class="s3">&quot;doublevay&quot;</span><span class="s0">, </span><span class="s3">&quot;eeks&quot;</span><span class="s0">, </span><span class="s3">&quot;egrecke&quot;</span><span class="s0">,</span>
+<a name="l760"><span class="ln">760  </span></a>                               <span class="s3">&quot;zed&quot;</span><span class="s1">]</span>
+<a name="l761"><span class="ln">761  </span></a>            <span class="s1">upperconversion = []</span>
+<a name="l762"><span class="ln">762  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l763"><span class="ln">763  </span></a>                <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l764"><span class="ln">764  </span></a>            <span class="s1">print(upperconversion)</span>
+<a name="l765"><span class="ln">765  </span></a>            <span class="s1">numberconversion = [</span><span class="s3">&quot;Cero&quot;</span><span class="s0">, </span><span class="s3">&quot;Un&quot;</span><span class="s0">, </span><span class="s3">&quot;Deux&quot;</span><span class="s0">, </span><span class="s3">&quot;Trois&quot;</span><span class="s0">, </span><span class="s3">&quot;Quatre&quot;</span><span class="s0">, </span><span class="s3">&quot;Cinq&quot;</span><span class="s0">, </span><span class="s3">&quot;Six&quot;</span><span class="s0">, </span><span class="s3">&quot;Sept&quot;</span><span class="s0">, </span><span class="s3">&quot;Huit&quot;</span><span class="s0">, </span><span class="s3">&quot;Neuf&quot;</span><span class="s1">]</span>
+<a name="l766"><span class="ln">766  </span></a>            <span class="s1">toeng(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l767"><span class="ln">767  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;s&quot;</span><span class="s1">:</span>
+<a name="l768"><span class="ln">768  </span></a>            <span class="s1">upperconversion = []</span>
+<a name="l769"><span class="ln">769  </span></a>            <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;be&quot;</span><span class="s0">, </span><span class="s3">&quot;ce&quot;</span><span class="s0">, </span><span class="s3">&quot;de&quot;</span><span class="s0">, </span><span class="s3">&quot;eh&quot;</span><span class="s0">, </span><span class="s3">&quot;efe&quot;</span><span class="s0">, </span><span class="s3">&quot;ge&quot;</span><span class="s0">, </span><span class="s3">&quot;hache&quot;</span><span class="s0">, </span><span class="s3">&quot;ii&quot;</span><span class="s0">, </span><span class="s3">&quot;jota&quot;</span><span class="s0">, </span><span class="s3">&quot;ca&quot;</span><span class="s0">, </span><span class="s3">&quot;ele&quot;</span><span class="s0">, </span><span class="s3">&quot;eme&quot;</span><span class="s0">,</span>
+<a name="l770"><span class="ln">770  </span></a>                               <span class="s3">&quot;ene&quot;</span><span class="s0">,</span>
+<a name="l771"><span class="ln">771  </span></a>                               <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pe&quot;</span><span class="s0">, </span><span class="s3">&quot;cu&quot;</span><span class="s0">, </span><span class="s3">&quot;ere&quot;</span><span class="s0">, </span><span class="s3">&quot;ese&quot;</span><span class="s0">, </span><span class="s3">&quot;te&quot;</span><span class="s0">, </span><span class="s3">&quot;uh&quot;</span><span class="s0">, </span><span class="s3">&quot;ve&quot;</span><span class="s0">, </span><span class="s3">&quot;dobleve&quot;</span><span class="s0">, </span><span class="s3">&quot;equis&quot;</span><span class="s0">, </span><span class="s3">&quot;igriega&quot;</span><span class="s0">, </span><span class="s3">&quot;zeta&quot;</span><span class="s1">]</span>
+<a name="l772"><span class="ln">772  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l773"><span class="ln">773  </span></a>                <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l774"><span class="ln">774  </span></a>            <span class="s1">numberconversion = [</span><span class="s3">&quot;Cero&quot;</span><span class="s0">, </span><span class="s3">&quot;Uno&quot;</span><span class="s0">, </span><span class="s3">&quot;Dos&quot;</span><span class="s0">, </span><span class="s3">&quot;Tres&quot;</span><span class="s0">, </span><span class="s3">&quot;Cuatro&quot;</span><span class="s0">, </span><span class="s3">&quot;Cinco&quot;</span><span class="s0">, </span><span class="s3">&quot;Seis&quot;</span><span class="s0">, </span><span class="s3">&quot;Siete&quot;</span><span class="s0">, </span><span class="s3">&quot;Ocho&quot;</span><span class="s0">, </span><span class="s3">&quot;Nueve&quot;</span><span class="s1">]</span>
+<a name="l775"><span class="ln">775  </span></a>            <span class="s1">toeng(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l776"><span class="ln">776  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;g&quot;</span><span class="s1">:</span>
+<a name="l777"><span class="ln">777  </span></a>            <span class="s1">upperconversion = []</span>
+<a name="l778"><span class="ln">778  </span></a>            <span class="s1">lowerconversion = [</span><span class="s3">&quot;ah&quot;</span><span class="s0">, </span><span class="s3">&quot;be&quot;</span><span class="s0">, </span><span class="s3">&quot;ce&quot;</span><span class="s0">, </span><span class="s3">&quot;de&quot;</span><span class="s0">, </span><span class="s3">&quot;eh&quot;</span><span class="s0">, </span><span class="s3">&quot;efe&quot;</span><span class="s0">, </span><span class="s3">&quot;ge&quot;</span><span class="s0">, </span><span class="s3">&quot;ha&quot;</span><span class="s0">, </span><span class="s3">&quot;ii&quot;</span><span class="s0">, </span><span class="s3">&quot;jot&quot;</span><span class="s0">, </span><span class="s3">&quot;ka&quot;</span><span class="s0">, </span><span class="s3">&quot;el&quot;</span><span class="s0">, </span><span class="s3">&quot;em&quot;</span><span class="s0">, </span><span class="s3">&quot;en&quot;</span><span class="s0">,</span>
+<a name="l779"><span class="ln">779  </span></a>                               <span class="s3">&quot;oh&quot;</span><span class="s0">, </span><span class="s3">&quot;pe&quot;</span><span class="s0">, </span><span class="s3">&quot;ku&quot;</span><span class="s0">, </span><span class="s3">&quot;er&quot;</span><span class="s0">, </span><span class="s3">&quot;es&quot;</span><span class="s0">, </span><span class="s3">&quot;te&quot;</span><span class="s0">, </span><span class="s3">&quot;oo&quot;</span><span class="s0">, </span><span class="s3">&quot;vau&quot;</span><span class="s0">, </span><span class="s3">&quot;ve&quot;</span><span class="s0">, </span><span class="s3">&quot;iks&quot;</span><span class="s0">, </span><span class="s3">&quot;opsilon&quot;</span><span class="s0">, </span><span class="s3">&quot;zet&quot;</span><span class="s1">]</span>
+<a name="l780"><span class="ln">780  </span></a>            <span class="s0">for </span><span class="s1">item </span><span class="s0">in </span><span class="s1">lowerconversion:</span>
+<a name="l781"><span class="ln">781  </span></a>                <span class="s1">upperconversion.append(item.swapcase())</span>
+<a name="l782"><span class="ln">782  </span></a>            <span class="s1">numberconversion = [</span><span class="s3">&quot;Null&quot;</span><span class="s0">, </span><span class="s3">&quot;Eins&quot;</span><span class="s0">, </span><span class="s3">&quot;Zwei&quot;</span><span class="s0">, </span><span class="s3">&quot;Drei&quot;</span><span class="s0">, </span><span class="s3">&quot;Vier&quot;</span><span class="s0">, </span><span class="s3">&quot;Funf&quot;</span><span class="s0">, </span><span class="s3">&quot;Sechs&quot;</span><span class="s0">, </span><span class="s3">&quot;Sieben&quot;</span><span class="s0">, </span><span class="s3">&quot;Acht&quot;</span><span class="s0">, </span><span class="s3">&quot;Neun&quot;</span><span class="s1">]</span>
+<a name="l783"><span class="ln">783  </span></a>            <span class="s1">toeng(lowerconversion</span><span class="s0">, </span><span class="s1">upperconversion</span><span class="s0">, </span><span class="s1">numberconversion)</span>
+<a name="l784"><span class="ln">784  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;z&quot;</span><span class="s1">:</span>
+<a name="l785"><span class="ln">785  </span></a>            <span class="s1">decode_code = int(tobase(decode_code</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span>
+<a name="l786"><span class="ln">786  </span></a>            <span class="s1">decode_code -= int(numstouse[</span><span class="s4">0</span><span class="s1">])</span>
+<a name="l787"><span class="ln">787  </span></a>            <span class="s1">numstouse.pop(</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l788"><span class="ln">788  </span></a>            <span class="s1">decode_code = str(tobase(decode_code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])))</span>
+<a name="l789"><span class="ln">789  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;y&quot;</span><span class="s1">:</span>
+<a name="l790"><span class="ln">790  </span></a>            <span class="s1">currentbase = int(decode_bases[-</span><span class="s4">1</span><span class="s1">])</span>
+<a name="l791"><span class="ln">791  </span></a>            <span class="s1">decode_code = int(tobase(decode_code</span><span class="s0">, </span><span class="s1">currentbase</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span>
+<a name="l792"><span class="ln">792  </span></a>            <span class="s1">decode_code += int(numstouse[</span><span class="s4">0</span><span class="s1">])</span>
+<a name="l793"><span class="ln">793  </span></a>            <span class="s1">numstouse.pop(</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l794"><span class="ln">794  </span></a>            <span class="s1">finalbase = currentbase</span>
+<a name="l795"><span class="ln">795  </span></a>            <span class="s1">decode_code = str(tobase(decode_code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">finalbase))</span>
+<a name="l796"><span class="ln">796  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;x&quot;</span><span class="s1">:</span>
+<a name="l797"><span class="ln">797  </span></a>            <span class="s1">decode_code = int(tobase(decode_code</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span>
+<a name="l798"><span class="ln">798  </span></a>            <span class="s1">decode_code /= int(numstouse[</span><span class="s4">0</span><span class="s1">])</span>
+<a name="l799"><span class="ln">799  </span></a>            <span class="s1">decode_code = int(decode_code)</span>
+<a name="l800"><span class="ln">800  </span></a>            <span class="s1">numstouse.pop(</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l801"><span class="ln">801  </span></a>            <span class="s1">decode_code = str(tobase(decode_code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])))</span>
+<a name="l802"><span class="ln">802  </span></a>        <span class="s0">elif </span><span class="s1">decode_pathway[y] == </span><span class="s3">&quot;w&quot;</span><span class="s1">:</span>
+<a name="l803"><span class="ln">803  </span></a>            <span class="s1">decode_code = int(tobase(decode_code</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span>
+<a name="l804"><span class="ln">804  </span></a>            <span class="s1">decode_code *= int(numstouse[</span><span class="s4">0</span><span class="s1">])</span>
+<a name="l805"><span class="ln">805  </span></a>            <span class="s1">decode_code = int(decode_code)</span>
+<a name="l806"><span class="ln">806  </span></a>            <span class="s1">numstouse.pop(</span><span class="s4">0</span><span class="s1">)</span>
+<a name="l807"><span class="ln">807  </span></a>            <span class="s1">decode_code = str(tobase(decode_code</span><span class="s0">, </span><span class="s4">10</span><span class="s0">, </span><span class="s1">int(decode_bases[-</span><span class="s4">1</span><span class="s1">])))</span>
+<a name="l808"><span class="ln">808  </span></a>
+<a name="l809"><span class="ln">809  </span></a>    <span class="s1">print(decode_code)</span>
+<a name="l810"><span class="ln">810  </span></a>    <span class="s1">messagebox.showinfo(Title=</span><span class="s0">None, </span><span class="s1">message=</span><span class="s3">&quot;The decoded characters is: &quot; </span><span class="s1">+ decode_code)</span>
+<a name="l811"><span class="ln">811  </span></a>    <span class="s1">b_encode.destroy()</span>
+<a name="l812"><span class="ln">812  </span></a>    <span class="s1">b_decode.destroy()</span>
+<a name="l813"><span class="ln">813  </span></a>    <span class="s1">create_buttons()</span>
+<a name="l814"><span class="ln">814  </span></a>    <span class="s1">textBox = Text(root)</span>
+<a name="l815"><span class="ln">815  </span></a>    <span class="s1">textBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l816"><span class="ln">816  </span></a>    <span class="s1">buttonCommit = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Upload text to be encoded or decoded, then click this button to continue&quot;</span><span class="s0">,</span>
+<a name="l817"><span class="ln">817  </span></a>                          <span class="s1">command=retrieve_input)</span>
+<a name="l818"><span class="ln">818  </span></a>    <span class="s1">buttonCommit.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l819"><span class="ln">819  </span></a>
+<a name="l820"><span class="ln">820  </span></a>
+<a name="l821"><span class="ln">821  </span></a><span class="s0">def </span><span class="s1">yell():</span>
+<a name="l822"><span class="ln">822  </span></a>    <span class="s1">print(code)</span>
+<a name="l823"><span class="ln">823  </span></a>    <span class="s0">global </span><span class="s1">b_encode</span><span class="s0">, </span><span class="s1">b_decode</span><span class="s0">, </span><span class="s1">b_ascii</span><span class="s0">, </span><span class="s1">b_nascii</span><span class="s0">, </span><span class="s1">b_octal</span><span class="s0">, </span><span class="s1">b_cipher</span><span class="s0">, </span><span class="s1">b_dontclick</span><span class="s0">, </span><span class="s1">\</span>
+<a name="l824"><span class="ln">824  </span></a>        <span class="s1">b_check</span><span class="s0">, </span><span class="s1">b_complete</span><span class="s0">, </span><span class="s1">b_functions</span><span class="s0">, </span><span class="s1">b_nothing</span><span class="s0">, </span><span class="s1">Logo2</span>
+<a name="l825"><span class="ln">825  </span></a>    <span class="s1">b_encode.destroy()</span>
+<a name="l826"><span class="ln">826  </span></a>    <span class="s1">b_decode.destroy()</span>
+<a name="l827"><span class="ln">827  </span></a>    <span class="s1">root.title(</span><span class="s3">&quot;Start making your code, the parentheses says what each conversion does&quot;</span><span class="s1">)</span>
+<a name="l828"><span class="ln">828  </span></a>    <span class="s1">root.geometry(</span><span class="s3">&quot;1000x1000&quot;</span><span class="s1">)</span>
+<a name="l829"><span class="ln">829  </span></a>    <span class="s1">b_ascii.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l830"><span class="ln">830  </span></a>    <span class="s1">b_nascii.place(relx=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l831"><span class="ln">831  </span></a>    <span class="s1">b_octal.place(relx=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l832"><span class="ln">832  </span></a>    <span class="s1">b_cipher.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l833"><span class="ln">833  </span></a>    <span class="s1">b_check.place(relx=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l834"><span class="ln">834  </span></a>    <span class="s1">b_complete.place(relx=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l835"><span class="ln">835  </span></a>    <span class="s1">b_functions.place(relx=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l836"><span class="ln">836  </span></a>    <span class="s1">b_nothing.place(relx=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">2 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l837"><span class="ln">837  </span></a>    <span class="s1">Logo2.place(relx=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">rely=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relheight=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">)</span><span class="s0">, </span><span class="s1">relwidth=(</span><span class="s4">1 </span><span class="s1">/ </span><span class="s4">3</span><span class="s1">))</span>
+<a name="l838"><span class="ln">838  </span></a>
+<a name="l839"><span class="ln">839  </span></a>
+<a name="l840"><span class="ln">840  </span></a><span class="s0">def </span><span class="s1">create_buttons():</span>
+<a name="l841"><span class="ln">841  </span></a>    <span class="s0">global </span><span class="s1">b_encode</span><span class="s0">, </span><span class="s1">b_decode</span><span class="s0">, </span><span class="s1">b_ascii</span><span class="s0">, </span><span class="s1">b_nascii</span><span class="s0">, </span><span class="s1">b_octal</span><span class="s0">, </span><span class="s1">b_cipher</span><span class="s0">, </span><span class="s1">b_dontclick</span><span class="s0">, </span><span class="s1">b_check</span><span class="s0">, </span><span class="s1">b_complete</span><span class="s0">, </span><span class="s1">b_functions</span><span class="s0">, </span><span class="s1">b_nothing</span><span class="s0">, </span><span class="s1">Logo</span><span class="s0">, </span><span class="s1">Logo1</span><span class="s0">, </span><span class="s1">Logo2</span>
+<a name="l842"><span class="ln">842  </span></a>    <span class="s1">b_encode = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Encode&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;goldenrod&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;gray25&quot;</span><span class="s0">, </span><span class="s1">command=yell</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l843"><span class="ln">843  </span></a>    <span class="s1">b_decode = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Decode&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;gray25&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;goldenrod&quot;</span><span class="s0">, </span><span class="s1">command=decode</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l844"><span class="ln">844  </span></a>    <span class="s1">b_ascii = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Convert to ASCII&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;midnight blue&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white smoke&quot;</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">)</span><span class="s0">, </span><span class="s1">command=ascii)</span>
+<a name="l845"><span class="ln">845  </span></a>    <span class="s1">b_nascii = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Math Functions&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;red&quot;</span><span class="s0">,</span>
+<a name="l846"><span class="ln">846  </span></a>                      <span class="s1">command=calc</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l847"><span class="ln">847  </span></a>    <span class="s1">b_octal = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Convert to any base&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white smoke&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;midnight blue&quot;</span><span class="s0">, </span><span class="s1">command=beforetobase</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l848"><span class="ln">848  </span></a>    <span class="s1">b_cipher = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Cipher Encryption&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;red&quot;</span><span class="s0">, </span><span class="s1">command=runthroughcipher</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l849"><span class="ln">849  </span></a>    <span class="s1">b_check = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Current Status: Code&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;red&quot;</span><span class="s0">, </span><span class="s1">command=show</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l850"><span class="ln">850  </span></a>    <span class="s1">b_complete = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Complete your code&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;midnight blue&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white smoke&quot;</span><span class="s0">, </span><span class="s1">command=complete</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l851"><span class="ln">851  </span></a>    <span class="s1">b_functions = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Change language&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;red&quot;</span><span class="s0">, </span><span class="s1">command=function1</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l852"><span class="ln">852  </span></a>    <span class="s1">b_nothing = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Restart&quot;</span><span class="s0">, </span><span class="s1">bg=</span><span class="s3">&quot;midnight blue&quot;</span><span class="s0">, </span><span class="s1">fg=</span><span class="s3">&quot;white smoke&quot;</span><span class="s0">, </span><span class="s1">command=replace</span><span class="s0">, </span><span class="s1">font=(</span><span class="s3">'Helvetica'</span><span class="s0">, </span><span class="s4">20</span><span class="s0">, </span><span class="s3">'bold'</span><span class="s1">))</span>
+<a name="l853"><span class="ln">853  </span></a>    <span class="s1">Logo = Image.open(</span><span class="s3">&quot;Logo.png&quot;</span><span class="s1">)</span>
+<a name="l854"><span class="ln">854  </span></a>    <span class="s1">Logo1 = ImageTk.PhotoImage(Logo)</span>
+<a name="l855"><span class="ln">855  </span></a>    <span class="s1">Logo2 = Label(root</span><span class="s0">, </span><span class="s1">image=Logo1)</span>
+<a name="l856"><span class="ln">856  </span></a>    <span class="s1">Logo2.image = Logo1</span>
+<a name="l857"><span class="ln">857  </span></a>
+<a name="l858"><span class="ln">858  </span></a>
+<a name="l859"><span class="ln">859  </span></a><span class="s1">root = tk.Tk()</span>
+<a name="l860"><span class="ln">860  </span></a><span class="s1">French = Button()</span>
+<a name="l861"><span class="ln">861  </span></a><span class="s1">German = Button()</span>
+<a name="l862"><span class="ln">862  </span></a><span class="s1">Spanish = Button()</span>
+<a name="l863"><span class="ln">863  </span></a><span class="s1">language = </span><span class="s3">&quot;&quot;</span>
+<a name="l864"><span class="ln">864  </span></a><span class="s1">lowerconversion = []</span>
+<a name="l865"><span class="ln">865  </span></a><span class="s1">upperconversion = []</span>
+<a name="l866"><span class="ln">866  </span></a><span class="s1">numberconversion = []</span>
+<a name="l867"><span class="ln">867  </span></a><span class="s1">root.geometry(</span><span class="s3">&quot;600x400&quot;</span><span class="s1">)</span>
+<a name="l868"><span class="ln">868  </span></a><span class="s1">output = []</span>
+<a name="l869"><span class="ln">869  </span></a><span class="s1">bases = []</span>
+<a name="l870"><span class="ln">870  </span></a><span class="s1">onedig = []</span>
+<a name="l871"><span class="ln">871  </span></a><span class="s1">twodig = []</span>
+<a name="l872"><span class="ln">872  </span></a><span class="s1">numstem = []</span>
+<a name="l873"><span class="ln">873  </span></a><span class="s1">ciphersused = []</span>
+<a name="l874"><span class="ln">874  </span></a><span class="s1">operations = []</span>
+<a name="l875"><span class="ln">875  </span></a><span class="s1">b_encode = Button()</span>
+<a name="l876"><span class="ln">876  </span></a><span class="s1">b_decode = Button()</span>
+<a name="l877"><span class="ln">877  </span></a><span class="s1">b_ascii = Button()</span>
+<a name="l878"><span class="ln">878  </span></a><span class="s1">b_nascii = Button()</span>
+<a name="l879"><span class="ln">879  </span></a><span class="s1">b_octal = Button()</span>
+<a name="l880"><span class="ln">880  </span></a><span class="s1">b_cipher = Button()</span>
+<a name="l881"><span class="ln">881  </span></a><span class="s1">b_dontclick = Button()</span>
+<a name="l882"><span class="ln">882  </span></a><span class="s1">b_check = Button()</span>
+<a name="l883"><span class="ln">883  </span></a><span class="s1">b_complete = Button()</span>
+<a name="l884"><span class="ln">884  </span></a><span class="s1">b_functions = Button()</span>
+<a name="l885"><span class="ln">885  </span></a><span class="s1">b_nothing = Button()</span>
+<a name="l886"><span class="ln">886  </span></a><span class="s1">Logo = Image.open(</span><span class="s3">&quot;Logo.png&quot;</span><span class="s1">)</span>
+<a name="l887"><span class="ln">887  </span></a><span class="s1">Logo1 = ImageTk.PhotoImage(Logo)</span>
+<a name="l888"><span class="ln">888  </span></a><span class="s1">Logo2 = Label(image=Logo1)</span>
+<a name="l889"><span class="ln">889  </span></a><span class="s1">Logo2.image = Logo1</span>
+<a name="l890"><span class="ln">890  </span></a><span class="s1">buttonCommit = Button()</span>
+<a name="l891"><span class="ln">891  </span></a><span class="s1">textBox = Text()</span>
+<a name="l892"><span class="ln">892  </span></a><span class="s1">bInLow = </span><span class="s0">False</span>
+<a name="l893"><span class="ln">893  </span></a><span class="s1">bInUp = </span><span class="s0">False</span>
+<a name="l894"><span class="ln">894  </span></a><span class="s1">bInNum = </span><span class="s0">False</span>
+<a name="l895"><span class="ln">895  </span></a><span class="s1">CanUpNum = </span><span class="s0">True</span>
+<a name="l896"><span class="ln">896  </span></a><span class="s1">Nothing = </span><span class="s0">False</span>
+<a name="l897"><span class="ln">897  </span></a><span class="s1">CanNum = </span><span class="s0">True</span>
+<a name="l898"><span class="ln">898  </span></a><span class="s1">textBox = Text(root)</span>
+<a name="l899"><span class="ln">899  </span></a><span class="s1">textBox.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.3</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l900"><span class="ln">900  </span></a><span class="s1">buttonCommit = Button(root</span><span class="s0">, </span><span class="s1">text=</span><span class="s3">&quot;Upload text to be encoded or decoded, then click this button to continue&quot;</span><span class="s0">,</span>
+<a name="l901"><span class="ln">901  </span></a>                      <span class="s1">command=retrieve_input)</span>
+<a name="l902"><span class="ln">902  </span></a><span class="s1">buttonCommit.place(relx=</span><span class="s4">0.125</span><span class="s0">, </span><span class="s1">rely=</span><span class="s4">0.5</span><span class="s0">, </span><span class="s1">relheight=</span><span class="s4">0.4</span><span class="s0">, </span><span class="s1">relwidth=</span><span class="s4">0.75</span><span class="s1">)</span>
+<a name="l903"><span class="ln">903  </span></a>
+<a name="l904"><span class="ln">904  </span></a><span class="s1">create_buttons()</span>
+<a name="l905"><span class="ln">905  </span></a>
+<a name="l906"><span class="ln">906  </span></a><span class="s1">code = </span><span class="s3">&quot;&quot;</span>
+<a name="l907"><span class="ln">907  </span></a><span class="s1">decode_code = </span><span class="s3">&quot;&quot;</span>
+<a name="l908"><span class="ln">908  </span></a><span class="s1">currentvalue = </span><span class="s3">&quot;&quot;</span>
+<a name="l909"><span class="ln">909  </span></a><span class="s1">pathway = []</span>
+<a name="l910"><span class="ln">910  </span></a><span class="s1">lastcompletedfunc = </span><span class="s3">&quot;&quot;</span>
+<a name="l911"><span class="ln">911  </span></a><span class="s1">actual = </span><span class="s3">&quot;&quot;</span>
+<a name="l912"><span class="ln">912  </span></a><span class="s1">inputValue = </span><span class="s3">&quot;&quot;</span>
+<a name="l913"><span class="ln">913  </span></a>
+<a name="l914"><span class="ln">914  </span></a><span class="s2"># when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in</span>
+<a name="l915"><span class="ln">915  </span></a><span class="s2"># both letters and numbers (non base 10 integer)</span>
+<a name="l916"><span class="ln">916  </span></a><span class="s1">currentvalue = </span><span class="s4">0</span>
+<a name="l917"><span class="ln">917  </span></a><span class="s1">newset = </span><span class="s3">&quot;&quot;</span>
+<a name="l918"><span class="ln">918  </span></a><span class="s1">newset = </span><span class="s4">0</span>
+<a name="l919"><span class="ln">919  </span></a><span class="s1">string = </span><span class="s3">&quot;&quot;</span>
+<a name="l920"><span class="ln">920  </span></a><span class="s1">digits = </span><span class="s3">&quot;&quot;</span>
+<a name="l921"><span class="ln">921  </span></a><span class="s1">instring = </span><span class="s3">&quot;&quot;</span>
+<a name="l922"><span class="ln">922  </span></a><span class="s1">help = []</span>
+<a name="l923"><span class="ln">923  </span></a><span class="s1">cipher = </span><span class="s3">&quot;&quot;</span>
+<a name="l924"><span class="ln">924  </span></a><span class="s1">currbase = </span><span class="s4">10</span>
+<a name="l925"><span class="ln">925  </span></a>
+<a name="l926"><span class="ln">926  </span></a><span class="s1">root.mainloop()</span></pre>
+</body>
+</html>

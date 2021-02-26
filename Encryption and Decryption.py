@@ -100,10 +100,12 @@ def calc():
     global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations
 
     def add1():
-        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+        global code, pathway, lastcompletedfunc, string, currentvalue, \
+            twodig, onedig, bases, operations, inputValue
 
         def actadd():
-            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, \
+                onedig, bases, operations, inputValue
             inputValue = ntextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
@@ -131,10 +133,12 @@ def calc():
         ntextBox.place(relx=0.125, rely=0, relheight=0.3, relwidth=0.75)
 
     def subtract1():
-        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+        global code, pathway, lastcompletedfunc, string, currentvalue, \
+            twodig, onedig, bases, operations, inputValue
 
         def actsub():
-            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            global code, pathway, lastcompletedfunc, string, currentvalue, \
+                twodig, onedig, bases, operations, inputValue
             inputValue = stextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
@@ -164,10 +168,12 @@ def calc():
         print(code)
 
     def multiply1():
-        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+        global code, pathway, lastcompletedfunc, string, currentvalue, \
+            twodig, onedig, bases, operations, inputValue
 
         def actmul():
-            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            global code, pathway, lastcompletedfunc, string, currentvalue, \
+                twodig, onedig, bases, operations, inputValue
             inputValue = mtextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
@@ -196,10 +202,12 @@ def calc():
         print(code)
 
     def divide1():
-        global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+        global code, pathway, lastcompletedfunc, string, currentvalue, \
+            twodig, onedig, bases, operations, inputValue
 
         def actdiv():
-            global code, pathway, lastcompletedfunc, string, currentvalue, twodig, onedig, bases, operations, inputValue
+            global code, pathway, lastcompletedfunc, string, currentvalue, \
+                twodig, onedig, bases, operations, inputValue
             inputValue = dtextBox.get("1.0", "end-1c")
             inputValue = int(inputValue)
             code = int(code)
@@ -255,13 +263,15 @@ def tobase(n, currbase, finbase):
     answerint = 0
     referencenums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     for x in range((len(n) - 1), -1, -1):
-        answerint += (referencenums[original.index(n[x])]) * (currbase ** ((len(n) - 1) - x))   # Converts the number into base 10
+        answerint += (referencenums[original.index(n[x])]) * (currbase ** ((len(n) - 1) - x))
+                                                    # Converts the number into base 10
     if finbase != 10:
         def tobase1(n1, base):
             if n1 < base:
                 return str(original[n1])
             else:
-                return str(tobase1(n1 // base, base) + original[(n1 % base)])   # Converts the number into the base that the user inputs (as a parameter called finbase)
+                return str(tobase1(n1 // base, base) + original[(n1 % base)])  # Converts the number into the
+                                                        # base that the user inputs (as a parameter called finbase)
 
         return str(tobase1(answerint, finbase))   # return type string
     else:
@@ -382,7 +392,9 @@ def show():
 
 
 def complete():
-    global code, pathway, bases, twodig, onedig, cipherused, b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, textBox, buttonCommit, Logo2
+    global code, pathway, bases, twodig, onedig, cipherused, b_encode, b_decode, b_ascii, \
+        b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, \
+        b_nothing, textBox, buttonCommit, Logo2
     x = "/"
     showcode = [listToString(pathway), str(code), x, listToString(bases), x, listToString(twodig), x,
                 listToString(onedig),
@@ -416,36 +428,45 @@ def function1():
     def toanotherlang(lower, upper, nums):
         global code
         code = list(code)  # Making the variable code a list so that it is easier to work with in the code
-        lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-                      "t", "u", "v", "w", "x", "y", "z"]
-        upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-                        "T", "U", "V", "W", "X", "Y", "Z"]
+        lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+                      "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+                      "w", "x", "y", "z"]
+        upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+                        "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+                        "W", "X", "Y", "Z"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
         if language == "French":
             pathway.append("f")
         elif language == "German":
             pathway.append(
-                "g")  # Appending the corresponding letter for each language to pathway so that the during decoding, correct decoding functions will be executed
+                "g")  # Appending the corresponding letter for each language to pathway so that the during decoding,
+                      # correct decoding functions will be executed
         elif language == "Spanish":
             pathway.append("s")
         for codeitem in range(0, len(code)):  # Iterating through every index of the list code
             for lowitem in range(0, len(lowletters)):
                 if lowletters[lowitem] == code[
-                    codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match
+                                # the current index of code
                     code[codeitem] = lower[
-                        lowitem]  # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                        lowitem]  # If it matches, then it is replaced with the corresponding index of the items
+                                  # in the selected language
                     break
             for upitem in range(0, len(upperletters)):
                 if upperletters[upitem] == code[
-                    codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them match the current index of code
+                    codeitem]:  # Iterates through all indexes of the uppercase and checks whether any of them
+                                # match the current index of code
                     code[codeitem] = upper[
-                        upitem]  # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                        upitem]  # If it matches, then it is replaced with the corresponding index of the items
+                                 # in the selected language
                     break
             for numitem in range(0, len(numbers)):
                 if numbers[numitem] == code[
-                    codeitem]:  # Iterates through all indexes of the digits and checks whether any of them match the current index of code
+                    codeitem]:  # Iterates through all indexes of the digits and checks whether any of
+                                # them match the current index of code
                     code[codeitem] = nums[
-                        numitem]  # If it matches, then it is replaced with the corresponding index of the items in the selected language
+                        numitem]  # If it matches, then it is replaced with the corresponding index of the
+                                  # items in the selected language
                     break
         code = listToString(code)  # A custom created function that converts the list back into a string
         print(code)  # Prints out the result
@@ -453,8 +474,9 @@ def function1():
     def french():
         global language
         language = "French"
-        lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "ei", "gee", "kah", "el", "em", "en",
-                           "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
+        lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "ei", "gee",
+                           "kah", "el", "em", "en","oh", "pay", "cou", "air", "es", 'tay', "ou",
+                           "vay", "doublevay", "eeks", "egrecke", "zed"]
         upperconversion = []
         for item in lowerconversion:
             upperconversion.append(item.swapcase())
@@ -474,8 +496,9 @@ def function1():
         German.destroy()
         Numbers.destroy()
         upperconversion = []
-        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "ii", "jota", "ca", "ele", "eme", "ene",
-                           "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
+        lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "ii", "jota", "ca",
+                           "ele", "eme", "ene", "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve",
+                           "dobleve", "equis", "igriega", "zeta"]
         for item in lowerconversion:
             upperconversion.append(item.swapcase())
         print(upperconversion)
@@ -575,11 +598,10 @@ def decode():
 
     def toeng(lowerconversion, upperconversion, numberconversion):
         global decode_code
-        lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
-                      "t", "u", "v", "w", "x", "y", "z"]
-        upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
-                        "S",
-                        "T", "U", "V", "W", "X", "Y", "Z"]
+        lowletters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                      "n", "o", "p", "q", "r", "s","t", "u", "v", "w", "x", "y", "z"]
+        upperletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+                        "N", "O", "P", "Q", "R","S","T", "U", "V", "W", "X", "Y", "Z"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
         indextouse = 0
         finalcode = []
@@ -711,7 +733,8 @@ def decode():
                         final = final + Final_code
                     decode_code = final
             elif decode_cipherused[-1] == '2':
-                cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதநயௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
+                cipher = "बगहदजडपरकतचटमनवलसयஆஈஊஐஏளறனடணஅஇஉஎகபமதந" \
+                         "யௌஓஒவஙலரழБГДЁЖИЙКЛПФУЦЧШЩЪЫЬЭЮЯѣѳѵé"
                 digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890,.?;:!$() "
                 instring = decode_code
                 word = ""
@@ -743,32 +766,35 @@ def decode():
                         final = final + Final_code
                     decode_code = final
         elif decode_pathway[y] == "f":
-            lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "ei", "gee", "kah", "el", "em",
-                               "en",
-                               "oh", "pay", "cou", "air", "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke",
-                               "zed"]
+            lowerconversion = ["ah", "bey", "cay", "day", "euh", "eff", "jay", "ash", "ei",
+                               "gee", "kah", "el", "em", "en", "oh", "pay", "cou", "air",
+                               "es", 'tay', "ou", "vay", "doublevay", "eeks", "egrecke", "zed"]
             upperconversion = []
             for item in lowerconversion:
                 upperconversion.append(item.swapcase())
             print(upperconversion)
-            numberconversion = ["Cero", "Un", "Deux", "Trois", "Quatre", "Cinq", "Six", "Sept", "Huit", "Neuf"]
+            numberconversion = ["Cero", "Un", "Deux", "Trois", "Quatre",
+                                "Cinq", "Six", "Sept", "Huit", "Neuf"]
             toeng(lowerconversion, upperconversion, numberconversion)
         elif decode_pathway[y] == "s":
             upperconversion = []
-            lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "ii", "jota", "ca", "ele", "eme",
-                               "ene",
-                               "oh", "pe", "cu", "ere", "ese", "te", "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
+            lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "hache", "ii", "jota",
+                               "ca", "ele", "eme","ene", "oh", "pe", "cu", "ere", "ese", "te",
+                               "uh", "ve", "dobleve", "equis", "igriega", "zeta"]
             for item in lowerconversion:
                 upperconversion.append(item.swapcase())
-            numberconversion = ["Cero", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve"]
+            numberconversion = ["Cero", "Uno", "Dos", "Tres", "Cuatro", "Cinco",
+                                "Seis", "Siete", "Ocho", "Nueve"]
             toeng(lowerconversion, upperconversion, numberconversion)
         elif decode_pathway[y] == "g":
             upperconversion = []
-            lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "ii", "jot", "ka", "el", "em", "en",
-                               "oh", "pe", "ku", "er", "es", "te", "oo", "vau", "ve", "iks", "opsilon", "zet"]
+            lowerconversion = ["ah", "be", "ce", "de", "eh", "efe", "ge", "ha", "ii", "jot",
+                               "ka", "el", "em", "en", "oh", "pe", "ku", "er", "es", "te", "oo",
+                               "vau", "ve", "iks", "opsilon", "zet"]
             for item in lowerconversion:
                 upperconversion.append(item.swapcase())
-            numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs", "Sieben", "Acht", "Neun"]
+            numberconversion = ["Null", "Eins", "Zwei", "Drei", "Vier", "Funf", "Sechs",
+                                "Sieben", "Acht", "Neun"]
             toeng(lowerconversion, upperconversion, numberconversion)
         elif decode_pathway[y] == "z":
             decode_code = int(tobase(decode_code, int(decode_bases[-1]), 10))
@@ -809,7 +835,8 @@ def decode():
 
 def yell():
     print(code)
-    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, Logo2
+    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, \
+        b_check, b_complete, b_functions, b_nothing, Logo2
     b_encode.destroy()
     b_decode.destroy()
     root.title("Start making your code, the parentheses says what each conversion does")
@@ -826,18 +853,28 @@ def yell():
 
 
 def create_buttons():
-    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, b_check, b_complete, b_functions, b_nothing, Logo, Logo1, Logo2
-    b_encode = Button(root, text="Encode", fg="goldenrod", bg="gray25", command=yell, font=('Helvetica', 20, 'bold'))
-    b_decode = Button(root, text="Decode", fg="gray25", bg="goldenrod", command=decode, font=('Helvetica', 20, 'bold'))
-    b_ascii = Button(root, text="Convert to ASCII", bg="midnight blue", fg="white smoke", font=('Helvetica', 20, 'bold'), command=ascii)
+    global b_encode, b_decode, b_ascii, b_nascii, b_octal, b_cipher, b_dontclick, \
+        b_check, b_complete, b_functions, b_nothing, Logo, Logo1, Logo2
+    b_encode = Button(root, text="Encode", fg="goldenrod", bg="gray25", command=yell,
+                      font=('Helvetica', 20, 'bold'))
+    b_decode = Button(root, text="Decode", fg="gray25", bg="goldenrod", command=decode,
+                      font=('Helvetica', 20, 'bold'))
+    b_ascii = Button(root, text="Convert to ASCII", bg="midnight blue", fg="white smoke",
+                     font=('Helvetica', 20, 'bold'), command=ascii)
     b_nascii = Button(root, text="Math Functions", fg="white", bg="red",
                       command=calc, font=('Helvetica', 20, 'bold'))
-    b_octal = Button(root, text="Convert to any base", fg="white smoke", bg="midnight blue", command=beforetobase, font=('Helvetica', 20, 'bold'))
-    b_cipher = Button(root, text="Cipher Encryption", fg="white", bg="red", command=runthroughcipher, font=('Helvetica', 20, 'bold'))
-    b_check = Button(root, text="Current Status: Code", fg="white", bg="red", command=show, font=('Helvetica', 20, 'bold'))
-    b_complete = Button(root, text="Complete your code", bg="midnight blue", fg="white smoke", command=complete, font=('Helvetica', 20, 'bold'))
-    b_functions = Button(root, text="Change language", fg="white", bg="red", command=function1, font=('Helvetica', 20, 'bold'))
-    b_nothing = Button(root, text="Restart", bg="midnight blue", fg="white smoke", command=replace, font=('Helvetica', 20, 'bold'))
+    b_octal = Button(root, text="Convert to any base", fg="white smoke", bg="midnight blue",
+                     command=beforetobase, font=('Helvetica', 20, 'bold'))
+    b_cipher = Button(root, text="Cipher Encryption", fg="white", bg="red",
+                      command=runthroughcipher, font=('Helvetica', 20, 'bold'))
+    b_check = Button(root, text="Current Status: Code", fg="white", bg="red",
+                     command=show, font=('Helvetica', 20, 'bold'))
+    b_complete = Button(root, text="Complete your code", bg="midnight blue",
+                        fg="white smoke", command=complete, font=('Helvetica', 20, 'bold'))
+    b_functions = Button(root, text="Change language", fg="white", bg="red",
+                         command=function1, font=('Helvetica', 20, 'bold'))
+    b_nothing = Button(root, text="Restart", bg="midnight blue", fg="white smoke",
+                       command=replace, font=('Helvetica', 20, 'bold'))
     Logo = Image.open("Logo.png")
     Logo1 = ImageTk.PhotoImage(Logo)
     Logo2 = Label(root, image=Logo1)
@@ -899,7 +936,8 @@ lastcompletedfunc = ""
 actual = ""
 inputValue = ""
 
-# when currentvalue equals 0, then it is only in letter form, when it is 1 it is only in numbers, when it is 2 it is in
+# when currentvalue equals 0, then it is only in letter form, when
+# it is 1 it is only in numbers, when it is 2 it is in
 # both letters and numbers (non base 10 integer)
 currentvalue = 0
 newset = ""

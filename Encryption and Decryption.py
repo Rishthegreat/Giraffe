@@ -255,7 +255,7 @@ def calc():
     multiply.place(relx=0, rely=0.5, relheight=0.5, relwidth=0.5)
     divide.place(relx=0.5, rely=0.5, relheight=0.5, relwidth=0.5)
 
-
+# Procedure used for Question 3c
 def tobase(n, currbase, finbase):
     n = str(n)    # n is the number that needs to be converted to another base
     currbase = int(currbase)
@@ -285,7 +285,7 @@ def beforetobase():
 
     def inputforconversion():
         global code, currentvalue, bases
-        currentbase = int(bases[-2])
+        currentbase = int(bases[-2])                  # Call used for question 3c and 3d
         finalbase = int(enterbox.get("1.0", "end-1c"))
         code = tobase(code, currentbase, finalbase)
         entbase.destroy()
@@ -424,7 +424,7 @@ def complete():
 
 def function1():
     global code, language, French, Spanish, German, Numbers, pathway, code, bInLow, bInUp, bInNum, indextouse
-
+    # Used for Question 3b
     def toanotherlang(lower, upper, nums):
         global code
         code = list(code)  # Making the variable code a list so that it is easier to work with in the code
